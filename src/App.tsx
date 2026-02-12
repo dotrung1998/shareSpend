@@ -44,9 +44,9 @@ const translations = {
       "July", "August", "September", "October", "November", "December"
     ],
     categories: {
-      eating: "Eating in the restaurant",
       groceries: "Groceries",
-      furniture: "Furniture",
+      supermarkt: "Supermarkt",
+      eating_out: "Eating Out",
       other: "Other"
     }
   },
@@ -92,9 +92,9 @@ const translations = {
       "Juli", "August", "September", "Oktober", "November", "Dezember"
     ],
     categories: {
-      eating: "Restaurant",
-      groceries: "Lebensmittel",
-      furniture: "Möbel",
+      groceries: "Drogerie",
+      supermarkt: "Supermarkt",
+      eating_out: "Restaurants",
       other: "Andere"
     }
   },
@@ -140,9 +140,9 @@ const translations = {
       "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"
     ],
     categories: {
-      eating: "Ăn tại nhà hàng",
-      groceries: "Tạp hóa",
-      furniture: "Đồ nội thất",
+      groceries: "Tạp hóa nhỏ",
+      supermarkt: "Siêu thị",
+      eating_out: "Ăn ngoài",
       other: "Khác"
     }
   }
@@ -179,19 +179,20 @@ const ExpenseTracker: React.FC = () => {
   const [expenseYear, setExpenseYear] = useState(currentDate.getFullYear().toString());
   const [expenseMonth, setExpenseMonth] = useState((currentDate.getMonth() + 1).toString().padStart(2, "0"));
   const [currency, setCurrency] = useState("EUR");
-  const [category, setCategory] = useState("eating");
+  const [category, setCategory] = useState("supermarkt");
+  
   const [categories, setCategories] = useState<Record<string, Category>>({
-    eating: { name: translations.en.categories.eating, icon: "🍽️", note: "" },
     groceries: { name: translations.en.categories.groceries, icon: "🛒", note: "" },
-    furniture: { name: translations.en.categories.furniture, icon: "🪑", note: "" },
+    supermarkt: { name: translations.en.categories.supermarkt, icon: "🏪", note: "" },
+    eating_out: { name: translations.en.categories.eating_out, icon: "🍽️", note: "" },
     other: { name: translations.en.categories.other, icon: "📦", note: "" }
   });
   
   const [categoryRules, setCategoryRules] = useState<CategoryRule>({
-    groceries: ["rewe", "kaufland", "dm-drogerie", "dm-markt", "rossmann", "depot", "penny", "aldi", "lidl"],
-    eating: ["restaurant", "kfc", "backwerk", "grill", "asia", "chiking", "burger", "pizza", "mcdonalds", "gourmet", "sumup"],
-    furniture: ["tjxeurope", "furniture", "möbel", "ikea"],
-    other: ["fressnapf", "pet", "paypal", "karroum"]
+    groceries: ["dm-drogerie", "dm-markt", "rossmann"],
+    supermarkt: ["rewe", "kaufland", "penny", "go asia", "aldi", "lidl", "netto"],
+    eating_out: ["kfc", "backwerk", "sumup", "grill", "asiagourmet", "asia", "chiking", "restaurant", "burger", "pizza", "mcdonalds"],
+    other: ["paypal", "depot", "karroum", "tjxeurope", "fressnapf", "pet"]
   });
   
   const [showRulesManager, setShowRulesManager] = useState(false);
