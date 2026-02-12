@@ -8,6 +8,7 @@ const translations = {
     manageCategoryRules: "Manage Auto-Categorization Rules",
     currentCategories: "Current Categories",
     addCategory: "Add Category",
+    addNewCategory: "Add New Category",
     categoryName: "Category Name",
     enterCategoryName: "Enter category name",
     categoryIcon: "Category Icon",
@@ -39,6 +40,8 @@ const translations = {
     requiredFieldsWarning: "Please fill out this field.",
     categoryTotal: "Category Total:",
     addKeyword: "Add Keyword",
+    deleteCategory: "Delete Category",
+    deleteCategoryWarning: "Are you sure? This will delete all expenses in this category.",
     monthNames: [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -56,6 +59,7 @@ const translations = {
     manageCategoryRules: "Auto-Kategorisierungsregeln verwalten",
     currentCategories: "Aktuelle Kategorien",
     addCategory: "Kategorie hinzufügen",
+    addNewCategory: "Neue Kategorie hinzufügen",
     categoryName: "Kategoriename",
     enterCategoryName: "Kategoriename eingeben",
     categoryIcon: "Kategorensymbol",
@@ -87,6 +91,8 @@ const translations = {
     requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
     categoryTotal: "Kategorien Gesamt:",
     addKeyword: "Schlüsselwort hinzufügen",
+    deleteCategory: "Kategorie löschen",
+    deleteCategoryWarning: "Sind Sie sicher? Dies löscht alle Ausgaben in dieser Kategorie.",
     monthNames: [
       "Januar", "Februar", "März", "April", "Mai", "Juni",
       "Juli", "August", "September", "Oktober", "November", "Dezember"
@@ -104,6 +110,7 @@ const translations = {
     manageCategoryRules: "Quản Lý Quy Tắc Tự Động Phân Loại",
     currentCategories: "Danh Mục Hiện Tại",
     addCategory: "Thêm Danh Mục",
+    addNewCategory: "Thêm Danh Mục Mới",
     categoryName: "Tên danh mục",
     enterCategoryName: "Nhập tên danh mục",
     categoryIcon: "Biểu tượng danh mục",
@@ -135,6 +142,8 @@ const translations = {
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
     categoryTotal: "Tổng danh mục:",
     addKeyword: "Thêm từ khóa",
+    deleteCategory: "Xóa danh mục",
+    deleteCategoryWarning: "Bạn có chắc? Điều này sẽ xóa tất cả chi phí trong danh mục này.",
     monthNames: [
       "Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu",
       "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"
@@ -300,12 +309,39 @@ const ExpenseTracker: React.FC = () => {
     setDescription("");
   };
 
-  const deleteExpensesByCategory = (categoryKey: string) => {
-    setExpenses(prev => prev.filter(exp => exp.category !== categoryKey));
+  const addNewCategory = (name: string, icon: string) => {
+    if (!name.trim()) return;
+    const catKey = name.toLowerCase().replace(/\s+/g, "_");
+    if (categories[catKey]) {
+      alert("Category already exists!");
+      return;
+    }
+    setCategories(prev => ({
+      ...prev,
+      [catKey]: { name: name.trim(), icon: icon || "📁", note: "" }
+    }));
+    setCategoryRules(prev => ({
+      ...prev,
+      [catKey]: []
+    }));
   };
 
   const deleteCategory = (categoryKey: string) => {
+    const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+    if (categoryExpenses.length > 0) {
+      if (!window.confirm(`${t.deleteCategoryWarning}\n\n${categoryExpenses.length} expenses will be deleted.`)) {
+        return;
+      }
+      setExpenses(prev => prev.filter(exp => exp.category !== categoryKey));
+    }
+    
     setCategories(prev => {
+      const updated = { ...prev };
+      delete updated[categoryKey];
+      return updated;
+    });
+    
+    setCategoryRules(prev => {
       const updated = { ...prev };
       delete updated[categoryKey];
       return updated;
@@ -761,6 +797,8 @@ const ExpenseTracker: React.FC = () => {
 
   const CategoryRulesManager = () => {
     const [newKeywords, setNewKeywords] = useState<Record<string, string>>({});
+    const [newCategoryForm, setNewCategoryForm] = useState({ name: "", icon: "📁" });
+    const [showAddCategory, setShowAddCategory] = useState(false);
 
     return (
       <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50`}>
@@ -775,14 +813,80 @@ const ExpenseTracker: React.FC = () => {
             </button>
           </div>
 
+          {/* Add New Category Section */}
+          <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
+            {!showAddCategory ? (
+              <button
+                onClick={() => setShowAddCategory(true)}
+                className="w-full p-3 rounded flex items-center justify-center gap-2"
+                style={{ backgroundColor: buttonColor }}
+              >
+                <Plus size={20} />
+                {t.addNewCategory}
+              </button>
+            ) : (
+              <div>
+                <div className="grid grid-cols-3 gap-2 mb-2">
+                  <input
+                    type="text"
+                    placeholder={t.enterCategoryName}
+                    value={newCategoryForm.name}
+                    onChange={(e) => setNewCategoryForm({ ...newCategoryForm, name: e.target.value })}
+                    className={`col-span-2 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+                  />
+                  <input
+                    type="text"
+                    placeholder="📁"
+                    maxLength={2}
+                    value={newCategoryForm.icon}
+                    onChange={(e) => setNewCategoryForm({ ...newCategoryForm, icon: e.target.value })}
+                    className={`p-2 rounded text-center ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      addNewCategory(newCategoryForm.name, newCategoryForm.icon);
+                      setNewCategoryForm({ name: "", icon: "📁" });
+                      setShowAddCategory(false);
+                    }}
+                    className="flex-1 p-2 rounded"
+                    style={{ backgroundColor: buttonColor }}
+                  >
+                    {t.save}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowAddCategory(false);
+                      setNewCategoryForm({ name: "", icon: "📁" });
+                    }}
+                    className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
+                  >
+                    {t.cancel}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Existing Categories */}
           <div className="space-y-6">
             {Object.keys(categories).map(catKey => (
               <div key={catKey} className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-2xl">{categories[catKey].icon}</span>
-                  <h3 className="text-lg font-bold">
-                    {getTranslatedCategory(catKey, categories[catKey].name, t)}
-                  </h3>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">{categories[catKey].icon}</span>
+                    <h3 className="text-lg font-bold">
+                      {getTranslatedCategory(catKey, categories[catKey].name, t)}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => deleteCategory(catKey)}
+                    className="p-2 rounded text-red-500 hover:bg-red-100"
+                    title={t.deleteCategory}
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
                 
                 <div className="mb-2">
