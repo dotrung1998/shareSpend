@@ -589,59 +589,85 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const handleCSVUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      const data = parseCSV(content);
-      const newExpenses: Expense[] = [];
-      const newCategories = { ...categories };
-      let currentCategoryName = "";
-      let uniqueIdCounter = Date.now();
-      let startRow = 0;
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const content = event.target?.result as string;
+    const data = parseCSV(content);
+    const newExpenses: Expense[] = [];
+    const newCategories = { ...categories };
+    let currentCategoryName = "";
+    let uniqueIdCounter = Date.now();
+    let startRow = 0;
 
-      if (data[0] && data[0][0] === "ID") {
-        startRow = 1;
-      }
+    if (data[0] && data[0][0] === "ID") {
+      startRow = 1;
+    }
 
-      for (let i = startRow; i < data.length; i++) {
-        const row = data[i];
-        if (row.every(cell => cell.trim() === "")) continue;
+    for (let i = startRow; i < data.length; i++) {
+      const row = data[i];
+      
+      // Skip empty rows
+      if (row.every(cell => cell.trim() === "")) continue;
 
-        if (row[0].startsWith("CATEGORY:")) {
-          currentCategoryName = row[0].split("CATEGORY:")[1].trim();
-          const catKey = currentCategoryName.toLowerCase().replace(/\s+/g, "_");
-          if (!newCategories[catKey]) {
-            newCategories[catKey] = { name: currentCategoryName, icon: "🔖", note: "" };
-          }
-          continue;
-        }
-
-        if (row[1] && (row[1].includes("CATEGORY TOTAL:") || row[1].includes("GRAND TOTAL:"))) continue;
-        if (row.length !== 7) continue;
-
-        const expenseCategoryName = row[6] ? row[6].trim() : currentCategoryName;
-        const catKey = expenseCategoryName.toLowerCase().replace(/\s+/g, "_");
+      // Skip category header rows
+      if (row[0].startsWith("CATEGORY:")) {
+        currentCategoryName = row[0].split("CATEGORY:")[1].trim();
+        const catKey = currentCategoryName.toLowerCase().replace(/\s+/g, "_");
         if (!newCategories[catKey]) {
-          newCategories[catKey] = { name: expenseCategoryName, icon: "🔖", note: "" };
+          newCategories[catKey] = { name: currentCategoryName, icon: "🔖", note: "" };
         }
-
-        newExpenses.push({
-          id: uniqueIdCounter++,
-          description: row[1],
-          date: row[2],
-          amount: parseFloat(row[3]),
-          currency: row[4],
-          category: catKey
-        });
+        continue;
       }
 
-      setExpenses(newExpenses);
-      setCategories(newCategories);
-    };
-    reader.readAsText(file);
+      // Skip total rows - check all possible columns and patterns
+      const rowText = row.join(" ").toLowerCase();
+      if (rowText.includes("total") || 
+          rowText.includes("gesamt") ||
+          row[1]?.toLowerCase().includes("total") ||
+          row[1]?.toLowerCase().includes("gesamt") ||
+          row[0]?.toLowerCase().includes("total") ||
+          row[0]?.toLowerCase().includes("grand")) {
+        continue;
+      }
+
+      // Skip rows that start with formulas
+      if (row[3]?.startsWith("=")) continue;
+
+      // Must have exactly 7 columns for valid expense
+      if (row.length !== 7) continue;
+
+      // Skip if description is empty or just whitespace
+      if (!row[1] || row[1].trim() === "") continue;
+
+      // Skip if amount is not a valid number
+      const amount = parseFloat(row[3]);
+      if (isNaN(amount) || amount === 0) continue;
+
+      // Use the category from the row if available, else fall back to current category
+      const expenseCategoryName = row[6] ? row[6].trim() : currentCategoryName;
+      const catKey = expenseCategoryName.toLowerCase().replace(/\s+/g, "_");
+      
+      if (!newCategories[catKey]) {
+        newCategories[catKey] = { name: expenseCategoryName, icon: "🔖", note: "" };
+      }
+
+      newExpenses.push({
+        id: uniqueIdCounter++,
+        description: row[1],
+        date: row[2],
+        amount: amount,
+        currency: row[4],
+        category: catKey
+      });
+    }
+
+    setExpenses(newExpenses);
+    setCategories(newCategories);
   };
+  reader.readAsText(file);
+};
 
   const categorizeExpense = (description: string): string => {
     const desc = description.toLowerCase();
