@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Upload, Edit2, Trash2, Sun, Moon, FileText, Plus, X, Settings } from "lucide-react";
+import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X } from "lucide-react";
 
 const translations = {
   en: {
     sharedExpenseTracker: "Shared Expense Tracker",
     manageCategories: "Manage Categories",
-    autoCategoryRules: "Auto-Category Rules",
+    manageCategoryRules: "Manage Auto-Categorization Rules",
     currentCategories: "Current Categories",
     addCategory: "Add Category",
     categoryName: "Category Name",
@@ -13,6 +13,8 @@ const translations = {
     categoryIcon: "Category Icon",
     categoryNote: "Category Description/Note",
     categoryNotePlaceholder: "Add a note for the category",
+    categoryRules: "Auto-categorization Keywords",
+    categoryRulesPlaceholder: "e.g., rewe, kaufland, aldi (comma separated)",
     delete: "Delete",
     edit: "Edit",
     cancel: "Cancel",
@@ -36,9 +38,7 @@ const translations = {
     amountExample: "e.g., 10",
     requiredFieldsWarning: "Please fill out this field.",
     categoryTotal: "Category Total:",
-    addKeyword: "Add keyword",
-    keywordPlaceholder: "e.g., rewe, kfc",
-    rulesDescription: "When uploading invoices, transactions containing these keywords will be automatically assigned to the category.",
+    addKeyword: "Add Keyword",
     monthNames: [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -53,7 +53,7 @@ const translations = {
   de: {
     sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
     manageCategories: "Kategorien verwalten",
-    autoCategoryRules: "Auto-Kategorisierungsregeln",
+    manageCategoryRules: "Auto-Kategorisierungsregeln verwalten",
     currentCategories: "Aktuelle Kategorien",
     addCategory: "Kategorie hinzufügen",
     categoryName: "Kategoriename",
@@ -61,6 +61,8 @@ const translations = {
     categoryIcon: "Kategorensymbol",
     categoryNote: "Kategoriebeschreibung/Notiz",
     categoryNotePlaceholder: "Fügen Sie der Kategorie eine Notiz hinzu",
+    categoryRules: "Auto-Kategorisierung Schlüsselwörter",
+    categoryRulesPlaceholder: "z.B. rewe, kaufland, aldi (durch Komma getrennt)",
     delete: "Löschen",
     edit: "Bearbeiten",
     cancel: "Abbrechen",
@@ -85,8 +87,6 @@ const translations = {
     requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
     categoryTotal: "Kategorien Gesamt:",
     addKeyword: "Schlüsselwort hinzufügen",
-    keywordPlaceholder: "z.B. rewe, kfc",
-    rulesDescription: "Beim Hochladen von Rechnungen werden Transaktionen mit diesen Schlüsselwörtern automatisch dieser Kategorie zugeordnet.",
     monthNames: [
       "Januar", "Februar", "März", "April", "Mai", "Juni",
       "Juli", "August", "September", "Oktober", "November", "Dezember"
@@ -101,7 +101,7 @@ const translations = {
   vi: {
     sharedExpenseTracker: "Trình Theo Dõi Chi Phí Chung",
     manageCategories: "Quản Lý Danh Mục",
-    autoCategoryRules: "Quy Tắc Tự Động Phân Loại",
+    manageCategoryRules: "Quản Lý Quy Tắc Tự Động Phân Loại",
     currentCategories: "Danh Mục Hiện Tại",
     addCategory: "Thêm Danh Mục",
     categoryName: "Tên danh mục",
@@ -109,6 +109,8 @@ const translations = {
     categoryIcon: "Biểu tượng danh mục",
     categoryNote: "Mô tả/Ghi chú danh mục",
     categoryNotePlaceholder: "Thêm ghi chú cho danh mục",
+    categoryRules: "Từ khóa tự động phân loại",
+    categoryRulesPlaceholder: "vd: rewe, kaufland, aldi (phân cách bằng dấu phẩy)",
     delete: "Xóa",
     edit: "Sửa",
     cancel: "Hủy",
@@ -133,8 +135,6 @@ const translations = {
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
     categoryTotal: "Tổng danh mục:",
     addKeyword: "Thêm từ khóa",
-    keywordPlaceholder: "vd: rewe, kfc",
-    rulesDescription: "Khi tải lên hóa đơn, các giao dịch chứa từ khóa này sẽ tự động được phân vào danh mục.",
     monthNames: [
       "Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu",
       "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"
@@ -187,23 +187,14 @@ const ExpenseTracker: React.FC = () => {
     other: { name: translations.en.categories.other, icon: "📦", note: "" }
   });
   
-  // Default category rules
-  const defaultRules: CategoryRule = {
+  const [categoryRules, setCategoryRules] = useState<CategoryRule>({
     groceries: ["rewe", "kaufland", "dm-drogerie", "dm-markt", "rossmann", "depot", "penny", "aldi", "lidl"],
     eating: ["restaurant", "kfc", "backwerk", "grill", "asia", "chiking", "burger", "pizza", "mcdonalds", "gourmet", "sumup"],
     furniture: ["tjxeurope", "furniture", "möbel", "ikea"],
-    other: ["fressnapf", "pet", "paypal"]
-  };
-  
-  const [categoryRules, setCategoryRules] = useState<CategoryRule>(() => {
-    const saved = localStorage.getItem("categoryRules");
-    return saved ? JSON.parse(saved) : defaultRules;
+    other: ["fressnapf", "pet", "paypal", "karroum"]
   });
   
-  const [showRulesModal, setShowRulesModal] = useState(false);
-  const [newKeyword, setNewKeyword] = useState("");
-  const [editingRuleCategory, setEditingRuleCategory] = useState<string | null>(null);
-  
+  const [showRulesManager, setShowRulesManager] = useState(false);
   const [newCategory, setNewCategory] = useState({ name: "", icon: "", note: "" });
   const [showCustomIconModal, setShowCustomIconModal] = useState(false);
   const [customIcon, setCustomIcon] = useState("");
@@ -232,10 +223,6 @@ const ExpenseTracker: React.FC = () => {
       return updated;
     });
   }, [t]);
-
-  useEffect(() => {
-    localStorage.setItem("categoryRules", JSON.stringify(categoryRules));
-  }, [categoryRules]);
 
   const amountExampleText = currency === "VND" ? (language === "vi" ? "vd: 10000" : "10000") : t.amountExample;
 
@@ -396,22 +383,6 @@ const ExpenseTracker: React.FC = () => {
     }
   };
 
-  const addKeywordToCategory = (categoryKey: string, keyword: string) => {
-    if (!keyword.trim()) return;
-    setCategoryRules(prev => ({
-      ...prev,
-      [categoryKey]: [...(prev[categoryKey] || []), keyword.toLowerCase().trim()]
-    }));
-    setNewKeyword("");
-  };
-
-  const removeKeywordFromCategory = (categoryKey: string, keyword: string) => {
-    setCategoryRules(prev => ({
-      ...prev,
-      [categoryKey]: prev[categoryKey].filter(k => k !== keyword)
-    }));
-  };
-
   const escapeCSV = (field: any) => {
     const strField = field.toString();
     if (strField.includes(",") || strField.includes('"') || strField.includes("\n")) {
@@ -552,7 +523,9 @@ const ExpenseTracker: React.FC = () => {
         }
 
         if (row[3]?.startsWith("=")) continue;
+
         if (row.length !== 7) continue;
+
         if (!row[1] || row[1].trim() === "") continue;
 
         const amount = parseFloat(row[3]);
@@ -585,8 +558,10 @@ const ExpenseTracker: React.FC = () => {
     const desc = description.toLowerCase();
     
     for (const [categoryKey, keywords] of Object.entries(categoryRules)) {
-      if (keywords.some(keyword => desc.includes(keyword.toLowerCase()))) {
-        return categoryKey;
+      for (const keyword of keywords) {
+        if (desc.includes(keyword.toLowerCase())) {
+          return categoryKey;
+        }
       }
     }
     
@@ -668,6 +643,21 @@ const ExpenseTracker: React.FC = () => {
     } else {
       reader.readAsText(file);
     }
+  };
+
+  const addKeywordToCategory = (categoryKey: string, keyword: string) => {
+    if (!keyword.trim()) return;
+    setCategoryRules(prev => ({
+      ...prev,
+      [categoryKey]: [...(prev[categoryKey] || []), keyword.trim().toLowerCase()]
+    }));
+  };
+
+  const removeKeywordFromCategory = (categoryKey: string, keyword: string) => {
+    setCategoryRules(prev => ({
+      ...prev,
+      [categoryKey]: (prev[categoryKey] || []).filter(k => k !== keyword)
+    }));
   };
 
   const InlineEditExpense: React.FC<{
@@ -768,6 +758,95 @@ const ExpenseTracker: React.FC = () => {
     );
   };
 
+  const CategoryRulesManager = () => {
+    const [newKeywords, setNewKeywords] = useState<Record<string, string>>({});
+
+    return (
+      <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50`}>
+        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg p-6 max-w-3xl w-full max-h-[80vh] overflow-y-auto`}>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">{t.manageCategoryRules}</h2>
+            <button
+              onClick={() => setShowRulesManager(false)}
+              className={`p-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <div className="space-y-6">
+            {Object.keys(categories).map(catKey => (
+              <div key={catKey} className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-2xl">{categories[catKey].icon}</span>
+                  <h3 className="text-lg font-bold">
+                    {getTranslatedCategory(catKey, categories[catKey].name, t)}
+                  </h3>
+                </div>
+                
+                <div className="mb-2">
+                  <label className="text-sm opacity-75 mb-1 block">{t.categoryRules}</label>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {(categoryRules[catKey] || []).map((keyword, idx) => (
+                      <span
+                        key={idx}
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                          isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
+                        }`}
+                      >
+                        {keyword}
+                        <button
+                          onClick={() => removeKeywordFromCategory(catKey, keyword)}
+                          className="hover:text-red-500"
+                        >
+                          <X size={14} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newKeywords[catKey] || ""}
+                      onChange={(e) => setNewKeywords({ ...newKeywords, [catKey]: e.target.value })}
+                      placeholder={t.categoryRulesPlaceholder}
+                      className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          addKeywordToCategory(catKey, newKeywords[catKey] || "");
+                          setNewKeywords({ ...newKeywords, [catKey]: "" });
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        addKeywordToCategory(catKey, newKeywords[catKey] || "");
+                        setNewKeywords({ ...newKeywords, [catKey]: "" });
+                      }}
+                      className="p-2 rounded"
+                      style={{ backgroundColor: buttonColor }}
+                    >
+                      <Plus size={20} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setShowRulesManager(false)}
+            className="w-full mt-6 p-3 rounded"
+            style={{ backgroundColor: buttonColor }}
+          >
+            {t.save}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <div className="max-w-4xl mx-auto p-6">
@@ -775,9 +854,9 @@ const ExpenseTracker: React.FC = () => {
           <h1 className="text-3xl font-bold">{t.sharedExpenseTracker}</h1>
           <div className="flex gap-2 items-center">
             <button
-              onClick={() => setShowRulesModal(true)}
+              onClick={() => setShowRulesManager(true)}
               className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
-              title={t.autoCategoryRules}
+              title={t.manageCategoryRules}
             >
               <Settings size={20} />
             </button>
@@ -798,98 +877,6 @@ const ExpenseTracker: React.FC = () => {
             </button>
           </div>
         </div>
-
-        {/* Auto-Category Rules Modal */}
-        {showRulesModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className={`rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">{t.autoCategoryRules}</h2>
-                <button onClick={() => setShowRulesModal(false)} className="p-2">
-                  <X size={24} />
-                </button>
-              </div>
-              
-              <p className={`mb-4 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                {t.rulesDescription}
-              </p>
-
-              {Object.keys(categories).map(categoryKey => (
-                <div key={categoryKey} className={`mb-4 p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold text-lg">
-                      {categories[categoryKey].icon} {getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}
-                    </h3>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {(categoryRules[categoryKey] || []).map((keyword, idx) => (
-                      <div
-                        key={idx}
-                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
-                          isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
-                        }`}
-                      >
-                        <span>{keyword}</span>
-                        <button
-                          onClick={() => removeKeywordFromCategory(categoryKey, keyword)}
-                          className="hover:text-red-500"
-                        >
-                          <X size={14} />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-
-                  {editingRuleCategory === categoryKey ? (
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={newKeyword}
-                        onChange={(e) => setNewKeyword(e.target.value)}
-                        onKeyPress={(e) => {
-                          if (e.key === 'Enter') {
-                            addKeywordToCategory(categoryKey, newKeyword);
-                            setEditingRuleCategory(null);
-                          }
-                        }}
-                        placeholder={t.keywordPlaceholder}
-                        className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}
-                        autoFocus
-                      />
-                      <button
-                        onClick={() => {
-                          addKeywordToCategory(categoryKey, newKeyword);
-                          setEditingRuleCategory(null);
-                        }}
-                        className="px-4 py-2 rounded"
-                        style={{ backgroundColor: buttonColor }}
-                      >
-                        {t.save}
-                      </button>
-                      <button
-                        onClick={() => {
-                          setEditingRuleCategory(null);
-                          setNewKeyword("");
-                        }}
-                        className={`px-4 py-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
-                      >
-                        {t.cancel}
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => setEditingRuleCategory(categoryKey)}
-                      className={`text-sm flex items-center gap-1 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}
-                    >
-                      <Plus size={16} /> {t.addKeyword}
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -1146,6 +1133,8 @@ const ExpenseTracker: React.FC = () => {
           </div>
         )}
       </div>
+
+      {showRulesManager && <CategoryRulesManager />}
     </div>
   );
 };
