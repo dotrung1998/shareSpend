@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Upload, Edit2, Trash2, Sun, Moon, FileText } from "lucide-react";
+import { Upload, Edit2, Trash2, Sun, Moon, FileText, Plus, X, Settings } from "lucide-react";
 
 const translations = {
   en: {
     sharedExpenseTracker: "Shared Expense Tracker",
     manageCategories: "Manage Categories",
+    autoCategoryRules: "Auto-Category Rules",
     currentCategories: "Current Categories",
     addCategory: "Add Category",
     categoryName: "Category Name",
@@ -35,6 +36,9 @@ const translations = {
     amountExample: "e.g., 10",
     requiredFieldsWarning: "Please fill out this field.",
     categoryTotal: "Category Total:",
+    addKeyword: "Add keyword",
+    keywordPlaceholder: "e.g., rewe, kfc",
+    rulesDescription: "When uploading invoices, transactions containing these keywords will be automatically assigned to the category.",
     monthNames: [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -46,53 +50,10 @@ const translations = {
       other: "Other"
     }
   },
-  fr: {
-    sharedExpenseTracker: "Gestionnaire de dépenses partagées",
-    manageCategories: "Gérer les catégories",
-    currentCategories: "Catégories actuelles",
-    addCategory: "Ajouter une catégorie",
-    categoryName: "Nom de la catégorie",
-    enterCategoryName: "Entrez le nom de la catégorie",
-    categoryIcon: "Icône de catégorie",
-    categoryNote: "Description/Note de la catégorie",
-    categoryNotePlaceholder: "Ajouter une note pour la catégorie",
-    delete: "Supprimer",
-    edit: "Éditer",
-    cancel: "Annuler",
-    save: "Enregistrer",
-    enterCustomIcon: "Entrez une icône personnalisée",
-    addExpense: "Ajouter une dépense(s)",
-    descriptionInputLabel: "Description (séparez plusieurs entrées avec ';' ou '+')",
-    amountInputLabel: "Montant (séparez plusieurs entrées avec ';' ou '+')",
-    expenseDateLabel: "Date de dépense (mois et année)",
-    currencyLabel: "Devise",
-    categoryLabel: "Catégorie",
-    primaryCurrencyLabel: "Devise principale",
-    batchEditSelected: "Modifier en lot les dépenses sélectionnées",
-    applyChanges: "Appliquer les modifications aux dépenses sélectionnées",
-    noExpensesYet: "Aucune dépense ajoutée. Commencez par ajouter votre première dépense !",
-    totalExpenses: "Total des dépenses :",
-    downloadCSV: "Télécharger CSV",
-    importFile: "Importer un fichier",
-    uploadInvoice: "Télécharger Facture (PDF/Image)",
-    exampleItem: "ex. Café",
-    amountExample: "ex. 10",
-    requiredFieldsWarning: "Veuillez remplir ce champ.",
-    categoryTotal: "Total de la catégorie:",
-    monthNames: [
-      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-    ],
-    categories: {
-      eating: "Restaurant",
-      groceries: "Épicerie",
-      furniture: "Mobilier",
-      other: "Autre"
-    }
-  },
   de: {
     sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
     manageCategories: "Kategorien verwalten",
+    autoCategoryRules: "Auto-Kategorisierungsregeln",
     currentCategories: "Aktuelle Kategorien",
     addCategory: "Kategorie hinzufügen",
     categoryName: "Kategoriename",
@@ -123,6 +84,9 @@ const translations = {
     amountExample: "z.B. 10",
     requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
     categoryTotal: "Kategorien Gesamt:",
+    addKeyword: "Schlüsselwort hinzufügen",
+    keywordPlaceholder: "z.B. rewe, kfc",
+    rulesDescription: "Beim Hochladen von Rechnungen werden Transaktionen mit diesen Schlüsselwörtern automatisch dieser Kategorie zugeordnet.",
     monthNames: [
       "Januar", "Februar", "März", "April", "Mai", "Juni",
       "Juli", "August", "September", "Oktober", "November", "Dezember"
@@ -137,6 +101,7 @@ const translations = {
   vi: {
     sharedExpenseTracker: "Trình Theo Dõi Chi Phí Chung",
     manageCategories: "Quản Lý Danh Mục",
+    autoCategoryRules: "Quy Tắc Tự Động Phân Loại",
     currentCategories: "Danh Mục Hiện Tại",
     addCategory: "Thêm Danh Mục",
     categoryName: "Tên danh mục",
@@ -167,6 +132,9 @@ const translations = {
     amountExample: "vd: 10000",
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
     categoryTotal: "Tổng danh mục:",
+    addKeyword: "Thêm từ khóa",
+    keywordPlaceholder: "vd: rewe, kfc",
+    rulesDescription: "Khi tải lên hóa đơn, các giao dịch chứa từ khóa này sẽ tự động được phân vào danh mục.",
     monthNames: [
       "Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu",
       "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"
@@ -176,94 +144,6 @@ const translations = {
       groceries: "Tạp hóa",
       furniture: "Đồ nội thất",
       other: "Khác"
-    }
-  },
-  zh: {
-    sharedExpenseTracker: "共享支出跟踪器",
-    manageCategories: "管理类别",
-    currentCategories: "当前类别",
-    addCategory: "添加类别",
-    categoryName: "类别名称",
-    enterCategoryName: "输入类别名称",
-    categoryIcon: "类别图标",
-    categoryNote: "类别描述/备注",
-    categoryNotePlaceholder: "为类别添加备注",
-    delete: "删除",
-    edit: "编辑",
-    cancel: "取消",
-    save: "保存",
-    enterCustomIcon: "输入自定义图标",
-    addExpense: "添加支出",
-    descriptionInputLabel: "描述（使用';'或'+'分隔多个条目）",
-    amountInputLabel: "金额（使用';'或'+'分隔多个条目）",
-    expenseDateLabel: "支出日期（月和年）",
-    currencyLabel: "货币",
-    categoryLabel: "类别",
-    primaryCurrencyLabel: "主要货币",
-    batchEditSelected: "批量编辑所选支出",
-    applyChanges: "应用更改到所选支出",
-    noExpensesYet: "尚未添加任何支出。开始添加您的第一个支出！",
-    totalExpenses: "总支出：",
-    downloadCSV: "下载 CSV",
-    importFile: "导入文件",
-    uploadInvoice: "上传发票 (PDF/图片)",
-    exampleItem: "例如：咖啡",
-    amountExample: "例如：10",
-    requiredFieldsWarning: "请填写此字段。",
-    categoryTotal: "类别总计:",
-    monthNames: [
-      "一月", "二月", "三月", "四月", "五月", "六月",
-      "七月", "八月", "九月", "十月", "十一月", "十二月"
-    ],
-    categories: {
-      eating: "餐饮",
-      groceries: "杂货",
-      furniture: "家具",
-      other: "其他"
-    }
-  },
-  ja: {
-    sharedExpenseTracker: "共通経費トラッカー",
-    manageCategories: "カテゴリ管理",
-    currentCategories: "現在のカテゴリ",
-    addCategory: "カテゴリを追加",
-    categoryName: "カテゴリ名",
-    enterCategoryName: "カテゴリ名を入力",
-    categoryIcon: "カテゴリアイコン",
-    categoryNote: "カテゴリ説明/メモ",
-    categoryNotePlaceholder: "カテゴリーにメモを追加",
-    delete: "削除",
-    edit: "編集",
-    cancel: "キャンセル",
-    save: "保存",
-    enterCustomIcon: "カスタムアイコンを入力",
-    addExpense: "経費を追加",
-    descriptionInputLabel: "説明（';' または '+' で複数エントリを区切る）",
-    amountInputLabel: "金額（';' または '+' で複数エントリを区切る）",
-    expenseDateLabel: "経費日付（月と年）",
-    currencyLabel: "通貨",
-    categoryLabel: "カテゴリ",
-    primaryCurrencyLabel: "主要通貨",
-    batchEditSelected: "選択した経費を一括編集",
-    applyChanges: "選択した経費に変更を適用",
-    noExpensesYet: "まだ経費が追加されていません。最初の経費を追加してください！",
-    totalExpenses: "総経費：",
-    downloadCSV: "CSVをダウンロード",
-    importFile: "ファイルをインポート",
-    uploadInvoice: "請求書をアップロード (PDF/画像)",
-    exampleItem: "例：コーヒー",
-    amountExample: "例：10",
-    requiredFieldsWarning: "このフィールドに入力してください。",
-    categoryTotal: "カテゴリ合計:",
-    monthNames: [
-      "1月", "2月", "3月", "4月", "5月", "6月",
-      "7月", "8月", "9月", "10月", "11月", "12月"
-    ],
-    categories: {
-      eating: "レストランでの食事",
-      groceries: "食料品",
-      furniture: "家具",
-      other: "その他"
     }
   }
 };
@@ -287,6 +167,10 @@ interface Category {
   note: string;
 }
 
+interface CategoryRule {
+  [categoryKey: string]: string[];
+}
+
 const ExpenseTracker: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [amount, setAmount] = useState("");
@@ -302,6 +186,24 @@ const ExpenseTracker: React.FC = () => {
     furniture: { name: translations.en.categories.furniture, icon: "🪑", note: "" },
     other: { name: translations.en.categories.other, icon: "📦", note: "" }
   });
+  
+  // Default category rules
+  const defaultRules: CategoryRule = {
+    groceries: ["rewe", "kaufland", "dm-drogerie", "dm-markt", "rossmann", "depot", "penny", "aldi", "lidl"],
+    eating: ["restaurant", "kfc", "backwerk", "grill", "asia", "chiking", "burger", "pizza", "mcdonalds", "gourmet", "sumup"],
+    furniture: ["tjxeurope", "furniture", "möbel", "ikea"],
+    other: ["fressnapf", "pet", "paypal"]
+  };
+  
+  const [categoryRules, setCategoryRules] = useState<CategoryRule>(() => {
+    const saved = localStorage.getItem("categoryRules");
+    return saved ? JSON.parse(saved) : defaultRules;
+  });
+  
+  const [showRulesModal, setShowRulesModal] = useState(false);
+  const [newKeyword, setNewKeyword] = useState("");
+  const [editingRuleCategory, setEditingRuleCategory] = useState<string | null>(null);
+  
   const [newCategory, setNewCategory] = useState({ name: "", icon: "", note: "" });
   const [showCustomIconModal, setShowCustomIconModal] = useState(false);
   const [customIcon, setCustomIcon] = useState("");
@@ -330,6 +232,10 @@ const ExpenseTracker: React.FC = () => {
       return updated;
     });
   }, [t]);
+
+  useEffect(() => {
+    localStorage.setItem("categoryRules", JSON.stringify(categoryRules));
+  }, [categoryRules]);
 
   const amountExampleText = currency === "VND" ? (language === "vi" ? "vd: 10000" : "10000") : t.amountExample;
 
@@ -490,6 +396,22 @@ const ExpenseTracker: React.FC = () => {
     }
   };
 
+  const addKeywordToCategory = (categoryKey: string, keyword: string) => {
+    if (!keyword.trim()) return;
+    setCategoryRules(prev => ({
+      ...prev,
+      [categoryKey]: [...(prev[categoryKey] || []), keyword.toLowerCase().trim()]
+    }));
+    setNewKeyword("");
+  };
+
+  const removeKeywordFromCategory = (categoryKey: string, keyword: string) => {
+    setCategoryRules(prev => ({
+      ...prev,
+      [categoryKey]: prev[categoryKey].filter(k => k !== keyword)
+    }));
+  };
+
   const escapeCSV = (field: any) => {
     const strField = field.toString();
     if (strField.includes(",") || strField.includes('"') || strField.includes("\n")) {
@@ -589,109 +511,83 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const handleCSVUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    const content = event.target?.result as string;
-    const data = parseCSV(content);
-    const newExpenses: Expense[] = [];
-    const newCategories = { ...categories };
-    let currentCategoryName = "";
-    let uniqueIdCounter = Date.now();
-    let startRow = 0;
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const content = event.target?.result as string;
+      const data = parseCSV(content);
+      const newExpenses: Expense[] = [];
+      const newCategories = { ...categories };
+      let currentCategoryName = "";
+      let uniqueIdCounter = Date.now();
+      let startRow = 0;
 
-    if (data[0] && data[0][0] === "ID") {
-      startRow = 1;
-    }
+      if (data[0] && data[0][0] === "ID") {
+        startRow = 1;
+      }
 
-    for (let i = startRow; i < data.length; i++) {
-      const row = data[i];
-      
-      // Skip empty rows
-      if (row.every(cell => cell.trim() === "")) continue;
+      for (let i = startRow; i < data.length; i++) {
+        const row = data[i];
+        
+        if (row.every(cell => cell.trim() === "")) continue;
 
-      // Skip category header rows
-      if (row[0].startsWith("CATEGORY:")) {
-        currentCategoryName = row[0].split("CATEGORY:")[1].trim();
-        const catKey = currentCategoryName.toLowerCase().replace(/\s+/g, "_");
-        if (!newCategories[catKey]) {
-          newCategories[catKey] = { name: currentCategoryName, icon: "🔖", note: "" };
+        if (row[0].startsWith("CATEGORY:")) {
+          currentCategoryName = row[0].split("CATEGORY:")[1].trim();
+          const catKey = currentCategoryName.toLowerCase().replace(/\s+/g, "_");
+          if (!newCategories[catKey]) {
+            newCategories[catKey] = { name: currentCategoryName, icon: "🔖", note: "" };
+          }
+          continue;
         }
-        continue;
+
+        const rowText = row.join(" ").toLowerCase();
+        if (rowText.includes("total") || 
+            rowText.includes("gesamt") ||
+            row[1]?.toLowerCase().includes("total") ||
+            row[1]?.toLowerCase().includes("gesamt") ||
+            row[0]?.toLowerCase().includes("total") ||
+            row[0]?.toLowerCase().includes("grand")) {
+          continue;
+        }
+
+        if (row[3]?.startsWith("=")) continue;
+        if (row.length !== 7) continue;
+        if (!row[1] || row[1].trim() === "") continue;
+
+        const amount = parseFloat(row[3]);
+        if (isNaN(amount) || amount === 0) continue;
+
+        const expenseCategoryName = row[6] ? row[6].trim() : currentCategoryName;
+        const catKey = expenseCategoryName.toLowerCase().replace(/\s+/g, "_");
+        
+        if (!newCategories[catKey]) {
+          newCategories[catKey] = { name: expenseCategoryName, icon: "🔖", note: "" };
+        }
+
+        newExpenses.push({
+          id: uniqueIdCounter++,
+          description: row[1],
+          date: row[2],
+          amount: amount,
+          currency: row[4],
+          category: catKey
+        });
       }
 
-      // Skip total rows - check all possible columns and patterns
-      const rowText = row.join(" ").toLowerCase();
-      if (rowText.includes("total") || 
-          rowText.includes("gesamt") ||
-          row[1]?.toLowerCase().includes("total") ||
-          row[1]?.toLowerCase().includes("gesamt") ||
-          row[0]?.toLowerCase().includes("total") ||
-          row[0]?.toLowerCase().includes("grand")) {
-        continue;
-      }
-
-      // Skip rows that start with formulas
-      if (row[3]?.startsWith("=")) continue;
-
-      // Must have exactly 7 columns for valid expense
-      if (row.length !== 7) continue;
-
-      // Skip if description is empty or just whitespace
-      if (!row[1] || row[1].trim() === "") continue;
-
-      // Skip if amount is not a valid number
-      const amount = parseFloat(row[3]);
-      if (isNaN(amount) || amount === 0) continue;
-
-      // Use the category from the row if available, else fall back to current category
-      const expenseCategoryName = row[6] ? row[6].trim() : currentCategoryName;
-      const catKey = expenseCategoryName.toLowerCase().replace(/\s+/g, "_");
-      
-      if (!newCategories[catKey]) {
-        newCategories[catKey] = { name: expenseCategoryName, icon: "🔖", note: "" };
-      }
-
-      newExpenses.push({
-        id: uniqueIdCounter++,
-        description: row[1],
-        date: row[2],
-        amount: amount,
-        currency: row[4],
-        category: catKey
-      });
-    }
-
-    setExpenses(newExpenses);
-    setCategories(newCategories);
+      setExpenses(newExpenses);
+      setCategories(newCategories);
+    };
+    reader.readAsText(file);
   };
-  reader.readAsText(file);
-};
 
   const categorizeExpense = (description: string): string => {
     const desc = description.toLowerCase();
     
-    if (desc.includes("rewe") || desc.includes("kaufland") || desc.includes("dm-drogerie") || 
-        desc.includes("dm-markt") || desc.includes("rossmann") || desc.includes("depot") || 
-        desc.includes("penny") || desc.includes("aldi") || desc.includes("lidl")) {
-      return "groceries";
-    }
-    
-    if (desc.includes("restaurant") || desc.includes("kfc") || desc.includes("backwerk") || 
-        desc.includes("grill") || desc.includes("asia") || desc.includes("chiking") || 
-        desc.includes("burger") || desc.includes("pizza") || desc.includes("mcdonalds") ||
-        desc.includes("gourmet") || desc.includes("sumup")) {
-      return "eating";
-    }
-    
-    if (desc.includes("fressnapf") || desc.includes("pet")) {
-      return "other";
-    }
-    
-    if (desc.includes("tjxeurope") || desc.includes("furniture") || desc.includes("möbel") ||
-        desc.includes("ikea")) {
-      return "furniture";
+    for (const [categoryKey, keywords] of Object.entries(categoryRules)) {
+      if (keywords.some(keyword => desc.includes(keyword.toLowerCase()))) {
+        return categoryKey;
+      }
     }
     
     return "other";
@@ -878,6 +774,13 @@ const ExpenseTracker: React.FC = () => {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{t.sharedExpenseTracker}</h1>
           <div className="flex gap-2 items-center">
+            <button
+              onClick={() => setShowRulesModal(true)}
+              className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
+              title={t.autoCategoryRules}
+            >
+              <Settings size={20} />
+            </button>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
@@ -885,10 +788,7 @@ const ExpenseTracker: React.FC = () => {
             >
               <option value="en">English</option>
               <option value="de">Deutsch</option>
-              <option value="fr">Français</option>
               <option value="vi">Tiếng Việt</option>
-              <option value="zh">中文</option>
-              <option value="ja">日本語</option>
             </select>
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
@@ -898,6 +798,98 @@ const ExpenseTracker: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* Auto-Category Rules Modal */}
+        {showRulesModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className={`rounded-lg p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold">{t.autoCategoryRules}</h2>
+                <button onClick={() => setShowRulesModal(false)} className="p-2">
+                  <X size={24} />
+                </button>
+              </div>
+              
+              <p className={`mb-4 text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                {t.rulesDescription}
+              </p>
+
+              {Object.keys(categories).map(categoryKey => (
+                <div key={categoryKey} className={`mb-4 p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-lg">
+                      {categories[categoryKey].icon} {getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}
+                    </h3>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {(categoryRules[categoryKey] || []).map((keyword, idx) => (
+                      <div
+                        key={idx}
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                          isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
+                        }`}
+                      >
+                        <span>{keyword}</span>
+                        <button
+                          onClick={() => removeKeywordFromCategory(categoryKey, keyword)}
+                          className="hover:text-red-500"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {editingRuleCategory === categoryKey ? (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={newKeyword}
+                        onChange={(e) => setNewKeyword(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            addKeywordToCategory(categoryKey, newKeyword);
+                            setEditingRuleCategory(null);
+                          }
+                        }}
+                        placeholder={t.keywordPlaceholder}
+                        className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}
+                        autoFocus
+                      />
+                      <button
+                        onClick={() => {
+                          addKeywordToCategory(categoryKey, newKeyword);
+                          setEditingRuleCategory(null);
+                        }}
+                        className="px-4 py-2 rounded"
+                        style={{ backgroundColor: buttonColor }}
+                      >
+                        {t.save}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setEditingRuleCategory(null);
+                          setNewKeyword("");
+                        }}
+                        className={`px-4 py-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
+                      >
+                        {t.cancel}
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setEditingRuleCategory(categoryKey)}
+                      className={`text-sm flex items-center gap-1 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}
+                    >
+                      <Plus size={16} /> {t.addKeyword}
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
