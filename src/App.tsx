@@ -317,8 +317,7 @@ const ExpenseTracker: React.FC = () => {
   const [buttonColor, setButtonColor] = useState("#F1C4D9");
   const [language, setLanguage] = useState("en");
   
-  const expenseListRef = useRef<HTMLDivElement>(null);
-  const editingExpenseRef = useRef<number | null>(null);
+  const scrollPositionRef = useRef<number>(0);
 
   const t = translations[language as keyof typeof translations];
 
@@ -341,17 +340,21 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const convertAmountTo = (amountValue: number, fromCurrency: string, toCurrency: string) => {
+    if (!amountValue || isNaN(amountValue)) return 0;
+    if (!currencies[fromCurrency] || !currencies[toCurrency]) return amountValue;
     return amountValue * (currencies[fromCurrency].rate / currencies[toCurrency].rate);
   };
 
   const formatCurrency = (value: number, curr: string) => {
+    if (isNaN(value) || value === null || value === undefined) return "€0.00";
     if (curr === "VND") {
       return `₫${Math.round(value).toLocaleString("vi-VN")}`;
     }
-    return `${currencies[curr].symbol}${value.toFixed(2)} ${curr}`;
+    return `${currencies[curr]?.symbol || "€"}${value.toFixed(2)} ${curr}`;
   };
 
   const formatCurrencyForCSV = (value: number, curr: string) => {
+    if (isNaN(value)) return "0";
     if (curr === "VND") {
       return `${Math.round(value)}`;
     }
@@ -426,7 +429,9 @@ const ExpenseTracker: React.FC = () => {
   const updateExpense = (updatedExpense: Expense) => {
     setExpenses(expenses.map(exp => exp.id === updatedExpense.id ? updatedExpense : exp));
     setEditingExpenseId(null);
-    editingExpenseRef.current = null;
+    setTimeout(() => {
+      window.scrollTo(0, scrollPositionRef.current);
+    }, 0);
   };
 
   const applyAllBatchEdits = () => {
@@ -452,6 +457,15 @@ const ExpenseTracker: React.FC = () => {
       (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
       0
     );
+  };
+
+  const calculateCategoryTotal = (categoryKey: string) => {
+    return expenses
+      .filter(exp => exp.category === categoryKey)
+      .reduce(
+        (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
+        0
+      );
   };
 
   const toggleSelectExpense = (id: number) => {
@@ -633,13 +647,15 @@ const ExpenseTracker: React.FC = () => {
     const desc = description.toLowerCase();
     
     if (desc.includes("rewe") || desc.includes("kaufland") || desc.includes("dm-drogerie") || 
-        desc.includes("rossmann") || desc.includes("depot") || desc.includes("penny")) {
+        desc.includes("dm-markt") || desc.includes("rossmann") || desc.includes("depot") || 
+        desc.includes("penny") || desc.includes("aldi") || desc.includes("lidl")) {
       return "groceries";
     }
     
     if (desc.includes("restaurant") || desc.includes("kfc") || desc.includes("backwerk") || 
         desc.includes("grill") || desc.includes("asia") || desc.includes("chiking") || 
-        desc.includes("gourmet")) {
+        desc.includes("burger") || desc.includes("pizza") || desc.includes("mcdonalds") ||
+        desc.includes("gourmet") || desc.includes("sumup")) {
       return "eating";
     }
     
@@ -647,11 +663,18 @@ const ExpenseTracker: React.FC = () => {
       return "other";
     }
     
-    if (desc.includes("tjxeurope") || desc.includes("furniture") || desc.includes("möbel")) {
+    if (desc.includes("tjxeurope") || desc.includes("furniture") || desc.includes("möbel") ||
+        desc.includes("ikea")) {
       return "furniture";
     }
     
     return "other";
+  };
+
+  const parseAmount = (amountStr: string): number => {
+    const cleaned = amountStr.replace(/[^\d,.-]/g, '').replace(',', '.');
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? 0 : Math.abs(parsed);
   };
 
   const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -663,38 +686,46 @@ const ExpenseTracker: React.FC = () => {
       const content = event.target?.result as string;
       
       try {
-        const lines = content.split('\n');
         const newExpenses: Expense[] = [];
         let uniqueIdCounter = Date.now();
         let invoiceDate = `${expenseYear}-${expenseMonth}`;
 
-        const dateMatch = content.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-        if (dateMatch) {
-          const [, day, month, year] = dateMatch;
+        const dateRangeMatch = content.match(/Abrechnung vom (\d{2})\.(\d{2})\.(\d{4}) bis (\d{2})\.(\d{2})\.(\d{4})/);
+        if (dateRangeMatch) {
+          const [, , , , , month, year] = dateRangeMatch;
           invoiceDate = `${year}-${month}`;
         }
 
-        const transactionPattern = /(\d{2}\.\d{2}\.\d{4})\s+([^\d]+?)\s+([\d,]+)\s*$/gm;
-        let match;
+        const lines = content.split('\n');
+        const transactionRegex = /^(\d{2}\.\d{2}\.\d{4})\s+(.+?)\s+([A-Za-zÄÖÜäöüß\s]+?)\s+([\d,]+)$/;
 
-        while ((match = transactionPattern.exec(content)) !== null) {
-          const [, date, desc, amountStr] = match;
-          const description = desc.trim();
-          const amount = parseFloat(amountStr.replace(',', '.'));
+        for (let line of lines) {
+          line = line.trim();
+          if (!line) continue;
+          
+          if (line.includes('ALTER SALDO') || line.includes('NEUER SALDO') || 
+              line.includes('EINZAHLUNG') || line.includes('SOLLZINSEN') ||
+              line.includes('Mindestbetrag')) {
+            continue;
+          }
 
-          if (description && amount && !description.includes('SALDO') && 
-              !description.includes('EINZAHLUNG') && !description.includes('SOLLZINSEN')) {
-            
-            const categoryKey = categorizeExpense(description);
-            
-            newExpenses.push({
-              id: uniqueIdCounter++,
-              description: description,
-              date: invoiceDate,
-              amount: amount,
-              currency: "EUR",
-              category: categoryKey
-            });
+          const match = line.match(transactionRegex);
+          if (match) {
+            const [, date, description, location, amountStr] = match;
+            const amount = parseAmount(amountStr);
+
+            if (amount > 0 && description.trim()) {
+              const categoryKey = categorizeExpense(description);
+              
+              newExpenses.push({
+                id: uniqueIdCounter++,
+                description: description.trim(),
+                date: invoiceDate,
+                amount: amount,
+                currency: "EUR",
+                category: categoryKey
+              });
+            }
           }
         }
 
@@ -702,7 +733,7 @@ const ExpenseTracker: React.FC = () => {
           setExpenses(prev => [...prev, ...newExpenses]);
           alert(`Successfully imported ${newExpenses.length} transactions from invoice!`);
         } else {
-          alert("No transactions found in the invoice. Please check the file format.");
+          alert("No transactions found. Please ensure this is a valid Mastercard invoice.");
         }
       } catch (error) {
         console.error("Error parsing invoice:", error);
@@ -710,7 +741,11 @@ const ExpenseTracker: React.FC = () => {
       }
     };
 
-    reader.readAsText(file);
+    if (file.name.endsWith('.pdf')) {
+      alert("Please convert PDF to text first, or copy-paste the invoice content into a .txt file.");
+    } else {
+      reader.readAsText(file);
+    }
   };
 
   const InlineEditExpense: React.FC<{
@@ -726,8 +761,9 @@ const ExpenseTracker: React.FC = () => {
       date: expense.date || ""
     });
 
-    const handleSave = () => {
-      const [year, month] = editData.date.split("-");
+    const handleSave = (e: React.MouseEvent) => {
+      e.preventDefault();
+      scrollPositionRef.current = window.pageYOffset;
       onSave({
         ...expense,
         description: editData.description,
@@ -736,6 +772,15 @@ const ExpenseTracker: React.FC = () => {
         category: editData.category,
         date: editData.date
       });
+    };
+
+    const handleCancel = (e: React.MouseEvent) => {
+      e.preventDefault();
+      scrollPositionRef.current = window.pageYOffset;
+      onCancel();
+      setTimeout(() => {
+        window.scrollTo(0, scrollPositionRef.current);
+      }, 0);
     };
 
     return (
@@ -785,12 +830,14 @@ const ExpenseTracker: React.FC = () => {
             onClick={handleSave}
             className="flex-1 p-2 rounded"
             style={{ backgroundColor: buttonColor }}
+            type="button"
           >
             {t.save}
           </button>
           <button
-            onClick={onCancel}
+            onClick={handleCancel}
             className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
+            type="button"
           >
             {t.cancel}
           </button>
@@ -927,7 +974,7 @@ const ExpenseTracker: React.FC = () => {
             </div>
             <input
               type="file"
-              accept=".pdf,.txt"
+              accept=".txt,.pdf"
               onChange={handleInvoiceUpload}
               className="hidden"
             />
@@ -974,15 +1021,12 @@ const ExpenseTracker: React.FC = () => {
           </div>
         )}
 
-        <div ref={expenseListRef}>
+        <div>
           {Object.keys(categories).map(categoryKey => {
             const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
             if (categoryExpenses.length === 0) return null;
 
-            const categoryTotal = categoryExpenses.reduce(
-              (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
-              0
-            );
+            const categoryTotal = calculateCategoryTotal(categoryKey);
 
             return (
               <div key={categoryKey} className={`mb-6 p-4 rounded ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
@@ -1010,7 +1054,9 @@ const ExpenseTracker: React.FC = () => {
                         onSave={updateExpense}
                         onCancel={() => {
                           setEditingExpenseId(null);
-                          editingExpenseRef.current = null;
+                          setTimeout(() => {
+                            window.scrollTo(0, scrollPositionRef.current);
+                          }, 0);
                         }}
                       />
                     ) : (
@@ -1033,7 +1079,7 @@ const ExpenseTracker: React.FC = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => {
-                              editingExpenseRef.current = expense.id;
+                              scrollPositionRef.current = window.pageYOffset;
                               setEditingExpenseId(expense.id);
                             }}
                             className={`p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-200'}`}
