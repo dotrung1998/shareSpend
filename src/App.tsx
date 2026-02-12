@@ -30,11 +30,13 @@ const translations = {
     totalExpenses: "Total Expenses:",
     downloadCSV: "Download CSV",
     importFile: "Import file",
-    uploadInvoice: "Upload Invoice (PDF)",
+    importInvoice: "Import Invoice (PDF)",
     exampleItem: "e.g., Coffee",
     amountExample: "e.g., 10",
     requiredFieldsWarning: "Please fill out this field.",
     categoryTotal: "Category Total:",
+    invoiceParseSuccess: "Invoice imported successfully!",
+    invoiceParseError: "Failed to parse invoice. Please check the file format.",
     monthNames: [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -44,6 +46,52 @@ const translations = {
       groceries: "Groceries",
       furniture: "Furniture",
       other: "Other"
+    }
+  },
+  fr: {
+    sharedExpenseTracker: "Gestionnaire de dépenses partagées",
+    manageCategories: "Gérer les catégories",
+    currentCategories: "Catégories actuelles",
+    addCategory: "Ajouter une catégorie",
+    categoryName: "Nom de la catégorie",
+    enterCategoryName: "Entrez le nom de la catégorie",
+    categoryIcon: "Icône de catégorie",
+    categoryNote: "Description/Note de la catégorie",
+    categoryNotePlaceholder: "Ajouter une note pour la catégorie",
+    delete: "Supprimer",
+    edit: "Éditer",
+    cancel: "Annuler",
+    save: "Enregistrer",
+    enterCustomIcon: "Entrez une icône personnalisée",
+    addExpense: "Ajouter une dépense(s)",
+    descriptionInputLabel: "Description (séparez plusieurs entrées avec ';' ou '+')",
+    amountInputLabel: "Montant (séparez plusieurs entrées avec ';' ou '+')",
+    expenseDateLabel: "Date de dépense (mois et année)",
+    currencyLabel: "Devise",
+    categoryLabel: "Catégorie",
+    primaryCurrencyLabel: "Devise principale",
+    batchEditSelected: "Modifier en lot les dépenses sélectionnées",
+    applyChanges: "Appliquer les modifications aux dépenses sélectionnées",
+    noExpensesYet: "Aucune dépense ajoutée. Commencez par ajouter votre première dépense !",
+    totalExpenses: "Total des dépenses :",
+    downloadCSV: "Télécharger CSV",
+    importFile: "Importer un fichier",
+    importInvoice: "Importer une facture (PDF)",
+    exampleItem: "ex. Café",
+    amountExample: "ex. 10",
+    requiredFieldsWarning: "Veuillez remplir ce champ.",
+    categoryTotal: "Total de la catégorie:",
+    invoiceParseSuccess: "Facture importée avec succès !",
+    invoiceParseError: "Échec de l'analyse de la facture. Veuillez vérifier le format du fichier.",
+    monthNames: [
+      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ],
+    categories: {
+      eating: "Restaurant",
+      groceries: "Épicerie",
+      furniture: "Mobilier",
+      other: "Autre"
     }
   },
   de: {
@@ -74,11 +122,13 @@ const translations = {
     totalExpenses: "Gesamtausgaben:",
     downloadCSV: "CSV herunterladen",
     importFile: "Datei importieren",
-    uploadInvoice: "Rechnung hochladen (PDF)",
+    importInvoice: "Rechnung importieren (PDF)",
     exampleItem: "z.B. Kaffee",
     amountExample: "z.B. 10",
     requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
     categoryTotal: "Kategorien Gesamt:",
+    invoiceParseSuccess: "Rechnung erfolgreich importiert!",
+    invoiceParseError: "Fehler beim Parsen der Rechnung. Bitte überprüfen Sie das Dateiformat.",
     monthNames: [
       "Januar", "Februar", "März", "April", "Mai", "Juni",
       "Juli", "August", "September", "Oktober", "November", "Dezember"
@@ -118,11 +168,13 @@ const translations = {
     totalExpenses: "Tổng Chi Phí:",
     downloadCSV: "Tải xuống CSV",
     importFile: "Nhập tệp",
-    uploadInvoice: "Tải lên hóa đơn (PDF)",
+    importInvoice: "Nhập Hóa Đơn (PDF)",
     exampleItem: "vd: Cà phê",
     amountExample: "vd: 10000",
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
     categoryTotal: "Tổng danh mục:",
+    invoiceParseSuccess: "Nhập hóa đơn thành công!",
+    invoiceParseError: "Không thể phân tích hóa đơn. Vui lòng kiểm tra định dạng tệp.",
     monthNames: [
       "Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu",
       "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"
@@ -132,50 +184,6 @@ const translations = {
       groceries: "Tạp hóa",
       furniture: "Đồ nội thất",
       other: "Khác"
-    }
-  },
-  fr: {
-    sharedExpenseTracker: "Gestionnaire de dépenses partagées",
-    manageCategories: "Gérer les catégories",
-    currentCategories: "Catégories actuelles",
-    addCategory: "Ajouter une catégorie",
-    categoryName: "Nom de la catégorie",
-    enterCategoryName: "Entrez le nom de la catégorie",
-    categoryIcon: "Icône de catégorie",
-    categoryNote: "Description/Note de la catégorie",
-    categoryNotePlaceholder: "Ajouter une note pour la catégorie",
-    delete: "Supprimer",
-    edit: "Éditer",
-    cancel: "Annuler",
-    save: "Enregistrer",
-    enterCustomIcon: "Entrez une icône personnalisée",
-    addExpense: "Ajouter une dépense(s)",
-    descriptionInputLabel: "Description (séparez plusieurs entrées avec ';' ou '+')",
-    amountInputLabel: "Montant (séparez plusieurs entrées avec ';' ou '+')",
-    expenseDateLabel: "Date de dépense (mois et année)",
-    currencyLabel: "Devise",
-    categoryLabel: "Catégorie",
-    primaryCurrencyLabel: "Devise principale",
-    batchEditSelected: "Modifier en lot les dépenses sélectionnées",
-    applyChanges: "Appliquer les modifications aux dépenses sélectionnées",
-    noExpensesYet: "Aucune dépense ajoutée. Commencez par ajouter votre première dépense !",
-    totalExpenses: "Total des dépenses :",
-    downloadCSV: "Télécharger CSV",
-    importFile: "Importer un fichier",
-    uploadInvoice: "Télécharger facture (PDF)",
-    exampleItem: "ex. Café",
-    amountExample: "ex. 10",
-    requiredFieldsWarning: "Veuillez remplir ce champ.",
-    categoryTotal: "Total de la catégorie:",
-    monthNames: [
-      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-    ],
-    categories: {
-      eating: "Restaurant",
-      groceries: "Épicerie",
-      furniture: "Mobilier",
-      other: "Autre"
     }
   },
   zh: {
@@ -206,11 +214,13 @@ const translations = {
     totalExpenses: "总支出：",
     downloadCSV: "下载 CSV",
     importFile: "导入文件",
-    uploadInvoice: "上传发票 (PDF)",
+    importInvoice: "导入发票 (PDF)",
     exampleItem: "例如：咖啡",
     amountExample: "例如：10",
     requiredFieldsWarning: "请填写此字段。",
     categoryTotal: "类别总计:",
+    invoiceParseSuccess: "发票导入成功！",
+    invoiceParseError: "无法解析发票。请检查文件格式。",
     monthNames: [
       "一月", "二月", "三月", "四月", "五月", "六月",
       "七月", "八月", "九月", "十月", "十一月", "十二月"
@@ -250,11 +260,13 @@ const translations = {
     totalExpenses: "総経費：",
     downloadCSV: "CSVをダウンロード",
     importFile: "ファイルをインポート",
-    uploadInvoice: "請求書をアップロード (PDF)",
+    importInvoice: "請求書をインポート (PDF)",
     exampleItem: "例：コーヒー",
     amountExample: "例：10",
     requiredFieldsWarning: "このフィールドに入力してください。",
     categoryTotal: "カテゴリ合計:",
+    invoiceParseSuccess: "請求書のインポートに成功しました！",
+    invoiceParseError: "請求書の解析に失敗しました。ファイル形式を確認してください。",
     monthNames: [
       "1月", "2月", "3月", "4月", "5月", "6月",
       "7月", "8月", "9月", "10月", "11月", "12月"
@@ -272,8 +284,23 @@ const getTranslatedCategory = (key: string, defaultName: string, t: any) => {
   return t.categories && t.categories[key] ? t.categories[key] : defaultName;
 };
 
+interface Expense {
+  id: number;
+  description: string;
+  amount: number;
+  currency: string;
+  category: string;
+  date: string;
+}
+
+interface Category {
+  name: string;
+  icon: string;
+  note: string;
+}
+
 const ExpenseTracker = () => {
-  const [expenses, setExpenses] = useState<any[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const currentDate = new Date();
@@ -281,7 +308,7 @@ const ExpenseTracker = () => {
   const [expenseMonth, setExpenseMonth] = useState((currentDate.getMonth() + 1).toString().padStart(2, "0"));
   const [currency, setCurrency] = useState("EUR");
   const [category, setCategory] = useState("eating");
-  const [categories, setCategories] = useState<any>({
+  const [categories, setCategories] = useState<Record<string, Category>>({
     eating: { name: translations.en.categories.eating, icon: "🍽️", note: "" },
     groceries: { name: translations.en.categories.groceries, icon: "🛒", note: "" },
     furniture: { name: translations.en.categories.furniture, icon: "🪑", note: "" },
@@ -302,16 +329,18 @@ const ExpenseTracker = () => {
   const [buttonColor, setButtonColor] = useState("#F1C4D9");
   const [language, setLanguage] = useState("en");
 
-  // Ref to store scroll position when editing
-  const scrollPositionRef = useRef<number>(0);
+  // NEW: Store scroll positions for expense rows
+  const editingScrollPositionRef = useRef<number | null>(null);
+  const expenseRowRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   const t = translations[language as keyof typeof translations];
 
+  // Update default categories names based on language selection
   useEffect(() => {
-    setCategories((prev: any) => {
+    setCategories(prev => {
       const updated = { ...prev };
       Object.keys(updated).forEach(key => {
-        updated[key].name = (t.categories as any)[key] || updated[key].name;
+        updated[key].name = t.categories[key as keyof typeof t.categories] || updated[key].name;
       });
       return updated;
     });
@@ -319,7 +348,7 @@ const ExpenseTracker = () => {
 
   const amountExampleText = currency === "VND" ? (language === "vi" ? "vd: 10000" : "10000") : t.amountExample;
 
-  const currencies: any = {
+  const currencies: Record<string, { symbol: string; rate: number }> = {
     EUR: { symbol: "€", rate: 25000 },
     USD: { symbol: "$", rate: 23000 },
     VND: { symbol: "₫", rate: 1 }
@@ -356,6 +385,7 @@ const ExpenseTracker = () => {
       alert(t.requiredFieldsWarning);
       return;
     }
+
     const expenseDate = `${expenseYear}-${expenseMonth}`;
     const rawAmountParts = amount.split(/[;+]/).map(s => s.trim()).filter(s => s !== "");
     let descriptionParts = description.split(/[;+]/).map(s => s.trim()).filter(s => s !== "");
@@ -363,9 +393,11 @@ const ExpenseTracker = () => {
     if (descriptionParts.length === 0) {
       descriptionParts = Array(rawAmountParts.length).fill("");
     }
+
     if (descriptionParts.length === 1 && rawAmountParts.length > 1) {
       descriptionParts = Array(rawAmountParts.length).fill(descriptionParts[0]);
     }
+
     if (descriptionParts.length !== rawAmountParts.length) {
       alert(t.requiredFieldsWarning);
       return;
@@ -393,7 +425,7 @@ const ExpenseTracker = () => {
   };
 
   const deleteCategory = (categoryKey: string) => {
-    setCategories((prev: any) => {
+    setCategories(prev => {
       const updated = { ...prev };
       delete updated[categoryKey];
       return updated;
@@ -408,18 +440,18 @@ const ExpenseTracker = () => {
     }
   };
 
-  // Modified updateExpense to preserve scroll position
-  const updateExpense = (updatedExpense: any) => {
-    // Save current scroll position before update
-    scrollPositionRef.current = window.pageYOffset || document.documentElement.scrollTop;
-    
+  // FIXED: updateExpense with scroll position preservation
+  const updateExpense = (updatedExpense: Expense) => {
     setExpenses(expenses.map(exp => exp.id === updatedExpense.id ? updatedExpense : exp));
     setEditingExpenseId(null);
     
-    // Restore scroll position after update
-    setTimeout(() => {
-      window.scrollTo(0, scrollPositionRef.current);
-    }, 0);
+    // Restore scroll position after state update
+    requestAnimationFrame(() => {
+      if (editingScrollPositionRef.current !== null) {
+        window.scrollTo(0, editingScrollPositionRef.current);
+        editingScrollPositionRef.current = null;
+      }
+    });
   };
 
   const applyAllBatchEdits = () => {
@@ -480,6 +512,7 @@ const ExpenseTracker = () => {
   const downloadCSV = () => {
     const csvRows: string[] = [];
     let rowIndex = 1;
+
     csvRows.push(
       ["ID", "Description", "Date", "Amount", "Currency", "Original Amount", "Category"]
         .map(escapeCSV).join(",")
@@ -520,6 +553,7 @@ const ExpenseTracker = () => {
       const expenseEnd = rowIndex - 1;
       csvRows.push(["", "", "", "", "", "", ""].join(","));
       rowIndex++;
+
       const categoryTotalFormula = `=SUM(D${expenseStart}:D${expenseEnd})`;
       csvRows.push(
         ["", t.categoryTotal, "", categoryTotalFormula, primaryCurrency, "", ""]
@@ -527,12 +561,14 @@ const ExpenseTracker = () => {
       );
       categoryTotalCellRefs.push(`D${rowIndex}`);
       rowIndex++;
+
       csvRows.push(["", "", "", "", "", "", ""].join(","));
       rowIndex++;
     });
 
     csvRows.push(["", "", "", "", "", "", ""].join(","));
     rowIndex++;
+
     const grandTotalFormula = `=SUM(${categoryTotalCellRefs.join(",")})`;
     csvRows.push(
       ["", "GRAND TOTAL:", "", grandTotalFormula, primaryCurrency, "", ""]
@@ -543,8 +579,8 @@ const ExpenseTracker = () => {
       ? convertDateToFileString(`${expenseYear}-${expenseMonth}`)
       : convertDateToFileString(new Date().toISOString().slice(0, 7));
     const fileName = `Expense_Tracker_${fileDate}.csv`;
-
     const csvString = csvRows.join("\n");
+
     const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -572,21 +608,26 @@ const ExpenseTracker = () => {
   const handleCSVUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const content = event.target?.result as string;
       const data = parseCSV(content);
-      const newExpenses: any[] = [];
+
+      const newExpenses: Expense[] = [];
       const newCategories = { ...categories };
       let currentCategoryName = "";
       let uniqueIdCounter = Date.now();
       let startRow = 0;
+
       if (data[0] && data[0][0] === "ID") {
         startRow = 1;
       }
+
       for (let i = startRow; i < data.length; i++) {
         const row = data[i];
         if (row.every(cell => cell.trim() === "")) continue;
+
         if (row[0].startsWith("CATEGORY:")) {
           currentCategoryName = row[0].split("CATEGORY:")[1].trim();
           const catKey = currentCategoryName.toLowerCase().replace(/\s+/g, "_");
@@ -595,13 +636,17 @@ const ExpenseTracker = () => {
           }
           continue;
         }
+
         if (row[1] && (row[1].includes("CATEGORY TOTAL:") || row[1].includes("GRAND TOTAL:"))) continue;
         if (row.length !== 7) continue;
+
         const expenseCategoryName = row[6] ? row[6].trim() : currentCategoryName;
         const catKey = expenseCategoryName.toLowerCase().replace(/\s+/g, "_");
+
         if (!newCategories[catKey]) {
           newCategories[catKey] = { name: expenseCategoryName, icon: "🔖", note: "" };
         }
+
         newExpenses.push({
           id: uniqueIdCounter++,
           description: row[1],
@@ -611,156 +656,109 @@ const ExpenseTracker = () => {
           category: catKey
         });
       }
+
       setExpenses(newExpenses);
       setCategories(newCategories);
     };
+
     reader.readAsText(file);
   };
 
-  // NEW: PDF Invoice parsing functionality
-  const categorizeExpense = (description: string): string => {
-    const desc = description.toLowerCase();
-    
-    // Groceries/Supermarkets
-    if (desc.includes('rewe') || desc.includes('kaufland') || desc.includes('edeka') || 
-        desc.includes('aldi') || desc.includes('lidl') || desc.includes('penny')) {
-      return 'groceries';
+  // NEW: Parse PDF Invoice (Mastercard format)
+  const parsePDFInvoice = async (file: File) => {
+    try {
+      const text = await file.text();
+      
+      // Parse invoice date
+      let invoiceMonth = expenseMonth;
+      let invoiceYear = expenseYear;
+      const dateMatch = text.match(/(\w+)\s+(\d{1,2}),?\s+(\d{4})/i);
+      if (dateMatch) {
+        const monthName = dateMatch[1];
+        const monthIndex = t.monthNames.findIndex(m => m.toLowerCase().startsWith(monthName.toLowerCase()));
+        if (monthIndex >= 0) {
+          invoiceMonth = (monthIndex + 1).toString().padStart(2, "0");
+        }
+        invoiceYear = dateMatch[3];
+      }
+
+      const invoiceDate = `${invoiceYear}-${invoiceMonth}`;
+
+      // Parse transactions
+      const transactions: Expense[] = [];
+      const lines = text.split("\n");
+      
+      let uniqueIdCounter = Date.now();
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        
+        // Pattern: Date Merchant Name Amount EUR
+        // Example: "03 Feb Amazon.de 45.99 EUR"
+        const transactionMatch = line.match(/(\d{1,2})\s+(\w{3})\s+(.+?)\s+([\d,]+\.?\d*)\s*(EUR|USD|VND)/i);
+        
+        if (transactionMatch) {
+          const day = transactionMatch[1];
+          const monthAbbr = transactionMatch[2];
+          const merchant = transactionMatch[3].trim();
+          const amountStr = transactionMatch[4].replace(/,/g, "");
+          const curr = transactionMatch[5].toUpperCase();
+          
+          const amount = parseFloat(amountStr);
+          
+          // Auto-categorize based on merchant name
+          let cat = "other";
+          const merchantLower = merchant.toLowerCase();
+          
+          if (merchantLower.includes("restaurant") || merchantLower.includes("cafe") || 
+              merchantLower.includes("pizza") || merchantLower.includes("burger") ||
+              merchantLower.includes("bistro") || merchantLower.includes("diner")) {
+            cat = "eating";
+          } else if (merchantLower.includes("supermarket") || merchantLower.includes("grocery") ||
+                     merchantLower.includes("edeka") || merchantLower.includes("rewe") ||
+                     merchantLower.includes("aldi") || merchantLower.includes("lidl")) {
+            cat = "groceries";
+          } else if (merchantLower.includes("ikea") || merchantLower.includes("furniture") ||
+                     merchantLower.includes("möbel") || merchantLower.includes("home")) {
+            cat = "furniture";
+          }
+          
+          transactions.push({
+            id: uniqueIdCounter++,
+            description: merchant,
+            amount: amount,
+            currency: curr as string,
+            category: cat,
+            date: invoiceDate
+          });
+        }
+      }
+
+      if (transactions.length > 0) {
+        setExpenses([...expenses, ...transactions]);
+        alert(t.invoiceParseSuccess);
+      } else {
+        alert(t.invoiceParseError);
+      }
+    } catch (error) {
+      console.error("Error parsing PDF:", error);
+      alert(t.invoiceParseError);
     }
-    
-    // Drugstores (can be groceries or other)
-    if (desc.includes('dm-drogerie') || desc.includes('rossmann') || desc.includes('müller')) {
-      return 'groceries';
-    }
-    
-    // Restaurants/Fast Food/Cafes
-    if (desc.includes('restaurant') || desc.includes('grill') || desc.includes('kfc') || 
-        desc.includes('mcdon') || desc.includes('burger') || desc.includes('pizza') || 
-        desc.includes('asia') || desc.includes('sushi') || desc.includes('backwerk') ||
-        desc.includes('cafe') || desc.includes('chiking') || desc.includes('gourmet') ||
-        desc.includes('sumup')) {
-      return 'eating';
-    }
-    
-    // Clothing/Fashion stores
-    if (desc.includes('tjx') || desc.includes('tkmaxx') || desc.includes('h&m') || 
-        desc.includes('zara') || desc.includes('fashion')) {
-      return 'other';
-    }
-    
-    // Pet supplies
-    if (desc.includes('fressnapf') || desc.includes('zoo')) {
-      return 'other';
-    }
-    
-    // Depot (home decoration)
-    if (desc.includes('depot')) {
-      return 'furniture';
-    }
-    
-    return 'other';
   };
 
-  const handlePDFUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    try {
-      // Import pdf.js
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const typedArray = new Uint8Array(event.target?.result as ArrayBuffer);
-        const pdf = await pdfjsLib.getDocument(typedArray).promise;
-        
-        let fullText = '';
-        for (let i = 1; i <= pdf.numPages; i++) {
-          const page = await pdf.getPage(i);
-          const textContent = await page.getTextContent();
-          const pageText = textContent.items.map((item: any) => item.str).join(' ');
-          fullText += pageText + '\n';
-        }
-
-        // Parse the invoice text
-        const lines = fullText.split('\n').map(line => line.trim()).filter(line => line);
-        const newExpenses: any[] = [];
-        let invoiceDate = '';
-        let invoiceCurrency = 'EUR';
-        
-        // Extract date from invoice (looking for pattern like "04.01.2026 bis 03.02.2026")
-        for (const line of lines) {
-          const dateMatch = line.match(/(\d{2})\.(\d{2})\.(\d{4})\s+bis\s+(\d{2})\.(\d{2})\.(\d{4})/);
-          if (dateMatch) {
-            // Use the end date
-            const year = dateMatch[6];
-            const month = dateMatch[5];
-            invoiceDate = `${year}-${month}`;
-            break;
-          }
-        }
-
-        // Parse expense lines (pattern: date, description, location, amount)
-        let uniqueId = Date.now();
-        let isInTransactionSection = false;
-        
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i];
-          
-          // Check if we're in the transaction section
-          if (line.includes('Datum') && line.includes('Beschreibung') && line.includes('Betrag')) {
-            isInTransactionSection = true;
-            continue;
-          }
-          
-          // Skip header rows and special rows
-          if (line.includes('ALTER SALDO') || line.includes('NEUER SALDO') || 
-              line.includes('EINZAHLUNG') || line.includes('SOLLZINSEN') || 
-              line.includes('Mindestbetrag')) {
-            continue;
-          }
-          
-          // Match transaction line pattern: DD.MM.YYYY followed by description and amount
-          const transactionMatch = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(.+?)\s+([A-Za-z\s]+?)\s+(\d+[,.]?\d*)\s*$/);
-          if (transactionMatch && isInTransactionSection) {
-            const [, date, desc, location, amountStr] = transactionMatch;
-            const amount = parseFloat(amountStr.replace(',', '.'));
-            
-            if (!isNaN(amount) && amount > 0) {
-              const description = `${desc.trim()} - ${location.trim()}`;
-              const autoCategory = categorizeExpense(description);
-              
-              newExpenses.push({
-                id: uniqueId++,
-                description: description,
-                amount: amount,
-                currency: invoiceCurrency,
-                category: autoCategory,
-                date: invoiceDate || `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}`
-              });
-            }
-          }
-        }
-
-        if (newExpenses.length > 0) {
-          setExpenses([...expenses, ...newExpenses]);
-          alert(`${newExpenses.length} expenses imported from PDF invoice!`);
-        } else {
-          alert('No expenses found in the PDF. Please check the file format.');
-        }
-      };
-
-      reader.readAsArrayBuffer(file);
-    } catch (error) {
-      console.error('Error parsing PDF:', error);
-      alert('Error reading PDF file. Please try again or use CSV import instead.');
+    if (file.type === "application/pdf") {
+      await parsePDFInvoice(file);
+    } else {
+      alert(t.invoiceParseError);
     }
-
-    // Reset file input
-    e.target.value = '';
   };
 
-  const InlineEditExpense = ({ expense, onSave, onCancel }: any) => {
+  // FIXED: InlineEditExpense with scroll position capture
+  const InlineEditExpense = ({ expense, onSave, onCancel }: { expense: Expense; onSave: (exp: Expense) => void; onCancel: () => void }) => {
     const [editData, setEditData] = useState({
       description: expense.description,
       amount: expense.amount.toString(),
@@ -769,574 +767,797 @@ const ExpenseTracker = () => {
       date: expense.date || ""
     });
 
-    const handleSave = () => {
-      const cleanAmountStr = editData.amount.replace(",", ".");
-      onSave({
-        ...expense,
-        description: editData.description,
-        amount: parseFloat(cleanAmountStr),
-        currency: editData.currency,
-        category: editData.category,
-        date: editData.date
-      });
-    };
+    // Capture scroll position before entering edit mode
+    useEffect(() => {
+      editingScrollPositionRef.current = window.scrollY;
+    }, []);
 
     return (
-      <div className={`p-3 ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded`}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+      <div
+        className={
+          isDarkMode
+            ? "bg-gray-700 text-white border border-gray-600"
+            : "bg-gray-100 text-gray-900 border border-gray-200"
+        }
+        style={{ padding: "1rem", borderRadius: "0.5rem", marginBottom: "0.5rem" }}
+      >
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.75rem" }}>
           <input
             type="text"
             value={editData.description}
-            onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-            className={`w-full px-2 py-1 border rounded ${isDarkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+            onChange={e => setEditData({ ...editData, description: e.target.value })}
+            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
             placeholder="Description"
           />
           <input
             type="text"
             value={editData.amount}
-            onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
-            className={`w-full px-2 py-1 border rounded ${isDarkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+            onChange={e => setEditData({ ...editData, amount: e.target.value })}
+            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
             placeholder="Amount"
           />
           <select
             value={editData.currency}
-            onChange={(e) => setEditData({ ...editData, currency: e.target.value })}
-            className={`w-full px-2 py-1 border rounded ${isDarkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+            onChange={e => setEditData({ ...editData, currency: e.target.value })}
+            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
           >
-            {Object.keys(currencies).map(curr => (
-              <option key={curr} value={curr}>{curr}</option>
+            {Object.entries(currencies).map(([code, { symbol }]) => (
+              <option key={code} value={code}>
+                {code} {symbol}
+              </option>
             ))}
           </select>
           <select
             value={editData.category}
-            onChange={(e) => setEditData({ ...editData, category: e.target.value })}
-            className={`w-full px-2 py-1 border rounded ${isDarkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+            onChange={e => setEditData({ ...editData, category: e.target.value })}
+            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
           >
-            {Object.entries(categories).map(([key, cat]: any) => (
+            {Object.entries(categories).map(([key, { icon, name }]) => (
               <option key={key} value={key}>
-                {cat.icon} {getTranslatedCategory(key, cat.name, t)}
+                {icon} {getTranslatedCategory(key, name, t)}
               </option>
             ))}
           </select>
           <input
             type="month"
             value={editData.date}
-            onChange={(e) => setEditData({ ...editData, date: e.target.value })}
-            className={`w-full px-2 py-1 border rounded ${isDarkMode ? 'bg-gray-600 border-gray-500 text-white' : 'bg-white border-gray-300'}`}
+            onChange={e => setEditData({ ...editData, date: e.target.value })}
+            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
           />
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={handleSave}
-            style={{ backgroundColor: buttonColor }}
-            className="px-3 py-1 rounded hover:opacity-80 text-sm"
-          >
-            {t.save}
-          </button>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "0.5rem" }}>
           <button
             onClick={onCancel}
-            className={`px-3 py-1 rounded text-sm ${isDarkMode ? 'bg-gray-600 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`}
+            className="px-3 py-1 border rounded text-red-500 hover:bg-red-50"
           >
             {t.cancel}
+          </button>
+          <button
+            onClick={() =>
+              onSave({
+                ...expense,
+                ...editData,
+                amount: parseFloat(editData.amount)
+              })
+            }
+            style={{ backgroundColor: buttonColor }}
+            className="px-3 py-1 text-white rounded hover:opacity-90"
+          >
+            {t.save}
           </button>
         </div>
       </div>
     );
   };
 
-  return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
-      <div className="max-w-6xl mx-auto p-4">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">{t.sharedExpenseTracker}</h1>
-          <div className="flex items-center gap-4">
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className={`px-3 py-2 rounded border ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'}`}
-            >
-              <option value="en">English</option>
-              <option value="de">Deutsch</option>
-              <option value="vi">Tiếng Việt</option>
-              <option value="fr">Français</option>
-              <option value="zh">中文</option>
-              <option value="ja">日本語</option>
-            </select>
+  const CategorySection = ({ categoryKey }: { categoryKey: string }) => {
+    const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+    if (categoryExpenses.length === 0) return null;
+
+    const allSelected = categoryExpenses.every(exp => selectedExpenseIds.includes(exp.id));
+    const total = categoryExpenses.reduce(
+      (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
+      0
+    );
+
+    return (
+      <div className="mb-8 relative">
+        <h2 className="text-2xl font-bold mb-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={allSelected}
+              onChange={() => toggleSelectAllInCategory(categoryKey)}
+              className="h-5 w-5"
+            />
+            <span>
+              {categories[categoryKey].icon} {getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}
+            </span>
+          </div>
+          <div className="flex gap-2">
             <button
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className={`p-2 rounded ${isDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-200'}`}
+              onClick={() =>
+                setEditingCategory({
+                  key: categoryKey,
+                  name: categories[categoryKey].name,
+                  icon: categories[categoryKey].icon,
+                  note: categories[categoryKey].note
+                })
+              }
+              className="group relative"
             >
-              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              <Edit2 className="h-5 w-5 text-blue-500" />
+              <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-blue-500 opacity-0 group-hover:opacity-100 z-50">
+                {t.edit}
+              </span>
+            </button>
+            <button onClick={() => deleteExpensesByCategory(categoryKey)} className="group relative">
+              <Trash2 className="h-5 w-5 text-red-500" />
+              <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-red-500 opacity-0 group-hover:opacity-100 z-50">
+                {t.delete}
+              </span>
             </button>
           </div>
-        </div>
+        </h2>
+        <div className="space-y-2">
+          {categoryExpenses.map(expense => {
+            if (editingExpenseId === expense.id) {
+              return (
+                <InlineEditExpense
+                  key={expense.id}
+                  expense={expense}
+                  onSave={updateExpense}
+                  onCancel={() => setEditingExpenseId(null)}
+                />
+              );
+            }
 
-        {/* Add Expense Form */}
-        <div className={`p-6 rounded-lg shadow-md mb-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <h2 className="text-xl font-semibold mb-4">{t.addExpense}</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block mb-1 text-sm font-medium">{t.descriptionInputLabel}</label>
+            return (
+              <div
+                key={expense.id}
+                ref={el => (expenseRowRefs.current[expense.id] = el)}
+                className={
+                  isDarkMode
+                    ? "bg-gray-800 text-white border border-gray-600"
+                    : "bg-gray-50 text-gray-900 border border-gray-200"
+                }
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "min-content 1fr 120px min-content",
+                  alignItems: "center",
+                  gap: "1rem",
+                  padding: "1rem",
+                  borderRadius: "0.5rem",
+                  marginBottom: "0.5rem",
+                  boxShadow: "0 1px 2px rgba(0,0,0,0.05)"
+                }}
+              >
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={selectedExpenseIds.includes(expense.id)}
+                    onChange={() => toggleSelectExpense(expense.id)}
+                    className="h-5 w-5"
+                  />
+                </div>
+                <div>
+                  <span className="text-lg">{expense.description}</span>
+                  {!expense.description && (
+                    <em className={isDarkMode ? "text-gray-300" : "text-gray-400"}>No description</em>
+                  )}
+                </div>
+                <div className="text-right font-mono">
+                  <div className="font-semibold">{formatCurrency(expense.amount, expense.currency)}</div>
+                  <div className="text-sm">
+                    {formatCurrency(convertAmountTo(expense.amount, expense.currency, primaryCurrency), primaryCurrency)}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      editingScrollPositionRef.current = window.scrollY;
+                      setEditingExpenseId(expense.id);
+                    }}
+                    className="group relative"
+                  >
+                    <Edit2 className="h-5 w-5 text-blue-500" />
+                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-blue-500 opacity-0 group-hover:opacity-100 z-50">
+                      {t.edit}
+                    </span>
+                  </button>
+                  <button onClick={() => deleteExpense(expense.id)} className="group relative">
+                    <Trash2 className="h-5 w-5 text-red-500" />
+                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-red-500 opacity-0 group-hover:opacity-100 z-50">
+                      {t.delete}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-4 text-right">
+          <div className={isDarkMode ? "text-white" : "text-gray-900"} style={{ fontWeight: "bold", fontSize: "1.125rem" }}>
+            {t.categoryTotal}
+          </div>
+          <div className={isDarkMode ? "text-white" : "text-gray-900"} style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+            {formatCurrency(total, primaryCurrency)}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const handleCategoryIconChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (value === "custom") {
+      setShowCustomIconModal(true);
+      setNewCategory({ ...newCategory, icon: "" });
+    } else {
+      setNewCategory({ ...newCategory, icon: value });
+    }
+  };
+
+  const handleCustomIconOk = () => {
+    if (customIcon.trim()) {
+      setNewCategory({ ...newCategory, icon: customIcon });
+    }
+    setCustomIcon("");
+    setShowCustomIconModal(false);
+  };
+
+  const handleCustomIconCancel = () => {
+    setCustomIcon("");
+    setShowCustomIconModal(false);
+  };
+
+  const handleEditCategoryIconChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    if (value === "custom") {
+      setShowEditCategoryCustomIconModal(true);
+      setEditingCategoryCustomIcon("");
+    } else {
+      setEditingCategory({ ...editingCategory, icon: value });
+    }
+  };
+
+  const handleEditCategoryCustomIconOk = () => {
+    if (editingCategoryCustomIcon.trim()) {
+      setEditingCategory({ ...editingCategory, icon: editingCategoryCustomIcon });
+    }
+    setEditingCategoryCustomIcon("");
+    setShowEditCategoryCustomIconModal(false);
+  };
+
+  const handleEditCategoryCustomIconCancel = () => {
+    setEditingCategoryCustomIcon("");
+    setShowEditCategoryCustomIconModal(false);
+  };
+
+  const saveEditedCategory = () => {
+    const { key, name, icon, note } = editingCategory;
+    setCategories(prev => ({ ...prev, [key]: { name, icon, note } }));
+    setEditingCategory(null);
+  };
+
+  const descriptionAmountContainerClass = "flex gap-4 items-end";
+  const fixedFieldClass = "flex-1";
+  const inputSelectClass =
+    "w-full p-3 rounded-xl border " +
+    (isDarkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white text-gray-900");
+
+  const currentYear = currentDate.getFullYear();
+  const years: string[] = [];
+  for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+    years.push(y.toString());
+  }
+
+  return (
+    <div
+      className={
+        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+      }
+      style={{ minHeight: "100vh", padding: "1.5rem", transition: "colors 500ms" }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+        <div
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className="relative w-16 h-8 bg-gray-200 dark:bg-gray-600 rounded-full cursor-pointer"
+        >
+          <div
+            className="absolute top-1 transition-all duration-300 w-6 h-6 bg-white rounded-full"
+            style={{ left: isDarkMode ? "calc(100% - 1.75rem)" : "0.25rem" }}
+          />
+          <div className="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
+            <Moon className="w-4 h-4 text-gray-700" />
+            <Sun className="w-4 h-4 text-yellow-500" />
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <label htmlFor="buttonColorPicker" className="text-sm font-medium">
+            Button Color
+          </label>
+          <input
+            id="buttonColorPicker"
+            type="color"
+            value={buttonColor}
+            onChange={e => setButtonColor(e.target.value)}
+            className="w-8 h-8 rounded border p-0 cursor-pointer"
+          />
+        </div>
+        <select
+          value={language}
+          onChange={e => setLanguage(e.target.value)}
+          className={inputSelectClass}
+          style={{ width: "auto" }}
+        >
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="zh">中文</option>
+          <option value="ja">日本語</option>
+        </select>
+      </div>
+
+      <div style={{ maxWidth: "48rem", margin: "0 auto" }}>
+        <div
+          className={isDarkMode ? "bg-gray-800" : "bg-white"}
+          style={{ borderRadius: "1rem", boxShadow: "0 4px 6px rgba(0,0,0,0.1)", padding: "1.5rem", marginBottom: "1.5rem", transition: "colors" }}
+        >
+          <h1 className="text-2xl font-bold mb-6 text-center">{t.sharedExpenseTracker}</h1>
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div className={descriptionAmountContainerClass}>
+              <div className={fixedFieldClass}>
+                <label className="block text-sm font-medium mb-2">{t.descriptionInputLabel}</label>
                 <input
                   type="text"
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={e => setDescription(e.target.value)}
+                  className={inputSelectClass}
                   placeholder={t.exampleItem}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
                   required
+                  onInvalid={e => (e.target as HTMLInputElement).setCustomValidity(t.requiredFieldsWarning)}
+                  onInput={e => (e.target as HTMLInputElement).setCustomValidity("")}
                 />
               </div>
-              <div>
-                <label className="block mb-1 text-sm font-medium">{t.amountInputLabel}</label>
+              <div className={fixedFieldClass}>
+                <label className="block text-sm font-medium mb-2">{t.amountInputLabel}</label>
                 <input
                   type="text"
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={e => setAmount(e.target.value)}
+                  className={inputSelectClass}
                   placeholder={amountExampleText}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
                   required
+                  onInvalid={e => (e.target as HTMLInputElement).setCustomValidity(t.requiredFieldsWarning)}
+                  onInput={e => (e.target as HTMLInputElement).setCustomValidity("")}
                 />
               </div>
-              <div>
-                <label className="block mb-1 text-sm font-medium">{t.expenseDateLabel}</label>
-                <input
-                  type="month"
-                  value={`${expenseYear}-${expenseMonth}`}
-                  onChange={(e) => {
-                    const [year, month] = e.target.value.split("-");
-                    setExpenseYear(year);
-                    setExpenseMonth(month);
-                  }}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-                />
-              </div>
-              <div>
-                <label className="block mb-1 text-sm font-medium">{t.currencyLabel}</label>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">{t.expenseDateLabel}</label>
+              <div className="flex gap-4">
                 <select
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                  value={expenseMonth}
+                  onChange={e => setExpenseMonth(e.target.value.padStart(2, "0"))}
+                  className={inputSelectClass}
                 >
-                  {Object.keys(currencies).map(curr => (
-                    <option key={curr} value={curr}>{curr}</option>
+                  {t.monthNames.map((month, index) => (
+                    <option key={index} value={(index + 1).toString().padStart(2, "0")}>
+                      {month}
+                    </option>
                   ))}
                 </select>
-              </div>
-              <div>
-                <label className="block mb-1 text-sm font-medium">{t.categoryLabel}</label>
                 <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                  value={expenseYear}
+                  onChange={e => setExpenseYear(e.target.value)}
+                  className={inputSelectClass}
                 >
-                  {Object.entries(categories).map(([key, cat]: any) => (
-                    <option key={key} value={key}>
-                      {cat.icon} {getTranslatedCategory(key, cat.name, t)}
+                  {years.map((yr, index) => (
+                    <option key={index} value={yr}>
+                      {yr}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+              <div>
+                <label className="block text-sm font-medium mb-2">{t.currencyLabel}</label>
+                <select
+                  value={currency}
+                  onChange={e => setCurrency(e.target.value)}
+                  className={inputSelectClass}
+                >
+                  {Object.entries(currencies).map(([code, { symbol }]) => (
+                    <option key={code} value={code}>
+                      {code} {symbol}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">{t.categoryLabel}</label>
+                <select
+                  value={category}
+                  onChange={e => setCategory(e.target.value)}
+                  className={inputSelectClass}
+                >
+                  {Object.entries(categories).map(([key, { icon, name }]) => (
+                    <option key={key} value={key}>
+                      {icon} {getTranslatedCategory(key, name, t)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">{t.primaryCurrencyLabel}</label>
+                <select
+                  value={primaryCurrency}
+                  onChange={e => setPrimaryCurrency(e.target.value)}
+                  className={inputSelectClass}
+                >
+                  {Object.entries(currencies).map(([code, { symbol }]) => (
+                    <option key={code} value={code}>
+                      {code} {symbol}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <button
               type="submit"
               style={{ backgroundColor: buttonColor }}
-              className="w-full py-2 rounded hover:opacity-80 font-medium"
+              className="w-full p-3 rounded-xl text-white font-medium transition-all duration-200 hover:opacity-90"
             >
               {t.addExpense}
             </button>
           </form>
         </div>
 
-        {/* Import/Export Section */}
-        <div className={`p-6 rounded-lg shadow-md mb-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <div className="flex flex-wrap gap-4">
-            <div>
-              <label className="block mb-1 text-sm font-medium">{t.primaryCurrencyLabel}</label>
-              <select
-                value={primaryCurrency}
-                onChange={(e) => setPrimaryCurrency(e.target.value)}
-                className={`px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-              >
-                {Object.keys(currencies).map(curr => (
-                  <option key={curr} value={curr}>{curr}</option>
-                ))}
-              </select>
-            </div>
-            <div className="flex gap-2 items-end">
-              <button
-                onClick={downloadCSV}
-                style={{ backgroundColor: buttonColor }}
-                className="px-4 py-2 rounded hover:opacity-80 flex items-center gap-2"
-              >
-                <Upload size={18} />
-                {t.downloadCSV}
-              </button>
-              <label className={`px-4 py-2 rounded cursor-pointer flex items-center gap-2 ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}>
-                <Upload size={18} />
-                {t.importFile}
+        <div
+          className={isDarkMode ? "bg-gray-800" : "bg-white"}
+          style={{ borderRadius: "1rem", boxShadow: "0 4px 6px rgba(0,0,0,0.1)", padding: "1.5rem", marginBottom: "1.5rem", transition: "colors" }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+            <h2 className="text-xl font-bold">{t.manageCategories}</h2>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {/* CSV Upload */}
+              <div className="group relative">
                 <input
+                  id="file-upload"
                   type="file"
                   accept=".csv"
                   onChange={handleCSVUpload}
                   className="hidden"
                 />
-              </label>
-              <label className={`px-4 py-2 rounded cursor-pointer flex items-center gap-2 ${isDarkMode ? 'bg-blue-700 hover:bg-blue-600' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}>
-                <FileText size={18} />
-                {t.uploadInvoice}
+                <label htmlFor="file-upload" className="cursor-pointer">
+                  <Upload className="h-6 w-6 text-gray-500 dark:text-gray-300" />
+                  <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-gray-500 dark:text-gray-200 opacity-0 group-hover:opacity-100 z-50">
+                    {t.importFile}
+                  </span>
+                </label>
+              </div>
+
+              {/* NEW: Invoice Upload */}
+              <div className="group relative">
                 <input
+                  id="invoice-upload"
                   type="file"
                   accept=".pdf"
-                  onChange={handlePDFUpload}
+                  onChange={handleInvoiceUpload}
                   className="hidden"
                 />
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* Category Management */}
-        <details className={`p-6 rounded-lg shadow-md mb-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <summary className="text-xl font-semibold cursor-pointer">{t.manageCategories}</summary>
-          <div className="mt-4 space-y-4">
-            <div>
-              <h3 className="font-medium mb-2">{t.currentCategories}</h3>
-              <div className="space-y-2">
-                {Object.entries(categories).map(([key, cat]: any) => (
-                  <div key={key} className={`flex items-center justify-between p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                    <span>{cat.icon} {getTranslatedCategory(key, cat.name, t)}</span>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => setEditingCategory({ key, ...cat })}
-                        className={`p-1 rounded ${isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
-                      >
-                        <Edit2 size={16} />
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (window.confirm(`Delete category "${getTranslatedCategory(key, cat.name, t)}" and all its expenses?`)) {
-                            deleteExpensesByCategory(key);
-                            deleteCategory(key);
-                          }
-                        }}
-                        className={`p-1 rounded ${isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                <label htmlFor="invoice-upload" className="cursor-pointer">
+                  <FileText className="h-6 w-6 text-green-500 dark:text-green-400" />
+                  <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-green-500 dark:text-green-400 opacity-0 group-hover:opacity-100 z-50 whitespace-nowrap">
+                    {t.importInvoice}
+                  </span>
+                </label>
               </div>
             </div>
-            
-            <div>
-              <h3 className="font-medium mb-2">{t.addCategory}</h3>
-              <div className="space-y-2">
+          </div>
+
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              if (!newCategory.name.trim()) {
+                alert(t.requiredFieldsWarning);
+                return;
+              }
+              const id = newCategory.name.toLowerCase().replace(/\s+/g, "_");
+              setCategories({ ...categories, [id]: { name: newCategory.name, icon: newCategory.icon || "📦", note: newCategory.note } });
+              setNewCategory({ name: "", icon: "", note: "" });
+            }}
+            className="space-y-4"
+          >
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              <div>
+                <label className="block text-sm font-medium mb-2">{t.categoryName}</label>
                 <input
                   type="text"
                   value={newCategory.name}
-                  onChange={(e) => setNewCategory({ ...newCategory, name: e.target.value })}
+                  onChange={e => setNewCategory({ ...newCategory, name: e.target.value })}
+                  className={inputSelectClass}
                   placeholder={t.enterCategoryName}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
+                  required
+                  onInvalid={e => (e.target as HTMLInputElement).setCustomValidity(t.requiredFieldsWarning)}
+                  onInput={e => (e.target as HTMLInputElement).setCustomValidity("")}
                 />
-                <button
-                  onClick={() => setShowCustomIconModal(true)}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-white border-gray-300 hover:bg-gray-50'}`}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">{t.categoryIcon}</label>
+                <select
+                  value={newCategory.icon}
+                  onChange={handleCategoryIconChange}
+                  className={inputSelectClass}
                 >
-                  {newCategory.icon || t.categoryIcon}
-                </button>
+                  {["🍽️", "🛒", "🪑", "📦", "🚗", "🏠", "💻", "🎮", "📚"].map((emoji, idx) => (
+                    <option key={idx} value={emoji}>
+                      {emoji}
+                    </option>
+                  ))}
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-4">
+              <label className="block text-sm font-medium mb-2">{t.categoryNote}</label>
+              <textarea
+                value={newCategory.note}
+                onChange={e => setNewCategory({ ...newCategory, note: e.target.value })}
+                className={inputSelectClass}
+                placeholder={t.categoryNotePlaceholder}
+                rows={2}
+              />
+            </div>
+            <button
+              type="submit"
+              style={{ backgroundColor: buttonColor }}
+              className="w-full p-3 rounded-xl text-white font-medium transition-all duration-200 hover:opacity-90"
+            >
+              {t.addCategory}
+            </button>
+          </form>
+
+          {showCustomIconModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+              <div
+                className={isDarkMode ? "bg-gray-800" : "bg-white"}
+                style={{ padding: "1.5rem", borderRadius: "0.75rem", boxShadow: "0 10px 25px rgba(0,0,0,0.2)", maxWidth: "24rem", width: "100%", transition: "colors" }}
+              >
+                <h3 className="text-lg font-bold mb-4">{t.enterCustomIcon}</h3>
+                <input
+                  type="text"
+                  value={customIcon}
+                  onChange={e => setCustomIcon(e.target.value)}
+                  className={inputSelectClass + " mb-4"}
+                  placeholder="Type your icon here"
+                />
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>
+                  <button
+                    onClick={handleCustomIconCancel}
+                    className="px-4 py-2 text-red-500 border border-red-500 rounded-lg font-medium"
+                  >
+                    {t.cancel}
+                  </button>
+                  <button
+                    onClick={handleCustomIconOk}
+                    style={{ backgroundColor: buttonColor }}
+                    className="px-4 py-2 text-white rounded-lg font-medium hover:opacity-90"
+                  >
+                    {t.save}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold mb-2">{t.currentCategories}</h3>
+            <ul>
+              {Object.entries(categories).map(([key, { icon, name, note }]) => (
+                <li key={key} style={{ display: "flex", flexDirection: "column", border: "1px solid", padding: "0.5rem", borderRadius: "0.5rem", marginBottom: "0.5rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span>
+                      {icon} {getTranslatedCategory(key, name, t)}
+                    </span>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <button
+                        onClick={() => setEditingCategory({ key, name, icon, note })}
+                        className="group relative"
+                      >
+                        <Edit2 className="h-5 w-5 text-blue-500" />
+                        <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-blue-500 opacity-0 group-hover:opacity-100 z-50">
+                          {t.edit}
+                        </span>
+                      </button>
+                      <button onClick={() => deleteCategory(key)} className="group relative">
+                        <Trash2 className="h-5 w-5 text-red-500" />
+                        <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs text-red-500 opacity-0 group-hover:opacity-100 z-50">
+                          {t.delete}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  {note && <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">{note}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {editingCategory && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
+            <div
+              className={isDarkMode ? "bg-gray-800" : "bg-white"}
+              style={{ padding: "1.5rem", borderRadius: "0.75rem", boxShadow: "0 10px 25px rgba(0,0,0,0.2)", maxWidth: "24rem", width: "100%", transition: "colors" }}
+            >
+              <h3 className="text-lg font-bold mb-4">
+                {t.edit} {t.categoryName}
+              </h3>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">{t.categoryName}</label>
+                <input
+                  type="text"
+                  value={editingCategory.name}
+                  onChange={e => setEditingCategory({ ...editingCategory, name: e.target.value })}
+                  className={inputSelectClass}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">{t.categoryIcon}</label>
+                <select
+                  value={editingCategory.icon}
+                  onChange={handleEditCategoryIconChange}
+                  className={inputSelectClass}
+                >
+                  {["🍽️", "🛒", "🪑", "📦", "🚗", "🏠", "💻", "🎮", "📚"].map((emoji, idx) => (
+                    <option key={idx} value={emoji}>
+                      {emoji}
+                    </option>
+                  ))}
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">{t.categoryNote}</label>
                 <textarea
-                  value={newCategory.note}
-                  onChange={(e) => setNewCategory({ ...newCategory, note: e.target.value })}
+                  value={editingCategory.note}
+                  onChange={e => setEditingCategory({ ...editingCategory, note: e.target.value })}
+                  className={inputSelectClass}
                   placeholder={t.categoryNotePlaceholder}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
                   rows={2}
                 />
+              </div>
+              {showEditCategoryCustomIconModal && (
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    value={editingCategoryCustomIcon}
+                    onChange={e => setEditingCategoryCustomIcon(e.target.value)}
+                    className={inputSelectClass}
+                    placeholder="Type your icon here"
+                  />
+                  <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "0.5rem" }}>
+                    <button
+                      onClick={handleEditCategoryCustomIconCancel}
+                      className="px-4 py-2 text-red-500 border border-red-500 rounded-lg font-medium"
+                    >
+                      {t.cancel}
+                    </button>
+                    <button
+                      onClick={handleEditCategoryCustomIconOk}
+                      style={{ backgroundColor: buttonColor }}
+                      className="px-4 py-2 text-white rounded-lg font-medium hover:opacity-90"
+                    >
+                      {t.save}
+                    </button>
+                  </div>
+                </div>
+              )}
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>
                 <button
-                  onClick={() => {
-                    if (newCategory.name && newCategory.icon) {
-                      const key = newCategory.name.toLowerCase().replace(/\s+/g, "_");
-                      setCategories({ ...categories, [key]: newCategory });
-                      setNewCategory({ name: "", icon: "", note: "" });
-                    }
-                  }}
-                  style={{ backgroundColor: buttonColor }}
-                  className="w-full py-2 rounded hover:opacity-80"
+                  onClick={() => setEditingCategory(null)}
+                  className="px-4 py-2 border rounded text-red-500 hover:bg-red-50"
                 >
-                  {t.addCategory}
+                  {t.cancel}
+                </button>
+                <button
+                  onClick={saveEditedCategory}
+                  style={{ backgroundColor: buttonColor }}
+                  className="px-4 py-2 text-white rounded hover:opacity-90"
+                >
+                  {t.save}
                 </button>
               </div>
             </div>
           </div>
-        </details>
+        )}
 
-        {/* Batch Edit Section */}
         {selectedExpenseIds.length > 0 && (
-          <div className={`p-6 rounded-lg shadow-md mb-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-            <h3 className="text-lg font-semibold mb-3">{t.batchEditSelected} ({selectedExpenseIds.length})</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                value={batchEditDescription}
-                onChange={(e) => setBatchEditDescription(e.target.value)}
-                placeholder="New description"
-                className={`px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-              />
-              <select
-                value={batchEditCategory}
-                onChange={(e) => setBatchEditCategory(e.target.value)}
-                className={`px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-              >
-                <option value="">Select new category</option>
-                {Object.entries(categories).map(([key, cat]: any) => (
-                  <option key={key} value={key}>
-                    {cat.icon} {getTranslatedCategory(key, cat.name, t)}
-                  </option>
-                ))}
-              </select>
+          <div
+            className={isDarkMode ? "bg-gray-800" : "bg-white"}
+            style={{ borderRadius: "1rem", boxShadow: "0 4px 6px rgba(0,0,0,0.1)", padding: "1.5rem", marginBottom: "1.5rem", transition: "colors" }}
+          >
+            <h2 className="text-xl font-bold mb-4">
+              {t.batchEditSelected} ({selectedExpenseIds.length})
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div>
+                <label className="block text-sm font-medium mb-2">Update Description</label>
+                <input
+                  type="text"
+                  value={batchEditDescription}
+                  onChange={e => setBatchEditDescription(e.target.value)}
+                  className={inputSelectClass}
+                  placeholder="Enter new description"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Update Category</label>
+                <select
+                  value={batchEditCategory}
+                  onChange={e => setBatchEditCategory(e.target.value)}
+                  className={inputSelectClass}
+                >
+                  <option value="">-- Select new category --</option>
+                  {Object.entries(categories).map(([key, { icon, name }]) => (
+                    <option key={key} value={key}>
+                      {icon} {getTranslatedCategory(key, name, t)}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <button
               onClick={applyAllBatchEdits}
               style={{ backgroundColor: buttonColor }}
-              className="w-full mt-4 py-2 rounded hover:opacity-80"
+              className="w-full p-3 rounded-xl text-white font-medium transition-all duration-200 hover:opacity-90"
+              disabled={!batchEditDescription && !batchEditCategory}
             >
               {t.applyChanges}
             </button>
           </div>
         )}
 
-        {/* Expenses List */}
-        {expenses.length === 0 ? (
-          <div className={`p-6 rounded-lg shadow-md text-center ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-            <p>{t.noExpensesYet}</p>
-          </div>
-        ) : (
-          <>
-            {Object.entries(categories).map(([categoryKey, cat]: any) => {
-              const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
-              if (categoryExpenses.length === 0) return null;
-
-              const categoryTotal = categoryExpenses.reduce(
-                (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
-                0
-              );
-
-              return (
-                <div key={categoryKey} className={`p-6 rounded-lg shadow-md mb-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold">
-                      {cat.icon} {getTranslatedCategory(categoryKey, cat.name, t)}
-                    </h3>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => toggleSelectAllInCategory(categoryKey)}
-                        className={`px-3 py-1 rounded text-sm ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-                      >
-                        Select All
-                      </button>
-                      <span className="font-medium">
-                        {t.categoryTotal} {formatCurrency(categoryTotal, primaryCurrency)}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {cat.note && (
-                    <p className={`text-sm mb-3 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                      {cat.note}
-                    </p>
-                  )}
-
-                  <div className="space-y-2">
-                    {categoryExpenses.map((exp: any) => (
-                      <div key={exp.id}>
-                        {editingExpenseId === exp.id ? (
-                          <InlineEditExpense
-                            expense={exp}
-                            onSave={updateExpense}
-                            onCancel={() => setEditingExpenseId(null)}
-                          />
-                        ) : (
-                          <div className={`flex items-center justify-between p-3 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-50'}`}>
-                            <div className="flex items-center gap-3 flex-1">
-                              <input
-                                type="checkbox"
-                                checked={selectedExpenseIds.includes(exp.id)}
-                                onChange={() => toggleSelectExpense(exp.id)}
-                                className="w-4 h-4"
-                              />
-                              <div className="flex-1">
-                                <div className="font-medium">{exp.description}</div>
-                                <div className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                                  {exp.date && convertDateToFileString(exp.date)} • {formatCurrency(exp.amount, exp.currency)}
-                                  {exp.currency !== primaryCurrency && (
-                                    <span className="ml-2">
-                                      (≈ {formatCurrency(convertAmountTo(exp.amount, exp.currency, primaryCurrency), primaryCurrency)})
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => {
-                                  scrollPositionRef.current = window.pageYOffset || document.documentElement.scrollTop;
-                                  setEditingExpenseId(exp.id);
-                                }}
-                                className={`p-2 rounded ${isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
-                              >
-                                <Edit2 size={16} />
-                              </button>
-                              <button
-                                onClick={() => deleteExpense(exp.id)}
-                                className={`p-2 rounded ${isDarkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-200'}`}
-                              >
-                                <Trash2 size={16} />
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* Grand Total */}
-            <div className={`p-6 rounded-lg shadow-md ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-              <div className="flex justify-between items-center text-xl font-bold">
-                <span>{t.totalExpenses}</span>
-                <span>{formatCurrency(calculateGrandTotal(), primaryCurrency)}</span>
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* Custom Icon Modal */}
-        {showCustomIconModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className={`p-6 rounded-lg max-w-md w-full ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-              <h3 className="text-lg font-semibold mb-4">{t.enterCustomIcon}</h3>
-              <input
-                type="text"
-                value={customIcon}
-                onChange={(e) => setCustomIcon(e.target.value)}
-                placeholder="Enter emoji or icon"
-                className={`w-full px-3 py-2 border rounded mb-4 ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-              />
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    setNewCategory({ ...newCategory, icon: customIcon });
-                    setCustomIcon("");
-                    setShowCustomIconModal(false);
-                  }}
-                  style={{ backgroundColor: buttonColor }}
-                  className="flex-1 py-2 rounded hover:opacity-80"
-                >
-                  {t.save}
-                </button>
-                <button
-                  onClick={() => {
-                    setCustomIcon("");
-                    setShowCustomIconModal(false);
-                  }}
-                  className={`flex-1 py-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-                >
-                  {t.cancel}
-                </button>
-              </div>
-            </div>
+        {expenses.length > 0 && (
+          <div className="mb-6">
+            <button
+              onClick={downloadCSV}
+              style={{ backgroundColor: buttonColor }}
+              className="w-full p-3 rounded-xl text-white font-medium transition-all duration-200 hover:opacity-90"
+            >
+              {t.downloadCSV}
+            </button>
           </div>
         )}
 
-        {/* Edit Category Modal */}
-        {editingCategory && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className={`p-6 rounded-lg max-w-md w-full ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-              <h3 className="text-lg font-semibold mb-4">{t.edit} {t.categoryName}</h3>
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  value={editingCategory.name}
-                  onChange={(e) => setEditingCategory({ ...editingCategory, name: e.target.value })}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-                />
-                <button
-                  onClick={() => setShowEditCategoryCustomIconModal(true)}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-white border-gray-300 hover:bg-gray-50'}`}
-                >
-                  {editingCategory.icon}
-                </button>
-                <textarea
-                  value={editingCategory.note}
-                  onChange={(e) => setEditingCategory({ ...editingCategory, note: e.target.value })}
-                  className={`w-full px-3 py-2 border rounded ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-                  rows={2}
-                />
-              </div>
-              <div className="flex gap-2 mt-4">
-                <button
-                  onClick={() => {
-                    const { key, ...catData } = editingCategory;
-                    setCategories({ ...categories, [key]: catData });
-                    setEditingCategory(null);
-                  }}
-                  style={{ backgroundColor: buttonColor }}
-                  className="flex-1 py-2 rounded hover:opacity-80"
-                >
-                  {t.save}
-                </button>
-                <button
-                  onClick={() => setEditingCategory(null)}
-                  className={`flex-1 py-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-                >
-                  {t.cancel}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <div
+          className={isDarkMode ? "bg-gray-800" : "bg-white"}
+          style={{ borderRadius: "1rem", boxShadow: "0 4px 6px rgba(0,0,0,0.1)", padding: "1.5rem", transition: "colors" }}
+        >
+          {Object.keys(categories).map(categoryKey => (
+            <CategorySection key={categoryKey} categoryKey={categoryKey} />
+          ))}
 
-        {/* Edit Category Icon Modal */}
-        {showEditCategoryCustomIconModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className={`p-6 rounded-lg max-w-md w-full ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-              <h3 className="text-lg font-semibold mb-4">{t.enterCustomIcon}</h3>
-              <input
-                type="text"
-                value={editingCategoryCustomIcon}
-                onChange={(e) => setEditingCategoryCustomIcon(e.target.value)}
-                placeholder="Enter emoji or icon"
-                className={`w-full px-3 py-2 border rounded mb-4 ${isDarkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'}`}
-              />
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    setEditingCategory({ ...editingCategory, icon: editingCategoryCustomIcon });
-                    setEditingCategoryCustomIcon("");
-                    setShowEditCategoryCustomIconModal(false);
-                  }}
-                  style={{ backgroundColor: buttonColor }}
-                  className="flex-1 py-2 rounded hover:opacity-80"
-                >
-                  {t.save}
-                </button>
-                <button
-                  onClick={() => {
-                    setEditingCategoryCustomIcon("");
-                    setShowEditCategoryCustomIconModal(false);
-                  }}
-                  className={`flex-1 py-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-                >
-                  {t.cancel}
-                </button>
+          {expenses.length > 0 && (
+            <div className="mt-8 pt-8 border-t-2">
+              <div className="text-right">
+                <h2 className="text-3xl font-bold mb-2">{t.totalExpenses}</h2>
+                <div className="text-2xl font-bold">{formatCurrency(calculateGrandTotal(), primaryCurrency)}</div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+
+          {expenses.length === 0 && (
+            <div className="text-center py-8 text-gray-500">{t.noExpensesYet}</div>
+          )}
+        </div>
       </div>
     </div>
   );
