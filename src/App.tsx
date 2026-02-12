@@ -30,23 +30,108 @@ const translations = {
     totalExpenses: "Total Expenses:",
     downloadCSV: "Download CSV",
     importFile: "Import file",
-    importInvoice: "Import Invoice (PDF)",
+    uploadInvoice: "Upload Invoice (PDF/Image)",
     exampleItem: "e.g., Coffee",
     amountExample: "e.g., 10",
     requiredFieldsWarning: "Please fill out this field.",
     categoryTotal: "Category Total:",
-    invoiceParseSuccess: "Invoice imported successfully!",
-    invoiceParseError:
-      "Failed to parse invoice. This PDF format is not supported in the browser. Please export CSV from your bank instead.",
     monthNames: [
-      "January","February","March","April","May","June",
-      "July","August","September","October","November","December"
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
     ],
     categories: {
       eating: "Eating in the restaurant",
       groceries: "Groceries",
       furniture: "Furniture",
       other: "Other"
+    }
+  },
+  fr: {
+    sharedExpenseTracker: "Gestionnaire de dépenses partagées",
+    manageCategories: "Gérer les catégories",
+    currentCategories: "Catégories actuelles",
+    addCategory: "Ajouter une catégorie",
+    categoryName: "Nom de la catégorie",
+    enterCategoryName: "Entrez le nom de la catégorie",
+    categoryIcon: "Icône de catégorie",
+    categoryNote: "Description/Note de la catégorie",
+    categoryNotePlaceholder: "Ajouter une note pour la catégorie",
+    delete: "Supprimer",
+    edit: "Éditer",
+    cancel: "Annuler",
+    save: "Enregistrer",
+    enterCustomIcon: "Entrez une icône personnalisée",
+    addExpense: "Ajouter une dépense(s)",
+    descriptionInputLabel: "Description (séparez plusieurs entrées avec ';' ou '+')",
+    amountInputLabel: "Montant (séparez plusieurs entrées avec ';' ou '+')",
+    expenseDateLabel: "Date de dépense (mois et année)",
+    currencyLabel: "Devise",
+    categoryLabel: "Catégorie",
+    primaryCurrencyLabel: "Devise principale",
+    batchEditSelected: "Modifier en lot les dépenses sélectionnées",
+    applyChanges: "Appliquer les modifications aux dépenses sélectionnées",
+    noExpensesYet: "Aucune dépense ajoutée. Commencez par ajouter votre première dépense !",
+    totalExpenses: "Total des dépenses :",
+    downloadCSV: "Télécharger CSV",
+    importFile: "Importer un fichier",
+    uploadInvoice: "Télécharger Facture (PDF/Image)",
+    exampleItem: "ex. Café",
+    amountExample: "ex. 10",
+    requiredFieldsWarning: "Veuillez remplir ce champ.",
+    categoryTotal: "Total de la catégorie:",
+    monthNames: [
+      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ],
+    categories: {
+      eating: "Restaurant",
+      groceries: "Épicerie",
+      furniture: "Mobilier",
+      other: "Autre"
+    }
+  },
+  de: {
+    sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
+    manageCategories: "Kategorien verwalten",
+    currentCategories: "Aktuelle Kategorien",
+    addCategory: "Kategorie hinzufügen",
+    categoryName: "Kategoriename",
+    enterCategoryName: "Kategoriename eingeben",
+    categoryIcon: "Kategorensymbol",
+    categoryNote: "Kategoriebeschreibung/Notiz",
+    categoryNotePlaceholder: "Fügen Sie der Kategorie eine Notiz hinzu",
+    delete: "Löschen",
+    edit: "Bearbeiten",
+    cancel: "Abbrechen",
+    save: "Speichern",
+    enterCustomIcon: "Benutzerdefiniertes Symbol eingeben",
+    addExpense: "Ausgabe(n) hinzufügen",
+    descriptionInputLabel: "Beschreibung (mehrere Einträge mit ';' oder '+' trennen)",
+    amountInputLabel: "Betrag (mehrere Einträge mit ';' oder '+' trennen)",
+    expenseDateLabel: "Ausgabedatum (Monat und Jahr)",
+    currencyLabel: "Währung",
+    categoryLabel: "Kategorie",
+    primaryCurrencyLabel: "Hauptwährung",
+    batchEditSelected: "Ausgewählte Ausgaben Stapelbearbeitung",
+    applyChanges: "Änderungen auf ausgewählte Ausgaben anwenden",
+    noExpensesYet: "Noch keine Ausgaben hinzugefügt. Beginnen Sie mit der ersten Ausgabe!",
+    totalExpenses: "Gesamtausgaben:",
+    downloadCSV: "CSV herunterladen",
+    importFile: "Datei importieren",
+    uploadInvoice: "Rechnung hochladen (PDF/Bild)",
+    exampleItem: "z.B. Kaffee",
+    amountExample: "z.B. 10",
+    requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
+    categoryTotal: "Kategorien Gesamt:",
+    monthNames: [
+      "Januar", "Februar", "März", "April", "Mai", "Juni",
+      "Juli", "August", "September", "Oktober", "November", "Dezember"
+    ],
+    categories: {
+      eating: "Restaurant",
+      groceries: "Lebensmittel",
+      furniture: "Möbel",
+      other: "Andere"
     }
   },
   vi: {
@@ -77,17 +162,14 @@ const translations = {
     totalExpenses: "Tổng Chi Phí:",
     downloadCSV: "Tải xuống CSV",
     importFile: "Nhập tệp",
-    importInvoice: "Nhập Hóa Đơn (PDF)",
+    uploadInvoice: "Tải lên Hóa đơn (PDF/Hình)",
     exampleItem: "vd: Cà phê",
     amountExample: "vd: 10000",
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
     categoryTotal: "Tổng danh mục:",
-    invoiceParseSuccess: "Nhập hóa đơn thành công!",
-    invoiceParseError:
-      "Không thể đọc nội dung PDF này trên trình duyệt. Vui lòng xuất CSV từ ngân hàng hoặc dùng bản sao text.",
     monthNames: [
-      "Tháng Một","Tháng Hai","Tháng Ba","Tháng Tư","Tháng Năm","Tháng Sáu",
-      "Tháng Bảy","Tháng Tám","Tháng Chín","Tháng Mười","Tháng Mười Một","Tháng Mười Hai"
+      "Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu",
+      "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"
     ],
     categories: {
       eating: "Ăn tại nhà hàng",
@@ -95,8 +177,95 @@ const translations = {
       furniture: "Đồ nội thất",
       other: "Khác"
     }
+  },
+  zh: {
+    sharedExpenseTracker: "共享支出跟踪器",
+    manageCategories: "管理类别",
+    currentCategories: "当前类别",
+    addCategory: "添加类别",
+    categoryName: "类别名称",
+    enterCategoryName: "输入类别名称",
+    categoryIcon: "类别图标",
+    categoryNote: "类别描述/备注",
+    categoryNotePlaceholder: "为类别添加备注",
+    delete: "删除",
+    edit: "编辑",
+    cancel: "取消",
+    save: "保存",
+    enterCustomIcon: "输入自定义图标",
+    addExpense: "添加支出",
+    descriptionInputLabel: "描述（使用';'或'+'分隔多个条目）",
+    amountInputLabel: "金额（使用';'或'+'分隔多个条目）",
+    expenseDateLabel: "支出日期（月和年）",
+    currencyLabel: "货币",
+    categoryLabel: "类别",
+    primaryCurrencyLabel: "主要货币",
+    batchEditSelected: "批量编辑所选支出",
+    applyChanges: "应用更改到所选支出",
+    noExpensesYet: "尚未添加任何支出。开始添加您的第一个支出！",
+    totalExpenses: "总支出：",
+    downloadCSV: "下载 CSV",
+    importFile: "导入文件",
+    uploadInvoice: "上传发票 (PDF/图片)",
+    exampleItem: "例如：咖啡",
+    amountExample: "例如：10",
+    requiredFieldsWarning: "请填写此字段。",
+    categoryTotal: "类别总计:",
+    monthNames: [
+      "一月", "二月", "三月", "四月", "五月", "六月",
+      "七月", "八月", "九月", "十月", "十一月", "十二月"
+    ],
+    categories: {
+      eating: "餐饮",
+      groceries: "杂货",
+      furniture: "家具",
+      other: "其他"
+    }
+  },
+  ja: {
+    sharedExpenseTracker: "共通経費トラッカー",
+    manageCategories: "カテゴリ管理",
+    currentCategories: "現在のカテゴリ",
+    addCategory: "カテゴリを追加",
+    categoryName: "カテゴリ名",
+    enterCategoryName: "カテゴリ名を入力",
+    categoryIcon: "カテゴリアイコン",
+    categoryNote: "カテゴリ説明/メモ",
+    categoryNotePlaceholder: "カテゴリーにメモを追加",
+    delete: "削除",
+    edit: "編集",
+    cancel: "キャンセル",
+    save: "保存",
+    enterCustomIcon: "カスタムアイコンを入力",
+    addExpense: "経費を追加",
+    descriptionInputLabel: "説明（';' または '+' で複数エントリを区切る）",
+    amountInputLabel: "金額（';' または '+' で複数エントリを区切る）",
+    expenseDateLabel: "経費日付（月と年）",
+    currencyLabel: "通貨",
+    categoryLabel: "カテゴリ",
+    primaryCurrencyLabel: "主要通貨",
+    batchEditSelected: "選択した経費を一括編集",
+    applyChanges: "選択した経費に変更を適用",
+    noExpensesYet: "まだ経費が追加されていません。最初の経費を追加してください！",
+    totalExpenses: "総経費：",
+    downloadCSV: "CSVをダウンロード",
+    importFile: "ファイルをインポート",
+    uploadInvoice: "請求書をアップロード (PDF/画像)",
+    exampleItem: "例：コーヒー",
+    amountExample: "例：10",
+    requiredFieldsWarning: "このフィールドに入力してください。",
+    categoryTotal: "カテゴリ合計:",
+    monthNames: [
+      "1月", "2月", "3月", "4月", "5月", "6月",
+      "7月", "8月", "9月", "10月", "11月", "12月"
+    ],
+    categories: {
+      eating: "レストランでの食事",
+      groceries: "食料品",
+      furniture: "家具",
+      other: "その他"
+    }
   }
-  // (giữ nguyên các ngôn ngữ khác nếu anh/chị cần – để code ngắn tôi chỉ giữ en + vi)
 };
 
 const getTranslatedCategory = (key: string, defaultName: string, t: any) => {
@@ -124,9 +293,7 @@ const ExpenseTracker: React.FC = () => {
   const [description, setDescription] = useState("");
   const currentDate = new Date();
   const [expenseYear, setExpenseYear] = useState(currentDate.getFullYear().toString());
-  const [expenseMonth, setExpenseMonth] = useState(
-    (currentDate.getMonth() + 1).toString().padStart(2, "0")
-  );
+  const [expenseMonth, setExpenseMonth] = useState((currentDate.getMonth() + 1).toString().padStart(2, "0"));
   const [currency, setCurrency] = useState("EUR");
   const [category, setCategory] = useState("eating");
   const [categories, setCategories] = useState<Record<string, Category>>({
@@ -135,7 +302,7 @@ const ExpenseTracker: React.FC = () => {
     furniture: { name: translations.en.categories.furniture, icon: "🪑", note: "" },
     other: { name: translations.en.categories.other, icon: "📦", note: "" }
   });
-  const [newCategory, setNewCategory] = useState({ name: "", icon: "📦", note: "" });
+  const [newCategory, setNewCategory] = useState({ name: "", icon: "", note: "" });
   const [showCustomIconModal, setShowCustomIconModal] = useState(false);
   const [customIcon, setCustomIcon] = useState("");
   const [editingCategory, setEditingCategory] = useState<any>(null);
@@ -148,12 +315,12 @@ const ExpenseTracker: React.FC = () => {
   const [batchEditCategory, setBatchEditCategory] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [buttonColor, setButtonColor] = useState("#F1C4D9");
-  const [language, setLanguage] = useState<"en" | "vi">("vi");
+  const [language, setLanguage] = useState("en");
+  
+  const expenseListRef = useRef<HTMLDivElement>(null);
+  const editingExpenseRef = useRef<number | null>(null);
 
-  // Lưu scrollY khi vào chế độ edit
-  const editScrollYRef = useRef<number | null>(null);
-
-  const t = translations[language];
+  const t = translations[language as keyof typeof translations];
 
   useEffect(() => {
     setCategories(prev => {
@@ -165,8 +332,7 @@ const ExpenseTracker: React.FC = () => {
     });
   }, [t]);
 
-  const amountExampleText =
-    currency === "VND" ? (language === "vi" ? "vd: 10000" : "10000") : t.amountExample;
+  const amountExampleText = currency === "VND" ? (language === "vi" ? "vd: 10000" : "10000") : t.amountExample;
 
   const currencies: Record<string, { symbol: string; rate: number }> = {
     EUR: { symbol: "€", rate: 25000 },
@@ -174,14 +340,29 @@ const ExpenseTracker: React.FC = () => {
     VND: { symbol: "₫", rate: 1 }
   };
 
-  const convertAmountTo = (amountValue: number, fromCurrency: string, toCurrency: string) =>
-    amountValue * (currencies[fromCurrency].rate / currencies[toCurrency].rate);
+  const convertAmountTo = (amountValue: number, fromCurrency: string, toCurrency: string) => {
+    return amountValue * (currencies[fromCurrency].rate / currencies[toCurrency].rate);
+  };
 
   const formatCurrency = (value: number, curr: string) => {
     if (curr === "VND") {
       return `₫${Math.round(value).toLocaleString("vi-VN")}`;
     }
     return `${currencies[curr].symbol}${value.toFixed(2)} ${curr}`;
+  };
+
+  const formatCurrencyForCSV = (value: number, curr: string) => {
+    if (curr === "VND") {
+      return `${Math.round(value)}`;
+    }
+    return `${value.toFixed(2)}`;
+  };
+
+  const convertDateToFileString = (dateStr: string) => {
+    if (!dateStr) return "";
+    const [year, month] = dateStr.split("-");
+    const monthNames = t.monthNames || [];
+    return monthNames[parseInt(month, 10) - 1] + " " + year;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -191,8 +372,8 @@ const ExpenseTracker: React.FC = () => {
       return;
     }
     const expenseDate = `${expenseYear}-${expenseMonth}`;
-    const rawAmountParts = amount.split(/[;+]/).map(s => s.trim()).filter(Boolean);
-    let descriptionParts = description.split(/[;+]/).map(s => s.trim()).filter(Boolean);
+    const rawAmountParts = amount.split(/[;+]/).map(s => s.trim()).filter(s => s !== "");
+    let descriptionParts = description.split(/[;+]/).map(s => s.trim()).filter(s => s !== "");
 
     if (descriptionParts.length === 0) {
       descriptionParts = Array(rawAmountParts.length).fill("");
@@ -206,18 +387,18 @@ const ExpenseTracker: React.FC = () => {
     }
 
     const newExpenses = descriptionParts.map((desc, index) => {
-      const clean = rawAmountParts[index].replace(",", ".");
+      const cleanAmountStr = rawAmountParts[index].replace(",", ".");
       return {
         id: Date.now() + index,
         description: desc,
-        amount: parseFloat(clean),
+        amount: parseFloat(cleanAmountStr),
         currency,
         category,
         date: expenseDate
       };
     });
 
-    setExpenses(prev => [...prev, ...newExpenses]);
+    setExpenses([...expenses, ...newExpenses]);
     setAmount("");
     setDescription("");
   };
@@ -235,99 +416,145 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const deleteExpense = (id: number) => {
-    setExpenses(prev => prev.filter(exp => exp.id !== id));
-    setSelectedExpenseIds(prev => prev.filter(eid => eid !== id));
+    setExpenses(expenses.filter(exp => exp.id !== id));
+    setSelectedExpenseIds(ids => ids.filter(expId => expId !== id));
     if (editingExpenseId === id) {
-      editingScrollRestore();
       setEditingExpenseId(null);
     }
   };
 
-  const editingScrollRestore = () => {
-    if (editScrollYRef.current !== null) {
-      window.scrollTo(0, editScrollYRef.current);
-      editScrollYRef.current = null;
-    }
-  };
-
   const updateExpense = (updatedExpense: Expense) => {
-    setExpenses(prev => prev.map(exp => (exp.id === updatedExpense.id ? updatedExpense : exp)));
+    setExpenses(expenses.map(exp => exp.id === updatedExpense.id ? updatedExpense : exp));
     setEditingExpenseId(null);
-    // luôn restore scroll sau khi thoát edit
-    requestAnimationFrame(editingScrollRestore);
+    editingExpenseRef.current = null;
   };
 
   const applyAllBatchEdits = () => {
-    setExpenses(prev => {
-      let updated = [...prev];
-      if (batchEditDescription.trim()) {
-        updated = updated.map(exp =>
-          selectedExpenseIds.includes(exp.id) ? { ...exp, description: batchEditDescription } : exp
-        );
-      }
-      if (batchEditCategory) {
-        updated = updated.map(exp =>
-          selectedExpenseIds.includes(exp.id) ? { ...exp, category: batchEditCategory } : exp
-        );
-      }
-      return updated;
-    });
+    let updatedExpenses = [...expenses];
+    if (batchEditDescription.trim() !== "") {
+      updatedExpenses = updatedExpenses.map(exp =>
+        selectedExpenseIds.includes(exp.id) ? { ...exp, description: batchEditDescription } : exp
+      );
+    }
+    if (batchEditCategory) {
+      updatedExpenses = updatedExpenses.map(exp =>
+        selectedExpenseIds.includes(exp.id) ? { ...exp, category: batchEditCategory } : exp
+      );
+    }
+    setExpenses(updatedExpenses);
     setBatchEditDescription("");
     setBatchEditCategory("");
     setSelectedExpenseIds([]);
   };
 
-  const calculateGrandTotal = () =>
-    expenses.reduce(
+  const calculateGrandTotal = () => {
+    return expenses.reduce(
       (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
       0
     );
+  };
 
   const toggleSelectExpense = (id: number) => {
     setSelectedExpenseIds(prev =>
-      prev.includes(id) ? prev.filter(eid => eid !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter(expId => expId !== id) : [...prev, id]
     );
   };
 
   const toggleSelectAllInCategory = (categoryKey: string) => {
-    const ids = expenses.filter(e => e.category === categoryKey).map(e => e.id);
-    const allSelected = ids.every(id => selectedExpenseIds.includes(id));
+    const categoryExpenseIds = expenses.filter(exp => exp.category === categoryKey).map(exp => exp.id);
+    const allSelected = categoryExpenseIds.every(id => selectedExpenseIds.includes(id));
     if (allSelected) {
-      setSelectedExpenseIds(prev => prev.filter(id => !ids.includes(id)));
+      setSelectedExpenseIds(prev => prev.filter(id => !categoryExpenseIds.includes(id)));
     } else {
       setSelectedExpenseIds(prev => {
-        const next = [...prev];
-        ids.forEach(id => {
-          if (!next.includes(id)) next.push(id);
+        const newSelected = [...prev];
+        categoryExpenseIds.forEach(id => {
+          if (!newSelected.includes(id)) newSelected.push(id);
         });
-        return next;
+        return newSelected;
       });
     }
   };
 
-  // ------ CSV Upload giữ nguyên logic cũ, lược bớt cho ngắn ------
-
   const escapeCSV = (field: any) => {
-    const s = field.toString();
-    if (s.includes(",") || s.includes('"') || s.includes("\n")) {
-      return '"' + s.replace(/"/g, '""') + '"';
+    const strField = field.toString();
+    if (strField.includes(",") || strField.includes('"') || strField.includes("\n")) {
+      return '"' + strField.replace(/"/g, '""') + '"';
     }
-    return s;
+    return strField;
   };
 
   const downloadCSV = () => {
-    const rows: string[] = [];
-    rows.push(
+    const csvRows: string[] = [];
+    let rowIndex = 1;
+    csvRows.push(
       ["ID", "Description", "Date", "Amount", "Currency", "Original Amount", "Category"]
-        .map(escapeCSV)
-        .join(",")
+        .map(escapeCSV).join(",")
     );
-    const fileName = "Expense_Tracker.csv";
-    const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+    rowIndex++;
+
+    const categoryTotalCellRefs: string[] = [];
+    Object.keys(categories).forEach(categoryKey => {
+      const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+      if (categoryExpenses.length === 0) return;
+
+      csvRows.push(["", "", "", "", "", "", ""].join(","));
+      rowIndex++;
+      csvRows.push(
+        [`CATEGORY: ${getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}`, "", "", "", "", "", ""]
+          .map(escapeCSV).join(",")
+      );
+      rowIndex++;
+      csvRows.push(["", "", "", "", "", "", ""].join(","));
+      rowIndex++;
+
+      const expenseStart = rowIndex;
+      categoryExpenses.forEach((exp, index) => {
+        const convertedAmount = convertAmountTo(exp.amount, exp.currency, primaryCurrency);
+        csvRows.push([
+          index + 1,
+          exp.description || "No description",
+          exp.date || "",
+          formatCurrencyForCSV(convertedAmount, primaryCurrency),
+          primaryCurrency,
+          formatCurrencyForCSV(exp.amount, exp.currency) + " " + exp.currency,
+          getTranslatedCategory(exp.category, categories[exp.category]?.name || exp.category, t)
+        ].map(escapeCSV).join(","));
+        rowIndex++;
+      });
+
+      const expenseEnd = rowIndex - 1;
+      csvRows.push(["", "", "", "", "", "", ""].join(","));
+      rowIndex++;
+      const categoryTotalFormula = `=SUM(D${expenseStart}:D${expenseEnd})`;
+      csvRows.push(
+        ["", t.categoryTotal, "", categoryTotalFormula, primaryCurrency, "", ""]
+          .map(escapeCSV).join(",")
+      );
+      categoryTotalCellRefs.push(`D${rowIndex}`);
+      rowIndex++;
+      csvRows.push(["", "", "", "", "", "", ""].join(","));
+      rowIndex++;
+    });
+
+    csvRows.push(["", "", "", "", "", "", ""].join(","));
+    rowIndex++;
+    const grandTotalFormula = `=SUM(${categoryTotalCellRefs.join(",")})`;
+    csvRows.push(
+      ["", "GRAND TOTAL:", "", grandTotalFormula, primaryCurrency, "", ""]
+        .map(escapeCSV).join(",")
+    );
+
+    const fileDate = expenseYear && expenseMonth
+      ? convertDateToFileString(`${expenseYear}-${expenseMonth}`)
+      : convertDateToFileString(new Date().toISOString().slice(0, 7));
+    const fileName = `Expense_Tracker_${fileDate}.csv`;
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = url;
-    link.download = fileName;
+    link.setAttribute("href", url);
+    link.setAttribute("download", fileName);
     link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
@@ -335,7 +562,7 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const parseCSV = (text: string) => {
-    const rows = text.split("\n").filter(r => r.trim() !== "");
+    const rows = text.split("\n").filter(row => row.trim() !== "");
     return rows.map(row =>
       row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(cell => {
         let c = cell.trim();
@@ -351,53 +578,144 @@ const ExpenseTracker: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = event => {
+    reader.onload = (event) => {
       const content = event.target?.result as string;
       const data = parseCSV(content);
       const newExpenses: Expense[] = [];
-      let idCounter = Date.now();
-      for (let i = 1; i < data.length; i++) {
+      const newCategories = { ...categories };
+      let currentCategoryName = "";
+      let uniqueIdCounter = Date.now();
+      let startRow = 0;
+
+      if (data[0] && data[0][0] === "ID") {
+        startRow = 1;
+      }
+
+      for (let i = startRow; i < data.length; i++) {
         const row = data[i];
-        if (row.length < 7) continue;
+        if (row.every(cell => cell.trim() === "")) continue;
+
+        if (row[0].startsWith("CATEGORY:")) {
+          currentCategoryName = row[0].split("CATEGORY:")[1].trim();
+          const catKey = currentCategoryName.toLowerCase().replace(/\s+/g, "_");
+          if (!newCategories[catKey]) {
+            newCategories[catKey] = { name: currentCategoryName, icon: "🔖", note: "" };
+          }
+          continue;
+        }
+
+        if (row[1] && (row[1].includes("CATEGORY TOTAL:") || row[1].includes("GRAND TOTAL:"))) continue;
+        if (row.length !== 7) continue;
+
+        const expenseCategoryName = row[6] ? row[6].trim() : currentCategoryName;
+        const catKey = expenseCategoryName.toLowerCase().replace(/\s+/g, "_");
+        if (!newCategories[catKey]) {
+          newCategories[catKey] = { name: expenseCategoryName, icon: "🔖", note: "" };
+        }
+
         newExpenses.push({
-          id: idCounter++,
+          id: uniqueIdCounter++,
           description: row[1],
           date: row[2],
           amount: parseFloat(row[3]),
           currency: row[4],
-          category: "other"
+          category: catKey
         });
       }
+
       setExpenses(newExpenses);
+      setCategories(newCategories);
     };
     reader.readAsText(file);
   };
 
-  // -------- PDF Invoice Upload: chỉ bắt lỗi format, không cố parse phức tạp --------
+  const categorizeExpense = (description: string): string => {
+    const desc = description.toLowerCase();
+    
+    if (desc.includes("rewe") || desc.includes("kaufland") || desc.includes("dm-drogerie") || 
+        desc.includes("rossmann") || desc.includes("depot") || desc.includes("penny")) {
+      return "groceries";
+    }
+    
+    if (desc.includes("restaurant") || desc.includes("kfc") || desc.includes("backwerk") || 
+        desc.includes("grill") || desc.includes("asia") || desc.includes("chiking") || 
+        desc.includes("gourmet")) {
+      return "eating";
+    }
+    
+    if (desc.includes("fressnapf") || desc.includes("pet")) {
+      return "other";
+    }
+    
+    if (desc.includes("tjxeurope") || desc.includes("furniture") || desc.includes("möbel")) {
+      return "furniture";
+    }
+    
+    return "other";
+  };
 
   const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.type !== "application/pdf") {
-      alert(t.invoiceParseError);
-      return;
-    }
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const content = event.target?.result as string;
+      
+      try {
+        const lines = content.split('\n');
+        const newExpenses: Expense[] = [];
+        let uniqueIdCounter = Date.now();
+        let invoiceDate = `${expenseYear}-${expenseMonth}`;
 
-    try {
-      // Browser thông thường không đọc text PDF chuẩn được, nên ta chỉ báo rõ cho user.
-      // Anh/chị nên: mở PDF -> copy bảng giao dịch ra file .txt hoặc .csv -> dùng CSV import.
-      alert(t.invoiceParseError);
-    } catch {
-      alert(t.invoiceParseError);
-    }
+        const dateMatch = content.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+        if (dateMatch) {
+          const [, day, month, year] = dateMatch;
+          invoiceDate = `${year}-${month}`;
+        }
+
+        const transactionPattern = /(\d{2}\.\d{2}\.\d{4})\s+([^\d]+?)\s+([\d,]+)\s*$/gm;
+        let match;
+
+        while ((match = transactionPattern.exec(content)) !== null) {
+          const [, date, desc, amountStr] = match;
+          const description = desc.trim();
+          const amount = parseFloat(amountStr.replace(',', '.'));
+
+          if (description && amount && !description.includes('SALDO') && 
+              !description.includes('EINZAHLUNG') && !description.includes('SOLLZINSEN')) {
+            
+            const categoryKey = categorizeExpense(description);
+            
+            newExpenses.push({
+              id: uniqueIdCounter++,
+              description: description,
+              date: invoiceDate,
+              amount: amount,
+              currency: "EUR",
+              category: categoryKey
+            });
+          }
+        }
+
+        if (newExpenses.length > 0) {
+          setExpenses(prev => [...prev, ...newExpenses]);
+          alert(`Successfully imported ${newExpenses.length} transactions from invoice!`);
+        } else {
+          alert("No transactions found in the invoice. Please check the file format.");
+        }
+      } catch (error) {
+        console.error("Error parsing invoice:", error);
+        alert("Error parsing invoice. Please check the file format.");
+      }
+    };
+
+    reader.readAsText(file);
   };
-
-  // -------- Inline Edit giữ scroll --------
 
   const InlineEditExpense: React.FC<{
     expense: Expense;
-    onSave: (e: Expense) => void;
+    onSave: (expense: Expense) => void;
     onCancel: () => void;
   }> = ({ expense, onSave, onCancel }) => {
     const [editData, setEditData] = useState({
@@ -408,806 +726,361 @@ const ExpenseTracker: React.FC = () => {
       date: expense.date || ""
     });
 
+    const handleSave = () => {
+      const [year, month] = editData.date.split("-");
+      onSave({
+        ...expense,
+        description: editData.description,
+        amount: parseFloat(editData.amount.replace(",", ".")),
+        currency: editData.currency,
+        category: editData.category,
+        date: editData.date
+      });
+    };
+
     return (
-      <div
-        className={
-          isDarkMode
-            ? "bg-gray-700 text-white border border-gray-600 p-4 rounded-lg mb-2"
-            : "bg-gray-100 text-gray-900 border border-gray-200 p-4 rounded-lg mb-2"
-        }
-      >
-        <div className="grid grid-cols-5 gap-3">
-          <input
-            type="text"
-            value={editData.description}
-            onChange={e => setEditData({ ...editData, description: e.target.value })}
-            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
-            placeholder="Description"
-          />
-          <input
-            type="text"
-            value={editData.amount}
-            onChange={e => setEditData({ ...editData, amount: e.target.value })}
-            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
-            placeholder="Amount"
-          />
-          <select
-            value={editData.currency}
-            onChange={e => setEditData({ ...editData, currency: e.target.value })}
-            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
-          >
-            {Object.entries(currencies).map(([code, { symbol }]) => (
-              <option key={code} value={code}>
-                {code} {symbol}
-              </option>
-            ))}
-          </select>
-          <select
-            value={editData.category}
-            onChange={e => setEditData({ ...editData, category: e.target.value })}
-            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
-          >
-            {Object.entries(categories).map(([key, { icon, name }]) => (
-              <option key={key} value={key}>
-                {icon} {getTranslatedCategory(key, name, t)}
-              </option>
-            ))}
-          </select>
-          <input
-            type="month"
-            value={editData.date}
-            onChange={e => setEditData({ ...editData, date: e.target.value })}
-            className="w-full p-2 rounded border bg-white dark:bg-gray-600 dark:text-white"
-          />
-        </div>
-        <div className="flex justify-end gap-3 mt-2">
+      <div className={`p-3 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+        <input
+          type="text"
+          value={editData.description}
+          onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+          className={`w-full p-2 mb-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+          placeholder="Description"
+        />
+        <input
+          type="text"
+          value={editData.amount}
+          onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
+          className={`w-full p-2 mb-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+          placeholder="Amount"
+        />
+        <select
+          value={editData.currency}
+          onChange={(e) => setEditData({ ...editData, currency: e.target.value })}
+          className={`w-full p-2 mb-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+        >
+          <option value="EUR">EUR</option>
+          <option value="USD">USD</option>
+          <option value="VND">VND</option>
+        </select>
+        <select
+          value={editData.category}
+          onChange={(e) => setEditData({ ...editData, category: e.target.value })}
+          className={`w-full p-2 mb-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+        >
+          {Object.keys(categories).map(catKey => (
+            <option key={catKey} value={catKey}>
+              {categories[catKey].icon} {getTranslatedCategory(catKey, categories[catKey].name, t)}
+            </option>
+          ))}
+        </select>
+        <input
+          type="month"
+          value={editData.date}
+          onChange={(e) => setEditData({ ...editData, date: e.target.value })}
+          className={`w-full p-2 mb-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+        />
+        <div className="flex gap-2">
           <button
-            onClick={() => {
-              onCancel();
-              requestAnimationFrame(editingScrollRestore);
-            }}
-            className="px-3 py-1 border rounded text-red-500 hover:bg-red-50"
-          >
-            {t.cancel}
-          </button>
-          <button
-            onClick={() =>
-              onSave({
-                ...expense,
-                ...editData,
-                amount: parseFloat(editData.amount)
-              })
-            }
+            onClick={handleSave}
+            className="flex-1 p-2 rounded"
             style={{ backgroundColor: buttonColor }}
-            className="px-3 py-1 text-white rounded hover:opacity-90"
           >
             {t.save}
           </button>
+          <button
+            onClick={onCancel}
+            className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
+          >
+            {t.cancel}
+          </button>
         </div>
       </div>
     );
   };
-
-  const CategorySection: React.FC<{ categoryKey: string }> = ({ categoryKey }) => {
-    const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
-    if (categoryExpenses.length === 0) return null;
-
-    const allSelected = categoryExpenses.every(exp => selectedExpenseIds.includes(exp.id));
-    const total = categoryExpenses.reduce(
-      (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
-      0
-    );
-
-    return (
-      <div className="mb-8 relative">
-        <h2 className="text-2xl font-bold mb-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={allSelected}
-              onChange={() => toggleSelectAllInCategory(categoryKey)}
-              className="h-5 w-5"
-            />
-            <span>
-              {categories[categoryKey].icon}{" "}
-              {getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}
-            </span>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() =>
-                setEditingCategory({
-                  key: categoryKey,
-                  name: categories[categoryKey].name,
-                  icon: categories[categoryKey].icon,
-                  note: categories[categoryKey].note
-                })
-              }
-              className="group relative"
-            >
-              <Edit2 className="h-5 w-5 text-blue-500" />
-            </button>
-            <button
-              onClick={() => deleteExpensesByCategory(categoryKey)}
-              className="group relative"
-            >
-              <Trash2 className="h-5 w-5 text-red-500" />
-            </button>
-          </div>
-        </h2>
-        <div className="space-y-2">
-          {categoryExpenses.map(expense =>
-            editingExpenseId === expense.id ? (
-              <InlineEditExpense
-                key={expense.id}
-                expense={expense}
-                onSave={updateExpense}
-                onCancel={() => {
-                  setEditingExpenseId(null);
-                  requestAnimationFrame(editingScrollRestore);
-                }}
-              />
-            ) : (
-              <div
-                key={expense.id}
-                className={
-                  isDarkMode
-                    ? "bg-gray-800 text-white border border-gray-600 grid grid-cols-[min-content,1fr,120px,min-content] items-center gap-4 p-4 rounded-lg mb-2 shadow-sm"
-                    : "bg-gray-50 text-gray-900 border border-gray-200 grid grid-cols-[min-content,1fr,120px,min-content] items-center gap-4 p-4 rounded-lg mb-2 shadow-sm"
-                }
-              >
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={selectedExpenseIds.includes(expense.id)}
-                    onChange={() => toggleSelectExpense(expense.id)}
-                    className="h-5 w-5"
-                  />
-                </div>
-                <div>
-                  <span className="text-lg">{expense.description}</span>
-                  {!expense.description && (
-                    <em className={isDarkMode ? "text-gray-300" : "text-gray-400"}>
-                      No description
-                    </em>
-                  )}
-                </div>
-                <div className="text-right font-mono">
-                  <div className="font-semibold">
-                    {formatCurrency(expense.amount, expense.currency)}
-                  </div>
-                  <div className="text-sm">
-                    {formatCurrency(
-                      convertAmountTo(expense.amount, expense.currency, primaryCurrency),
-                      primaryCurrency
-                    )}
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      editScrollYRef.current = window.scrollY;
-                      setEditingExpenseId(expense.id);
-                    }}
-                    className="group relative"
-                  >
-                    <Edit2 className="h-5 w-5 text-blue-500" />
-                  </button>
-                  <button
-                    onClick={() => deleteExpense(expense.id)}
-                    className="group relative"
-                  >
-                    <Trash2 className="h-5 w-5 text-red-500" />
-                  </button>
-                </div>
-              </div>
-            )
-          )}
-        </div>
-        <div className="mt-4 text-right">
-          <div className="text-lg font-bold">{t.categoryTotal}</div>
-          <div className="text-xl font-bold">
-            {formatCurrency(total, primaryCurrency)}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const currentYear = currentDate.getFullYear();
-  const years: string[] = [];
-  for (let y = currentYear - 5; y <= currentYear + 5; y++) years.push(y.toString());
-
-  const inputSelectClass =
-    "w-full p-3 rounded-xl border " +
-    (isDarkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white text-gray-900");
 
   return (
-    <div
-      className={isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"}
-      style={{ minHeight: "100vh", padding: "1.5rem" }}
-    >
-      <div className="flex justify-between items-center mb-8">
-        <div
-          onClick={() => setIsDarkMode(!isDarkMode)}
-          className="relative w-16 h-8 bg-gray-200 dark:bg-gray-600 rounded-full cursor-pointer"
-        >
-          <div
-            className="absolute top-1 transition-all duration-300 w-6 h-6 bg-white rounded-full"
-            style={{ left: isDarkMode ? "calc(100% - 1.75rem)" : "0.25rem" }}
-          />
-          <div className="absolute inset-0 flex items-center justify-between px-2 pointer-events-none">
-            <Moon className="w-4 h-4 text-gray-700" />
-            <Sun className="w-4 h-4 text-yellow-500" />
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <label htmlFor="buttonColorPicker" className="text-sm font-medium">
-            Button Color
-          </label>
-          <input
-            id="buttonColorPicker"
-            type="color"
-            value={buttonColor}
-            onChange={e => setButtonColor(e.target.value)}
-            className="w-8 h-8 rounded border p-0 cursor-pointer"
-          />
-        </div>
-        <select
-          value={language}
-          onChange={e => setLanguage(e.target.value as "en" | "vi")}
-          className={inputSelectClass + " w-auto"}
-        >
-          <option value="en">English</option>
-          <option value="vi">Tiếng Việt</option>
-        </select>
-      </div>
-
-      <div className="max-w-3xl mx-auto">
-        {/* Form add expense */}
-        <div
-          className={isDarkMode ? "bg-gray-800" : "bg-white"}
-          style={{ borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.5rem" }}
-        >
-          <h1 className="text-2xl font-bold mb-6 text-center">
-            {t.sharedExpenseTracker}
-          </h1>
-          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-            <div className="flex gap-4 items-end">
-              <div className="flex-1">
-                <label className="block text-sm font-medium mb-2">
-                  {t.descriptionInputLabel}
-                </label>
-                <input
-                  type="text"
-                  value={description}
-                  onChange={e => setDescription(e.target.value)}
-                  className={inputSelectClass}
-                  placeholder={t.exampleItem}
-                  required
-                />
-              </div>
-              <div className="flex-1">
-                <label className="block text-sm font-medium mb-2">
-                  {t.amountInputLabel}
-                </label>
-                <input
-                  type="text"
-                  value={amount}
-                  onChange={e => setAmount(e.target.value)}
-                  className={inputSelectClass}
-                  placeholder={amountExampleText}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
-                {t.expenseDateLabel}
-              </label>
-              <div className="flex gap-4">
-                <select
-                  value={expenseMonth}
-                  onChange={e => setExpenseMonth(e.target.value.padStart(2, "0"))}
-                  className={inputSelectClass}
-                >
-                  {t.monthNames.map((m: string, i: number) => (
-                    <option key={i} value={(i + 1).toString().padStart(2, "0")}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={expenseYear}
-                  onChange={e => setExpenseYear(e.target.value)}
-                  className={inputSelectClass}
-                >
-                  {years.map((y, i) => (
-                    <option key={i} value={y}>
-                      {y}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.currencyLabel}
-                </label>
-                <select
-                  value={currency}
-                  onChange={e => setCurrency(e.target.value)}
-                  className={inputSelectClass}
-                >
-                  {Object.entries(currencies).map(([code, { symbol }]) => (
-                    <option key={code} value={code}>
-                      {code} {symbol}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.categoryLabel}
-                </label>
-                <select
-                  value={category}
-                  onChange={e => setCategory(e.target.value)}
-                  className={inputSelectClass}
-                >
-                  {Object.entries(categories).map(([key, { icon, name }]) => (
-                    <option key={key} value={key}>
-                      {icon} {getTranslatedCategory(key, name, t)}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.primaryCurrencyLabel}
-                </label>
-                <select
-                  value={primaryCurrency}
-                  onChange={e => setPrimaryCurrency(e.target.value)}
-                  className={inputSelectClass}
-                >
-                  {Object.entries(currencies).map(([code, { symbol }]) => (
-                    <option key={code} value={code}>
-                      {code} {symbol}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              style={{ backgroundColor: buttonColor }}
-              className="w-full p-3 rounded-xl text-white font-medium hover:opacity-90"
+    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">{t.sharedExpenseTracker}</h1>
+          <div className="flex gap-2 items-center">
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
             >
-              {t.addExpense}
+              <option value="en">English</option>
+              <option value="de">Deutsch</option>
+              <option value="fr">Français</option>
+              <option value="vi">Tiếng Việt</option>
+              <option value="zh">中文</option>
+              <option value="ja">日本語</option>
+            </select>
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-          </form>
+          </div>
         </div>
 
-        {/* Manage categories + import */}
-        <div
-          className={isDarkMode ? "bg-gray-800" : "bg-white"}
-          style={{ borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.5rem" }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold">{t.manageCategories}</h2>
-            <div className="flex gap-3">
-              <div className="group relative">
-                <input
-                  id="file-upload"
-                  type="file"
-                  accept=".csv"
-                  onChange={handleCSVUpload}
-                  className="hidden"
-                />
-                <label htmlFor="file-upload" className="cursor-pointer">
-                  <Upload className="h-6 w-6 text-gray-500 dark:text-gray-300" />
-                </label>
-              </div>
-              <div className="group relative">
-                <input
-                  id="invoice-upload"
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleInvoiceUpload}
-                  className="hidden"
-                />
-                <label htmlFor="invoice-upload" className="cursor-pointer">
-                  <FileText className="h-6 w-6 text-green-500 dark:text-green-400" />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Add category form */}
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              if (!newCategory.name.trim()) {
-                alert(t.requiredFieldsWarning);
-                return;
-              }
-              const id = newCategory.name.toLowerCase().replace(/\s+/g, "_");
-              setCategories(prev => ({
-                ...prev,
-                [id]: { name: newCategory.name, icon: newCategory.icon, note: newCategory.note }
-              }));
-              setNewCategory({ name: "", icon: "📦", note: "" });
-            }}
-            className="space-y-4"
-          >
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">{t.categoryName}</label>
-                <input
-                  type="text"
-                  value={newCategory.name}
-                  onChange={e => setNewCategory({ ...newCategory, name: e.target.value })}
-                  className={inputSelectClass}
-                  placeholder={t.enterCategoryName}
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  {t.categoryIcon}
-                </label>
-                <select
-                  value={newCategory.icon}
-                  onChange={e => {
-                    if (e.target.value === "custom") {
-                      setShowCustomIconModal(true);
-                    } else {
-                      setNewCategory({ ...newCategory, icon: e.target.value });
-                    }
-                  }}
-                  className={inputSelectClass}
-                >
-                  {["🍽️", "🛒", "🪑", "📦", "🚗", "🏠", "💻", "🎮", "📚"].map((emoji, idx) => (
-                    <option key={idx} value={emoji}>
-                      {emoji}
-                    </option>
-                  ))}
-                  <option value="custom">Custom</option>
-                </select>
-              </div>
-            </div>
-            <div className="mt-4">
-              <label className="block text-sm font-medium mb-2">{t.categoryNote}</label>
-              <textarea
-                value={newCategory.note}
-                onChange={e => setNewCategory({ ...newCategory, note: e.target.value })}
-                className={inputSelectClass}
-                placeholder={t.categoryNotePlaceholder}
-                rows={2}
+        <form onSubmit={handleSubmit} className="mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block mb-2">{t.descriptionInputLabel}</label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
+                placeholder={t.exampleItem}
               />
             </div>
-            <button
-              type="submit"
-              style={{ backgroundColor: buttonColor }}
-              className="w-full p-3 rounded-xl text-white font-medium hover:opacity-90"
-            >
-              {t.addCategory}
-            </button>
-          </form>
-
-          {/* Custom icon modal */}
-          {showCustomIconModal && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-              <div
-                className={
-                  isDarkMode
-                    ? "bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full"
-                    : "bg-white p-6 rounded-xl shadow-lg max-w-sm w-full"
-                }
+            <div>
+              <label className="block mb-2">{t.amountInputLabel}</label>
+              <input
+                type="text"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
+                placeholder={amountExampleText}
+              />
+            </div>
+            <div>
+              <label className="block mb-2">{t.currencyLabel}</label>
+              <select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
               >
-                <h3 className="text-lg font-bold mb-4">{t.enterCustomIcon}</h3>
-                <input
-                  type="text"
-                  value={customIcon}
-                  onChange={e => setCustomIcon(e.target.value)}
-                  className={inputSelectClass + " mb-4"}
-                  placeholder="Type your icon here"
-                />
-                <div className="flex justify-end gap-3">
-                  <button
-                    onClick={() => {
-                      setCustomIcon("");
-                      setShowCustomIconModal(false);
-                    }}
-                    className="px-4 py-2 text-red-500 border border-red-500 rounded-lg font-medium"
-                  >
-                    {t.cancel}
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (customIcon.trim()) {
-                        setNewCategory(prev => ({ ...prev, icon: customIcon }));
-                      }
-                      setCustomIcon("");
-                      setShowCustomIconModal(false);
-                    }}
-                    style={{ backgroundColor: buttonColor }}
-                    className="px-4 py-2 text-white rounded-lg font-medium hover:opacity-90"
-                  >
-                    {t.save}
-                  </button>
-                </div>
-              </div>
+                <option value="EUR">EUR (€)</option>
+                <option value="USD">USD ($)</option>
+                <option value="VND">VND (₫)</option>
+              </select>
             </div>
-          )}
-
-          {/* Category list */}
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">{t.currentCategories}</h3>
-            <ul>
-              {Object.entries(categories).map(([key, { icon, name, note }]) => (
-                <li
-                  key={key}
-                  className="flex flex-col border p-2 rounded-lg mb-2"
-                >
-                  <div className="flex justify-between items-center">
-                    <span>
-                      {icon} {getTranslatedCategory(key, name, t)}
-                    </span>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() =>
-                          setEditingCategory({ key, name, icon, note })
-                        }
-                        className="group relative"
-                      >
-                        <Edit2 className="h-5 w-5 text-blue-500" />
-                      </button>
-                      <button
-                        onClick={() => deleteCategory(key)}
-                        className="group relative"
-                      >
-                        <Trash2 className="h-5 w-5 text-red-500" />
-                      </button>
-                    </div>
-                  </div>
-                  {note && (
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
-                      {note}
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Edit category modal */}
-        {editingCategory && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
-            <div
-              className={
-                isDarkMode
-                  ? "bg-gray-800 p-6 rounded-xl shadow-lg max-w-sm w-full"
-                  : "bg-white p-6 rounded-xl shadow-lg max-w-sm w-full"
-              }
-            >
-              <h3 className="text-lg font-bold mb-4">
-                {t.edit} {t.categoryName}
-              </h3>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">
-                  {t.categoryName}
-                </label>
-                <input
-                  type="text"
-                  value={editingCategory.name}
-                  onChange={e =>
-                    setEditingCategory({ ...editingCategory, name: e.target.value })
-                  }
-                  className={inputSelectClass}
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">
-                  {t.categoryIcon}
-                </label>
-                <select
-                  value={editingCategory.icon}
-                  onChange={e => {
-                    if (e.target.value === "custom") {
-                      setShowEditCategoryCustomIconModal(true);
-                      setEditingCategoryCustomIcon("");
-                    } else {
-                      setEditingCategory({
-                        ...editingCategory,
-                        icon: e.target.value
-                      });
-                    }
-                  }}
-                  className={inputSelectClass}
-                >
-                  {["🍽️", "🛒", "🪑", "📦", "🚗", "🏠", "💻", "🎮", "📚"].map(
-                    (emoji, idx) => (
-                      <option key={idx} value={emoji}>
-                        {emoji}
-                      </option>
-                    )
-                  )}
-                  <option value="custom">Custom</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">
-                  {t.categoryNote}
-                </label>
-                <textarea
-                  value={editingCategory.note}
-                  onChange={e =>
-                    setEditingCategory({ ...editingCategory, note: e.target.value })
-                  }
-                  className={inputSelectClass}
-                  rows={2}
-                />
-              </div>
-
-              {showEditCategoryCustomIconModal && (
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    value={editingCategoryCustomIcon}
-                    onChange={e => setEditingCategoryCustomIcon(e.target.value)}
-                    className={inputSelectClass}
-                    placeholder="Type your icon here"
-                  />
-                  <div className="flex justify-end gap-3 mt-2">
-                    <button
-                      onClick={() => {
-                        setEditingCategoryCustomIcon("");
-                        setShowEditCategoryCustomIconModal(false);
-                      }}
-                      className="px-4 py-2 text-red-500 border border-red-500 rounded-lg font-medium"
-                    >
-                      {t.cancel}
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (editingCategoryCustomIcon.trim()) {
-                          setEditingCategory({
-                            ...editingCategory,
-                            icon: editingCategoryCustomIcon
-                          });
-                        }
-                        setEditingCategoryCustomIcon("");
-                        setShowEditCategoryCustomIconModal(false);
-                      }}
-                      style={{ backgroundColor: buttonColor }}
-                      className="px-4 py-2 text-white rounded-lg font-medium hover:opacity-90"
-                    >
-                      {t.save}
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => setEditingCategory(null)}
-                  className="px-4 py-2 border rounded text-red-500 hover:bg-red-50"
-                >
-                  {t.cancel}
-                </button>
-                <button
-                  onClick={() => {
-                    const { key, name, icon, note } = editingCategory;
-                    setCategories(prev => ({
-                      ...prev,
-                      [key]: { name, icon, note }
-                    }));
-                    setEditingCategory(null);
-                  }}
-                  style={{ backgroundColor: buttonColor }}
-                  className="px-4 py-2 text-white rounded hover:opacity-90"
-                >
-                  {t.save}
-                </button>
-              </div>
+            <div>
+              <label className="block mb-2">{t.categoryLabel}</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
+              >
+                {Object.keys(categories).map(catKey => (
+                  <option key={catKey} value={catKey}>
+                    {categories[catKey].icon} {getTranslatedCategory(catKey, categories[catKey].name, t)}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
-        )}
-
-        {/* Batch edit */}
-        {selectedExpenseIds.length > 0 && (
-          <div
-            className={isDarkMode ? "bg-gray-800" : "bg-white"}
-            style={{ borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.5rem" }}
-          >
-            <h2 className="text-xl font-bold mb-4">
-              {t.batchEditSelected} ({selectedExpenseIds.length})
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Update Description
-                </label>
-                <input
-                  type="text"
-                  value={batchEditDescription}
-                  onChange={e => setBatchEditDescription(e.target.value)}
-                  className={inputSelectClass}
-                  placeholder="Enter new description"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Update Category
-                </label>
+            <div>
+              <label className="block mb-2">{t.expenseDateLabel}</label>
+              <div className="flex gap-2">
                 <select
-                  value={batchEditCategory}
-                  onChange={e => setBatchEditCategory(e.target.value)}
-                  className={inputSelectClass}
+                  value={expenseMonth}
+                  onChange={(e) => setExpenseMonth(e.target.value)}
+                  className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
                 >
-                  <option value="">-- Select new category --</option>
-                  {Object.entries(categories).map(([key, { icon, name }]) => (
-                    <option key={key} value={key}>
-                      {icon} {getTranslatedCategory(key, name, t)}
+                  {t.monthNames.map((month, idx) => (
+                    <option key={idx} value={(idx + 1).toString().padStart(2, "0")}>
+                      {month}
                     </option>
                   ))}
                 </select>
+                <input
+                  type="number"
+                  value={expenseYear}
+                  onChange={(e) => setExpenseYear(e.target.value)}
+                  className={`w-24 p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}
+                  placeholder="Year"
+                />
               </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full p-3 rounded text-white font-bold"
+            style={{ backgroundColor: buttonColor }}
+          >
+            {t.addExpense}
+          </button>
+        </form>
+
+        <div className="flex gap-2 mb-4">
+          <label className="flex-1 cursor-pointer">
+            <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+              <Upload className="inline mr-2" size={20} />
+              {t.importFile}
+            </div>
+            <input
+              type="file"
+              accept=".csv"
+              onChange={handleCSVUpload}
+              className="hidden"
+            />
+          </label>
+          <label className="flex-1 cursor-pointer">
+            <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+              <FileText className="inline mr-2" size={20} />
+              {t.uploadInvoice}
+            </div>
+            <input
+              type="file"
+              accept=".pdf,.txt"
+              onChange={handleInvoiceUpload}
+              className="hidden"
+            />
+          </label>
+          <button
+            onClick={downloadCSV}
+            className={`flex-1 p-3 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
+          >
+            {t.downloadCSV}
+          </button>
+        </div>
+
+        {selectedExpenseIds.length > 0 && (
+          <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-800' : 'bg-blue-50'}`}>
+            <h3 className="font-bold mb-2">{t.batchEditSelected} ({selectedExpenseIds.length})</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+              <input
+                type="text"
+                value={batchEditDescription}
+                onChange={(e) => setBatchEditDescription(e.target.value)}
+                placeholder="New description"
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+              />
+              <select
+                value={batchEditCategory}
+                onChange={(e) => setBatchEditCategory(e.target.value)}
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+              >
+                <option value="">Select category</option>
+                {Object.keys(categories).map(catKey => (
+                  <option key={catKey} value={catKey}>
+                    {categories[catKey].icon} {getTranslatedCategory(catKey, categories[catKey].name, t)}
+                  </option>
+                ))}
+              </select>
             </div>
             <button
               onClick={applyAllBatchEdits}
+              className="w-full p-2 rounded text-white"
               style={{ backgroundColor: buttonColor }}
-              className="w-full p-3 rounded-xl text-white font-medium hover:opacity-90"
-              disabled={!batchEditDescription && !batchEditCategory}
             >
               {t.applyChanges}
             </button>
           </div>
         )}
 
-        {/* Download CSV + list */}
-        {expenses.length > 0 && (
-          <div className="mb-6">
-            <button
-              onClick={downloadCSV}
-              style={{ backgroundColor: buttonColor }}
-              className="w-full p-3 rounded-xl text-white font-medium hover:opacity-90"
-            >
-              {t.downloadCSV}
-            </button>
+        <div ref={expenseListRef}>
+          {Object.keys(categories).map(categoryKey => {
+            const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+            if (categoryExpenses.length === 0) return null;
+
+            const categoryTotal = categoryExpenses.reduce(
+              (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
+              0
+            );
+
+            return (
+              <div key={categoryKey} className={`mb-6 p-4 rounded ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">
+                    {categories[categoryKey].icon} {getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}
+                  </h2>
+                  <div className="flex gap-2 items-center">
+                    <input
+                      type="checkbox"
+                      checked={categoryExpenses.every(exp => selectedExpenseIds.includes(exp.id))}
+                      onChange={() => toggleSelectAllInCategory(categoryKey)}
+                      className="w-5 h-5"
+                    />
+                    <span className="font-bold">
+                      {t.categoryTotal} {formatCurrency(categoryTotal, primaryCurrency)}
+                    </span>
+                  </div>
+                </div>
+                {categoryExpenses.map((expense) => (
+                  <div key={expense.id} className="mb-2">
+                    {editingExpenseId === expense.id ? (
+                      <InlineEditExpense
+                        expense={expense}
+                        onSave={updateExpense}
+                        onCancel={() => {
+                          setEditingExpenseId(null);
+                          editingExpenseRef.current = null;
+                        }}
+                      />
+                    ) : (
+                      <div className={`p-3 rounded flex justify-between items-center ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}>
+                        <div className="flex items-center gap-3 flex-1">
+                          <input
+                            type="checkbox"
+                            checked={selectedExpenseIds.includes(expense.id)}
+                            onChange={() => toggleSelectExpense(expense.id)}
+                            className="w-5 h-5"
+                          />
+                          <div className="flex-1">
+                            <div className="font-semibold">{expense.description}</div>
+                            <div className="text-sm opacity-75">
+                              {formatCurrency(expense.amount, expense.currency)}
+                              {expense.date && ` • ${convertDateToFileString(expense.date)}`}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              editingExpenseRef.current = expense.id;
+                              setEditingExpenseId(expense.id);
+                            }}
+                            className={`p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-200'}`}
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => deleteExpense(expense.id)}
+                            className={`p-2 rounded ${isDarkMode ? 'bg-red-600' : 'bg-red-200'}`}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+
+        {expenses.length === 0 && (
+          <div className="text-center py-12 opacity-50">
+            {t.noExpensesYet}
           </div>
         )}
 
-        <div
-          className={isDarkMode ? "bg-gray-800" : "bg-white"}
-          style={{ borderRadius: "1rem", padding: "1.5rem" }}
-        >
-          {Object.keys(categories).map(key => (
-            <CategorySection key={key} categoryKey={key} />
-          ))}
-
-          {expenses.length > 0 && (
-            <div className="mt-8 pt-8 border-t-2">
-              <div className="text-right">
-                <h2 className="text-3xl font-bold mb-2">{t.totalExpenses}</h2>
-                <div className="text-2xl font-bold">
-                  {formatCurrency(calculateGrandTotal(), primaryCurrency)}
-                </div>
-              </div>
+        {expenses.length > 0 && (
+          <div className={`p-4 rounded mt-6 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">{t.totalExpenses}</h2>
+              <select
+                value={primaryCurrency}
+                onChange={(e) => setPrimaryCurrency(e.target.value)}
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+              >
+                <option value="EUR">EUR (€)</option>
+                <option value="USD">USD ($)</option>
+                <option value="VND">VND (₫)</option>
+              </select>
             </div>
-          )}
-
-          {expenses.length === 0 && (
-            <div className="text-center py-8 text-gray-500">{t.noExpensesYet}</div>
-          )}
-        </div>
+            <div className="text-3xl font-bold">
+              {formatCurrency(calculateGrandTotal(), primaryCurrency)}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
