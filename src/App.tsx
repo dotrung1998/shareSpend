@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X } from "lucide-react";
+import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X, Users } from "lucide-react";
 
 const translations = {
   en: {
@@ -29,6 +29,8 @@ const translations = {
     currencyLabel: "Currency",
     categoryLabel: "Category",
     primaryCurrencyLabel: "Primary Currency",
+    numberOfPeople: "Number of People",
+    perPerson: "Per Person",
     batchEditSelected: "Batch Edit Selected Expenses",
     applyChanges: "Apply Changes to Selected Expenses",
     noExpensesYet: "No expenses added yet. Start by adding your first expense!",
@@ -81,6 +83,8 @@ const translations = {
     currencyLabel: "Währung",
     categoryLabel: "Kategorie",
     primaryCurrencyLabel: "Hauptwährung",
+    numberOfPeople: "Anzahl Personen",
+    perPerson: "Pro Person",
     batchEditSelected: "Ausgewählte Ausgaben Stapelbearbeitung",
     applyChanges: "Änderungen auf ausgewählte Ausgaben anwenden",
     noExpensesYet: "Noch keine Ausgaben hinzugefügt. Beginnen Sie mit der ersten Ausgabe!",
@@ -133,6 +137,8 @@ const translations = {
     currencyLabel: "Tiền tệ",
     categoryLabel: "Danh mục",
     primaryCurrencyLabel: "Tiền tệ chính",
+    numberOfPeople: "Số người",
+    perPerson: "Mỗi người",
     batchEditSelected: "Chỉnh Sửa Hàng Loạt Các Chi Phí Được Chọn",
     applyChanges: "Áp dụng thay đổi cho các chi phí được chọn",
     noExpensesYet: "Chưa có chi phí nào. Hãy bắt đầu bằng cách thêm chi phí đầu tiên!",
@@ -203,6 +209,7 @@ const ExpenseTracker: React.FC = () => {
   const [expenseMonth, setExpenseMonth] = useState((currentDate.getMonth() + 1).toString().padStart(2, "0"));
   const [currency, setCurrency] = useState("EUR");
   const [category, setCategory] = useState("supermarkt");
+  const [numberOfPeople, setNumberOfPeople] = useState(2);
   
   const [categories, setCategories] = useState<Record<string, Category>>({
     groceries: { name: translations.en.categories.groceries, icon: "🛒", note: "" },
@@ -626,82 +633,81 @@ const ExpenseTracker: React.FC = () => {
     return isNaN(parsed) ? 0 : Math.abs(parsed);
   };
 
-const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+  const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = async (event) => {
-    const content = event.target?.result as string;
-    
-    try {
-      const newExpenses: Expense[] = [];
-      let uniqueIdCounter = Date.now();
-      let invoiceDate = `${expenseYear}-${expenseMonth}`;
-
-      const dateRangeMatch = content.match(/Abrechnung vom (\d{2})\.(\d{2})\.(\d{4}) bis (\d{2})\.(\d{2})\.(\d{4})/);
-      if (dateRangeMatch) {
-        const [, , , , , month, year] = dateRangeMatch;
-        invoiceDate = `${year}-${month}`;
-      }
-
-      const lines = content.split('\n');
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const content = event.target?.result as string;
       
-      for (let line of lines) {
-        line = line.trim();
-        if (!line) continue;
-        
-        // Skip header/footer lines
-        if (line.includes('ALTER SALDO') || line.includes('NEUER SALDO') || 
-            line.includes('EINZAHLUNG') || line.includes('SOLLZINSEN') ||
-            line.includes('Mindestbetrag') || line.includes('Abrechnung vom') ||
-            line.includes('Karteninhaber') || line.includes('Kartennummer') ||
-            line.includes('Mastercard') || line.startsWith('Seite ')) {
-          continue;
+      try {
+        const newExpenses: Expense[] = [];
+        let uniqueIdCounter = Date.now();
+        let invoiceDate = `${expenseYear}-${expenseMonth}`;
+
+        const dateRangeMatch = content.match(/Abrechnung vom (\d{2})\.(\d{2})\.(\d{4}) bis (\d{2})\.(\d{2})\.(\d{4})/);
+        if (dateRangeMatch) {
+          const [, , , , , month, year] = dateRangeMatch;
+          invoiceDate = `${year}-${month}`;
         }
 
-        // Match transaction lines: Date, Description (including location), Amount
-        // Pattern: DD.MM.YYYY followed by text and ending with amount
-        const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(.+?)\s+([\d.,]+)$/);
+        const lines = content.split('\n');
         
-        if (match) {
-          const [, date, fullDescription, amountStr] = match;
-          const amount = parseAmount(amountStr);
+        for (let line of lines) {
+          line = line.trim();
+          if (!line) continue;
+          
+          // Skip header/footer lines
+          if (line.includes('ALTER SALDO') || line.includes('NEUER SALDO') || 
+              line.includes('EINZAHLUNG') || line.includes('SOLLZINSEN') ||
+              line.includes('Mindestbetrag') || line.includes('Abrechnung vom') ||
+              line.includes('Karteninhaber') || line.includes('Kartennummer') ||
+              line.includes('Mastercard') || line.startsWith('Seite ')) {
+            continue;
+          }
 
-          if (amount > 0 && fullDescription.trim()) {
-            const categoryKey = categorizeExpense(fullDescription);
-            
-            newExpenses.push({
-              id: uniqueIdCounter++,
-              description: fullDescription.trim(),
-              date: invoiceDate,
-              amount: amount,
-              currency: "EUR",
-              category: categoryKey
-            });
+          // Match transaction lines: Date, Description (including location), Amount
+          // Pattern: DD.MM.YYYY followed by text and ending with amount
+          const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(.+?)\s+([\d.,]+)$/);
+          
+          if (match) {
+            const [, date, fullDescription, amountStr] = match;
+            const amount = parseAmount(amountStr);
+
+            if (amount > 0 && fullDescription.trim()) {
+              const categoryKey = categorizeExpense(fullDescription);
+              
+              newExpenses.push({
+                id: uniqueIdCounter++,
+                description: fullDescription.trim(),
+                date: invoiceDate,
+                amount: amount,
+                currency: "EUR",
+                category: categoryKey
+              });
+            }
           }
         }
-      }
 
-      if (newExpenses.length > 0) {
-        setExpenses(prev => [...prev, ...newExpenses]);
-        alert(`Successfully imported ${newExpenses.length} transactions from invoice!`);
-      } else {
-        alert("No transactions found. Please ensure this is a valid Mastercard invoice.");
+        if (newExpenses.length > 0) {
+          setExpenses(prev => [...prev, ...newExpenses]);
+          alert(`Successfully imported ${newExpenses.length} transactions from invoice!`);
+        } else {
+          alert("No transactions found. Please ensure this is a valid Mastercard invoice.");
+        }
+      } catch (error) {
+        console.error("Error parsing invoice:", error);
+        alert("Error parsing invoice. Please check the file format.");
       }
-    } catch (error) {
-      console.error("Error parsing invoice:", error);
-      alert("Error parsing invoice. Please check the file format.");
+    };
+
+    if (file.name.endsWith('.pdf')) {
+      alert("Please convert PDF to text first, or copy-paste the invoice content into a .txt file.");
+    } else {
+      reader.readAsText(file);
     }
   };
-
-  if (file.name.endsWith('.pdf')) {
-    alert("Please convert PDF to text first, or copy-paste the invoice content into a .txt file.");
-  } else {
-    reader.readAsText(file);
-  }
-};
-
 
   const addKeywordToCategory = (categoryKey: string, keyword: string) => {
     if (!keyword.trim()) return;
@@ -1231,6 +1237,7 @@ const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
             if (categoryExpenses.length === 0) return null;
 
             const categoryTotal = calculateCategoryTotal(categoryKey);
+            const perPersonAmount = numberOfPeople > 0 ? categoryTotal / numberOfPeople : 0;
 
             return (
               <div key={categoryKey} className={`mb-6 p-4 rounded ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
@@ -1245,9 +1252,16 @@ const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                       onChange={() => toggleSelectAllInCategory(categoryKey)}
                       className="w-5 h-5"
                     />
-                    <span className="font-bold">
-                      {t.categoryTotal} {formatCurrency(categoryTotal, primaryCurrency)}
-                    </span>
+                    <div className="text-right">
+                      <div className="font-bold">
+                        {t.categoryTotal} {formatCurrency(categoryTotal, primaryCurrency)}
+                      </div>
+                      {numberOfPeople > 1 && (
+                        <div className="text-sm opacity-75">
+                          {t.perPerson}: {formatCurrency(perPersonAmount, primaryCurrency)}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
                 {categoryExpenses.map((expense) => (
@@ -1316,18 +1330,45 @@ const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
           <div className={`p-4 rounded mt-6 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">{t.totalExpenses}</h2>
-              <select
-                value={primaryCurrency}
-                onChange={(e) => setPrimaryCurrency(e.target.value)}
-                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-              >
-                <option value="EUR">EUR (€)</option>
-                <option value="USD">USD ($)</option>
-                <option value="VND">VND (₫)</option>
-              </select>
+              <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
+                  <Users size={20} />
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={numberOfPeople}
+                    onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
+                    className={`w-16 p-2 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                    title={t.numberOfPeople}
+                  />
+                </div>
+                <select
+                  value={primaryCurrency}
+                  onChange={(e) => setPrimaryCurrency(e.target.value)}
+                  className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                >
+                  <option value="EUR">EUR (€)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="VND">VND (₫)</option>
+                </select>
+              </div>
             </div>
-            <div className="text-3xl font-bold">
-              {formatCurrency(calculateGrandTotal(), primaryCurrency)}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-lg">Total:</span>
+                <span className="text-3xl font-bold">
+                  {formatCurrency(calculateGrandTotal(), primaryCurrency)}
+                </span>
+              </div>
+              {numberOfPeople > 1 && (
+                <div className="flex justify-between items-center border-t pt-2">
+                  <span className="text-lg">{t.perPerson} ({numberOfPeople} {numberOfPeople === 1 ? 'person' : 'people'}):</span>
+                  <span className="text-2xl font-bold text-blue-500">
+                    {formatCurrency(calculateGrandTotal() / numberOfPeople, primaryCurrency)}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}
