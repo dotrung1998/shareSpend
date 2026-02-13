@@ -3,14 +3,9 @@ import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X, Users, S
 
 const translations = {
   en: {
+    sharedExpenseTracker: "Shared Expense Tracker",
     settings: "Settings",
     appearance: "Appearance",
-    categories: "Categories",
-    accentColor: "Accent Color",
-    presetColors: "Preset Colors",
-    customColor: "Custom Color",
-    resetToDefault: "Reset to Default",
-    sharedExpenseTracker: "Shared Expense Tracker",
     manageCategories: "Manage Categories",
     manageCategoryRules: "Manage Auto-Categorization Rules",
     currentCategories: "Current Categories",
@@ -24,6 +19,10 @@ const translations = {
     categoryNotePlaceholder: "Add a note for the category",
     categoryRules: "Auto-categorization Keywords",
     categoryRulesPlaceholder: "e.g., rewe, kaufland, aldi (comma separated)",
+    accentColor: "Accent Color",
+    presetColors: "Preset Colors",
+    customColor: "Custom Color",
+    resetToDefault: "Reset to Default",
     delete: "Delete",
     edit: "Edit",
     cancel: "Cancel",
@@ -50,7 +49,7 @@ const translations = {
     totalExpenses: "Total Expenses:",
     downloadCSV: "Download CSV",
     importFile: "Import file",
-    uploadInvoice: "Upload Invoice (txt)",
+    uploadInvoice: "Upload Invoice (PDF/Image)",
     exampleItem: "e.g., Coffee",
     amountExample: "e.g., 10",
     requiredFieldsWarning: "Please fill out this field.",
@@ -70,14 +69,9 @@ const translations = {
     }
   },
   de: {
+    sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
     settings: "Einstellungen",
     appearance: "Erscheinungsbild",
-    categories: "Kategorien",
-    accentColor: "Akzentfarbe",
-    presetColors: "Vordefinierte Farben",
-    customColor: "Benutzerdefinierte Farbe",
-    resetToDefault: "Auf Standard zurücksetzen",
-    sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
     manageCategories: "Kategorien verwalten",
     manageCategoryRules: "Auto-Kategorisierungsregeln verwalten",
     currentCategories: "Aktuelle Kategorien",
@@ -91,6 +85,10 @@ const translations = {
     categoryNotePlaceholder: "Fügen Sie der Kategorie eine Notiz hinzu",
     categoryRules: "Auto-Kategorisierung Schlüsselwörter",
     categoryRulesPlaceholder: "z.B. rewe, kaufland, aldi (durch Komma getrennt)",
+    accentColor: "Akzentfarbe",
+    presetColors: "Vordefinierte Farben",
+    customColor: "Benutzerdefinierte Farbe",
+    resetToDefault: "Auf Standard zurücksetzen",
     delete: "Löschen",
     edit: "Bearbeiten",
     cancel: "Abbrechen",
@@ -117,7 +115,7 @@ const translations = {
     totalExpenses: "Gesamtausgaben:",
     downloadCSV: "CSV herunterladen",
     importFile: "Datei importieren",
-    uploadInvoice: "Rechnung hochladen (txt)",
+    uploadInvoice: "Rechnung hochladen (PDF/Bild)",
     exampleItem: "z.B. Kaffee",
     amountExample: "z.B. 10",
     requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
@@ -137,14 +135,9 @@ const translations = {
     }
   },
   vi: {
+    sharedExpenseTracker: "Trình Theo Dõi Chi Phí Chung",
     settings: "Cài đặt",
     appearance: "Giao diện",
-    categories: "Danh mục",
-    accentColor: "Màu chủ đạo",
-    presetColors: "Màu có sẵn",
-    customColor: "Màu tùy chỉnh",
-    resetToDefault: "Đặt lại mặc định",
-    sharedExpenseTracker: "Trình Theo Dõi Chi Phí Chung",
     manageCategories: "Quản Lý Danh Mục",
     manageCategoryRules: "Quản Lý Quy Tắc Tự Động Phân Loại",
     currentCategories: "Danh Mục Hiện Tại",
@@ -158,6 +151,10 @@ const translations = {
     categoryNotePlaceholder: "Thêm ghi chú cho danh mục",
     categoryRules: "Từ khóa tự động phân loại",
     categoryRulesPlaceholder: "vd: rewe, kaufland, aldi (phân cách bằng dấu phẩy)",
+    accentColor: "Màu chủ đạo",
+    presetColors: "Màu có sẵn",
+    customColor: "Màu tùy chỉnh",
+    resetToDefault: "Đặt lại mặc định",
     delete: "Xóa",
     edit: "Sửa",
     cancel: "Hủy",
@@ -184,7 +181,7 @@ const translations = {
     totalExpenses: "Tổng Chi Phí:",
     downloadCSV: "Tải xuống CSV",
     importFile: "Nhập tệp",
-    uploadInvoice: "Tải lên Hóa đơn (txt)",
+    uploadInvoice: "Tải lên Hóa đơn (PDF/Hình)",
     exampleItem: "vd: Cà phê",
     amountExample: "vd: 10000",
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
@@ -216,6 +213,7 @@ const ICON_OPTIONS = [
   "🐕", "🐈", "🐾", "🧸", "🎂", "🍰", "🧁", "🍫", "🍬", "🍭"
 ];
 
+// Preset accent colors
 const PRESET_COLORS = [
   { name: "Pink", value: "#F1C4D9" },
   { name: "Blue", value: "#4A90E2" },
@@ -280,7 +278,7 @@ const ExpenseTracker: React.FC = () => {
     other: ["paypal", "depot", "karroum", "tjxeurope", "fressnapf", "pet"]
   });
   
-  const [showRulesManager, setShowRulesManager] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [settingsTab, setSettingsTab] = useState<"appearance" | "categories">("appearance");
   const [newCategory, setNewCategory] = useState({ name: "", icon: "", note: "" });
   const [showCustomIconModal, setShowCustomIconModal] = useState(false);
@@ -936,7 +934,7 @@ const ExpenseTracker: React.FC = () => {
         <div className="flex gap-2">
           <button
             onClick={handleSave}
-            className="flex-1 p-2 rounded"
+            className="flex-1 p-2 rounded text-white"
             style={{ backgroundColor: buttonColor }}
             type="button"
           >
@@ -980,297 +978,299 @@ const ExpenseTracker: React.FC = () => {
     );
   };
 
-const SettingsModal = () => {
-  const [newKeywords, setNewKeywords] = useState<Record<string, string>>({});
-  const [newCategoryForm, setNewCategoryForm] = useState({ name: "", icon: "📁" });
-  const [showAddCategory, setShowAddCategory] = useState(false);
-  const [showIconPicker, setShowIconPicker] = useState(false);
-  const [customColorInput, setCustomColorInput] = useState(buttonColor);
+  const SettingsModal = () => {
+    const [newKeywords, setNewKeywords] = useState<Record<string, string>>({});
+    const [newCategoryForm, setNewCategoryForm] = useState({ name: "", icon: "📁" });
+    const [showAddCategory, setShowAddCategory] = useState(false);
+    const [showIconPicker, setShowIconPicker] = useState(false);
+    const [customColorInput, setCustomColorInput] = useState(buttonColor);
 
-  return (
-    <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50`}>
-      <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg p-6 max-w-3xl w-full max-h-[85vh] flex flex-col`}>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">{t.settings}</h2>
-          <button
-            onClick={() => setShowRulesManager(false)}
-            className={`p-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-          >
-            <X size={20} />
-          </button>
-        </div>
+    return (
+      <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50`}>
+        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg p-6 max-w-3xl w-full max-h-[85vh] flex flex-col`}>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">{t.settings}</h2>
+            <button
+              onClick={() => setShowSettingsModal(false)}
+              className={`p-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-        {/* Tabs */}
-        <div className="flex gap-2 mb-4 border-b border-gray-300">
-          <button
-            onClick={() => setSettingsTab("appearance")}
-            className={`px-4 py-2 font-semibold transition ${
-              settingsTab === "appearance"
-                ? `border-b-2 ${isDarkMode ? 'border-blue-400 text-blue-400' : 'border-blue-500 text-blue-500'}`
-                : 'opacity-60'
-            }`}
-          >
-            {t.appearance}
-          </button>
-          <button
-            onClick={() => setSettingsTab("categories")}
-            className={`px-4 py-2 font-semibold transition ${
-              settingsTab === "categories"
-                ? `border-b-2 ${isDarkMode ? 'border-blue-400 text-blue-400' : 'border-blue-500 text-blue-500'}`
-                : 'opacity-60'
-            }`}
-          >
-            {t.categories}
-          </button>
-        </div>
+          {/* Tabs */}
+          <div className="flex gap-2 mb-4 border-b border-gray-300">
+            <button
+              onClick={() => setSettingsTab("appearance")}
+              className={`px-4 py-2 font-semibold transition ${
+                settingsTab === "appearance"
+                  ? `border-b-2 ${isDarkMode ? 'border-blue-400 text-blue-400' : 'border-blue-500 text-blue-500'}`
+                  : 'opacity-60'
+              }`}
+            >
+              {t.appearance}
+            </button>
+            <button
+              onClick={() => setSettingsTab("categories")}
+              className={`px-4 py-2 font-semibold transition ${
+                settingsTab === "categories"
+                  ? `border-b-2 ${isDarkMode ? 'border-blue-400 text-blue-400' : 'border-blue-500 text-blue-500'}`
+                  : 'opacity-60'
+              }`}
+            >
+              {t.manageCategories}
+            </button>
+          </div>
 
-        {/* Scrollable content */}
-        <div ref={modalScrollRef} className="overflow-y-auto flex-1">
-          {/* Appearance Tab */}
-          {settingsTab === "appearance" && (
-            <div className="space-y-6">
-              {/* Accent Color Section */}
-              <div className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                <h3 className="text-lg font-bold mb-3">{t.accentColor}</h3>
-                
-                {/* Preset Colors */}
-                <div className="mb-4">
-                  <label className="text-sm opacity-75 mb-2 block">{t.presetColors}</label>
-                  <div className="grid grid-cols-6 gap-2">
-                    {PRESET_COLORS.map((color) => (
-                      <button
-                        key={color.value}
-                        onClick={() => setButtonColor(color.value)}
-                        className={`h-12 rounded transition hover:scale-110 ${
-                          buttonColor === color.value 
-                            ? 'ring-4 ring-offset-2 ring-blue-500' 
-                            : 'hover:ring-2 ring-gray-400'
-                        }`}
-                        style={{ backgroundColor: color.value }}
-                        title={color.name}
-                      />
-                    ))}
+          {/* Scrollable content */}
+          <div ref={modalScrollRef} className="overflow-y-auto flex-1">
+            {/* Appearance Tab */}
+            {settingsTab === "appearance" && (
+              <div className="space-y-6">
+                {/* Accent Color Section */}
+                <div className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                  <h3 className="text-lg font-bold mb-3">{t.accentColor}</h3>
+                  
+                  {/* Preset Colors */}
+                  <div className="mb-4">
+                    <label className="text-sm opacity-75 mb-2 block">{t.presetColors}</label>
+                    <div className="grid grid-cols-6 gap-2">
+                      {PRESET_COLORS.map((color) => (
+                        <button
+                          key={color.value}
+                          onClick={() => {
+                            setButtonColor(color.value);
+                            setCustomColorInput(color.value);
+                          }}
+                          className={`h-12 rounded transition hover:scale-110 ${
+                            buttonColor === color.value 
+                              ? 'ring-4 ring-offset-2 ring-blue-500' 
+                              : 'hover:ring-2 ring-gray-400'
+                          }`}
+                          style={{ backgroundColor: color.value }}
+                          title={color.name}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Custom Color Picker */}
-                <div className="mb-4">
-                  <label className="text-sm opacity-75 mb-2 block">{t.customColor}</label>
-                  <div className="flex gap-2 items-center">
-                    <input
-                      type="color"
-                      value={customColorInput}
-                      onChange={(e) => {
-                        setCustomColorInput(e.target.value);
-                        setButtonColor(e.target.value);
-                      }}
-                      className="h-12 w-20 rounded cursor-pointer"
-                    />
-                    <input
-                      type="text"
-                      value={customColorInput}
-                      onChange={(e) => {
-                        setCustomColorInput(e.target.value);
-                        if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                  {/* Custom Color Picker */}
+                  <div className="mb-4">
+                    <label className="text-sm opacity-75 mb-2 block">{t.customColor}</label>
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="color"
+                        value={customColorInput}
+                        onChange={(e) => {
+                          setCustomColorInput(e.target.value);
                           setButtonColor(e.target.value);
-                        }
-                      }}
-                      className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
-                      placeholder="#F1C4D9"
-                    />
+                        }}
+                        className="h-12 w-20 rounded cursor-pointer"
+                      />
+                      <input
+                        type="text"
+                        value={customColorInput}
+                        onChange={(e) => {
+                          setCustomColorInput(e.target.value);
+                          if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                            setButtonColor(e.target.value);
+                          }
+                        }}
+                        className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+                        placeholder="#F1C4D9"
+                      />
+                      <button
+                        onClick={() => {
+                          setButtonColor("#F1C4D9");
+                          setCustomColorInput("#F1C4D9");
+                        }}
+                        className={`px-4 py-2 rounded ${isDarkMode ? 'bg-gray-600 hover:bg-gray-500' : 'bg-gray-200 hover:bg-gray-300'}`}
+                      >
+                        {t.resetToDefault}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Preview */}
+                  <div className={`mt-4 p-4 rounded border-2 border-dashed ${isDarkMode ? 'border-gray-500' : 'border-gray-400'}`}>
+                    <p className="text-sm opacity-75 mb-2">Preview:</p>
                     <button
-                      onClick={() => {
-                        setButtonColor("#F1C4D9");
-                        setCustomColorInput("#F1C4D9");
-                      }}
-                      className={`px-4 py-2 rounded ${isDarkMode ? 'bg-gray-600 hover:bg-gray-500' : 'bg-gray-200 hover:bg-gray-300'}`}
+                      className="w-full p-3 rounded text-white font-bold"
+                      style={{ backgroundColor: buttonColor }}
                     >
-                      {t.resetToDefault}
+                      {t.addExpense}
                     </button>
                   </div>
                 </div>
-
-                {/* Preview */}
-                <div className="mt-4 p-4 rounded border border-dashed border-gray-400">
-                  <p className="text-sm opacity-75 mb-2">Preview:</p>
-                  <button
-                    className="w-full p-3 rounded text-white font-bold"
-                    style={{ backgroundColor: buttonColor }}
-                  >
-                    {t.addExpense}
-                  </button>
-                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Categories Tab */}
-          {settingsTab === "categories" && (
-            <div>
-              {/* Add New Category Section */}
-              <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
-                {!showAddCategory ? (
-                  <button
-                    onClick={() => setShowAddCategory(true)}
-                    className="w-full p-3 rounded flex items-center justify-center gap-2"
-                    style={{ backgroundColor: buttonColor }}
-                  >
-                    <Plus size={20} />
-                    {t.addNewCategory}
-                  </button>
-                ) : (
-                  <div>
-                    <div className="mb-2">
-                      <input
-                        type="text"
-                        placeholder={t.enterCategoryName}
-                        value={newCategoryForm.name}
-                        onChange={(e) => setNewCategoryForm({ ...newCategoryForm, name: e.target.value })}
-                        className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
-                      />
-                    </div>
-                    
-                    <div className="mb-2 flex items-center gap-2">
-                      <div 
-                        className={`text-4xl p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'} cursor-pointer`}
-                        onClick={() => setShowIconPicker(!showIconPicker)}
-                      >
-                        {newCategoryForm.icon}
-                      </div>
-                      <button
-                        onClick={() => setShowIconPicker(!showIconPicker)}
-                        className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}
-                      >
-                        {t.selectIcon}
-                      </button>
-                    </div>
-
-                    {showIconPicker && (
+            {/* Categories Tab */}
+            {settingsTab === "categories" && (
+              <div>
+                {/* Add New Category Section */}
+                <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
+                  {!showAddCategory ? (
+                    <button
+                      onClick={() => setShowAddCategory(true)}
+                      className="w-full p-3 rounded flex items-center justify-center gap-2 text-white"
+                      style={{ backgroundColor: buttonColor }}
+                    >
+                      <Plus size={20} />
+                      {t.addNewCategory}
+                    </button>
+                  ) : (
+                    <div>
                       <div className="mb-2">
-                        <IconPicker 
-                          selectedIcon={newCategoryForm.icon}
-                          onSelectIcon={(icon) => {
-                            setNewCategoryForm({ ...newCategoryForm, icon });
-                            setShowIconPicker(false);
-                          }}
-                        />
-                      </div>
-                    )}
-                    
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => {
-                          addNewCategory(newCategoryForm.name, newCategoryForm.icon);
-                          setNewCategoryForm({ name: "", icon: "📁" });
-                          setShowAddCategory(false);
-                          setShowIconPicker(false);
-                        }}
-                        className="flex-1 p-2 rounded"
-                        style={{ backgroundColor: buttonColor }}
-                      >
-                        {t.save}
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowAddCategory(false);
-                          setShowIconPicker(false);
-                          setNewCategoryForm({ name: "", icon: "📁" });
-                        }}
-                        className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
-                      >
-                        {t.cancel}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Existing Categories */}
-              <div className="space-y-6">
-                {Object.keys(categories).map(catKey => (
-                  <div key={catKey} className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="text-2xl">{categories[catKey].icon}</span>
-                        <h3 className="text-lg font-bold">
-                          {getTranslatedCategory(catKey, categories[catKey].name, t)}
-                        </h3>
-                      </div>
-                      <button
-                        onClick={() => deleteCategory(catKey)}
-                        className="p-2 rounded text-red-500 hover:bg-red-100"
-                        title={t.deleteCategory}
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </div>
-                    
-                    <div className="mb-2">
-                      <label className="text-sm opacity-75 mb-1 block">{t.categoryRules}</label>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        {(categoryRules[catKey] || []).map((keyword, idx) => (
-                          <span
-                            key={idx}
-                            className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
-                              isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
-                            }`}
-                          >
-                            {keyword}
-                            <button
-                              onClick={() => removeKeywordFromCategory(catKey, keyword)}
-                              className="hover:text-red-500"
-                            >
-                              <X size={14} />
-                            </button>
-                          </span>
-                        ))}
-                      </div>
-                      
-                      <div className="flex gap-2">
                         <input
                           type="text"
-                          value={newKeywords[catKey] || ""}
-                          onChange={(e) => setNewKeywords({ ...newKeywords, [catKey]: e.target.value })}
-                          placeholder={t.categoryRulesPlaceholder}
-                          className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
-                          onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                              addKeywordToCategory(catKey, newKeywords[catKey] || "");
-                              setNewKeywords({ ...newKeywords, [catKey]: "" });
-                            }
-                          }}
+                          placeholder={t.enterCategoryName}
+                          value={newCategoryForm.name}
+                          onChange={(e) => setNewCategoryForm({ ...newCategoryForm, name: e.target.value })}
+                          className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
                         />
+                      </div>
+                      
+                      <div className="mb-2 flex items-center gap-2">
+                        <div 
+                          className={`text-4xl p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'} cursor-pointer`}
+                          onClick={() => setShowIconPicker(!showIconPicker)}
+                        >
+                          {newCategoryForm.icon}
+                        </div>
+                        <button
+                          onClick={() => setShowIconPicker(!showIconPicker)}
+                          className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}
+                        >
+                          {t.selectIcon}
+                        </button>
+                      </div>
+
+                      {showIconPicker && (
+                        <div className="mb-2">
+                          <IconPicker 
+                            selectedIcon={newCategoryForm.icon}
+                            onSelectIcon={(icon) => {
+                              setNewCategoryForm({ ...newCategoryForm, icon });
+                              setShowIconPicker(false);
+                            }}
+                          />
+                        </div>
+                      )}
+                      
+                      <div className="flex gap-2">
                         <button
                           onClick={() => {
-                            addKeywordToCategory(catKey, newKeywords[catKey] || "");
-                            setNewKeywords({ ...newKeywords, [catKey]: "" });
+                            addNewCategory(newCategoryForm.name, newCategoryForm.icon);
+                            setNewCategoryForm({ name: "", icon: "📁" });
+                            setShowAddCategory(false);
+                            setShowIconPicker(false);
                           }}
-                          className="p-2 rounded"
+                          className="flex-1 p-2 rounded text-white"
                           style={{ backgroundColor: buttonColor }}
                         >
-                          <Plus size={20} />
+                          {t.save}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowAddCategory(false);
+                            setShowIconPicker(false);
+                            setNewCategoryForm({ name: "", icon: "📁" });
+                          }}
+                          className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
+                        >
+                          {t.cancel}
                         </button>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )}
+                </div>
+
+                {/* Existing Categories */}
+                <div className="space-y-6">
+                  {Object.keys(categories).map(catKey => (
+                    <div key={catKey} className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl">{categories[catKey].icon}</span>
+                          <h3 className="text-lg font-bold">
+                            {getTranslatedCategory(catKey, categories[catKey].name, t)}
+                          </h3>
+                        </div>
+                        <button
+                          onClick={() => deleteCategory(catKey)}
+                          className="p-2 rounded text-red-500 hover:bg-red-100"
+                          title={t.deleteCategory}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                      
+                      <div className="mb-2">
+                        <label className="text-sm opacity-75 mb-1 block">{t.categoryRules}</label>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {(categoryRules[catKey] || []).map((keyword, idx) => (
+                            <span
+                              key={idx}
+                              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                                isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
+                              }`}
+                            >
+                              {keyword}
+                              <button
+                                onClick={() => removeKeywordFromCategory(catKey, keyword)}
+                                className="hover:text-red-500"
+                              >
+                                <X size={14} />
+                              </button>
+                            </span>
+                          ))}
+                        </div>
+                        
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={newKeywords[catKey] || ""}
+                            onChange={(e) => setNewKeywords({ ...newKeywords, [catKey]: e.target.value })}
+                            placeholder={t.categoryRulesPlaceholder}
+                            className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                addKeywordToCategory(catKey, newKeywords[catKey] || "");
+                                setNewKeywords({ ...newKeywords, [catKey]: "" });
+                              }
+                            }}
+                          />
+                          <button
+                            onClick={() => {
+                              addKeywordToCategory(catKey, newKeywords[catKey] || "");
+                              setNewKeywords({ ...newKeywords, [catKey]: "" });
+                            }}
+                            className="p-2 rounded text-white"
+                            style={{ backgroundColor: buttonColor }}
+                          >
+                            <Plus size={20} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
+          <button
+            onClick={() => setShowSettingsModal(false)}
+            className="w-full mt-4 p-3 rounded text-white"
+            style={{ backgroundColor: buttonColor }}
+          >
+            {t.save}
+          </button>
         </div>
-
-      <button
-        onClick={() => setShowRulesManager(true)}
-        className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
-        title={t.settings}
-      >
-        <Settings size={20} />
-      </button>
-
       </div>
-    </div>
-  );
-};
+    );
+  };
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
@@ -1279,9 +1279,12 @@ const SettingsModal = () => {
           <h1 className="text-3xl font-bold">{t.sharedExpenseTracker}</h1>
           <div className="flex gap-2 items-center">
             <button
-              onClick={() => setShowRulesManager(true)}
+              onClick={() => {
+                setShowSettingsModal(true);
+                setSettingsTab("appearance");
+              }}
               className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
-              title={t.manageCategoryRules}
+              title={t.settings}
             >
               <Settings size={20} />
             </button>
@@ -1641,7 +1644,7 @@ const SettingsModal = () => {
         )}
       </div>
 
-      {showRulesManager && <SettingsModal />}
+      {showSettingsModal && <SettingsModal />}
     </div>
   );
 };
