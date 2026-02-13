@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Wings -->
+  <g fill="#90CAF9" stroke="#64B5F6" stroke-width="1.5">
+    <!-- Left wing -->
+    <path d="M20 52 C10 40, 5 25, 15 20 C25 15, 35 25, 40 35 C35 30, 25 28, 20 35 C15 42, 18 48, 20 52Z" opacity="0.9"/>
+    <path d="M25 58 C12 50, 2 38, 8 30 C14 22, 28 30, 35 40 C30 36, 20 35, 18 42 C16 49, 22 55, 25 58Z" opacity="0.7"/>
+    <!-- Right wing -->
+    <path d="M108 52 C118 40, 123 25, 113 20 C103 15, 93 25, 88 35 C93 30, 103 28, 108 35 C113 42, 110 48, 108 52Z" opacity="0.9"/>
+    <path d="M103 58 C116 50, 126 38, 120 30 C114 22, 100 30, 93 40 C98 36, 108 35, 110 42 C112 49, 106 55, 103 58Z" opacity="0.7"/>
+  </g>
+  <!-- Dollar bill body -->
+  <rect x="28" y="38" width="72" height="48" rx="6" ry="6" fill="#66BB6A"/>
+  <rect x="32" y="42" width="64" height="40" rx="4" ry="4" fill="#81C784"/>
+  <rect x="36" y="46" width="56" height="32" rx="2" ry="2" fill="#66BB6A"/>
+  <!-- Dollar sign -->
+  <text x="64" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#2E7D32">$</text>
+  <!-- Motion lines -->
+  <line x1="40" y1="95" x2="50" y2="100" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round"/>
+  <line x1="55" y1="97" x2="62" y2="104" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round"/>
+  <line x1="70" y1="97" x2="72" y2="105" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round"/>
+  <line x1="80" y1="95" x2="82" y2="102" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round"/>
+</svg>
