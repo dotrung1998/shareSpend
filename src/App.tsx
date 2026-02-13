@@ -626,76 +626,82 @@ const ExpenseTracker: React.FC = () => {
     return isNaN(parsed) ? 0 : Math.abs(parsed);
   };
 
-  const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+const handleInvoiceUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      const content = event.target?.result as string;
-      
-      try {
-        const newExpenses: Expense[] = [];
-        let uniqueIdCounter = Date.now();
-        let invoiceDate = `${expenseYear}-${expenseMonth}`;
+  const reader = new FileReader();
+  reader.onload = async (event) => {
+    const content = event.target?.result as string;
+    
+    try {
+      const newExpenses: Expense[] = [];
+      let uniqueIdCounter = Date.now();
+      let invoiceDate = `${expenseYear}-${expenseMonth}`;
 
-        const dateRangeMatch = content.match(/Abrechnung vom (\d{2})\.(\d{2})\.(\d{4}) bis (\d{2})\.(\d{2})\.(\d{4})/);
-        if (dateRangeMatch) {
-          const [, , , , , month, year] = dateRangeMatch;
-          invoiceDate = `${year}-${month}`;
-        }
-
-        const lines = content.split('\n');
-        const transactionRegex = /^(\d{2}\.\d{2}\.\d{4})\s+(.+?)\s+([A-Za-zÄÖÜäöüß\s]+?)\s+([\d,]+)$/;
-
-        for (let line of lines) {
-          line = line.trim();
-          if (!line) continue;
-          
-          if (line.includes('ALTER SALDO') || line.includes('NEUER SALDO') || 
-              line.includes('EINZAHLUNG') || line.includes('SOLLZINSEN') ||
-              line.includes('Mindestbetrag')) {
-            continue;
-          }
-
-          const match = line.match(transactionRegex);
-          if (match) {
-            const [, date, description, location, amountStr] = match;
-            const amount = parseAmount(amountStr);
-
-            if (amount > 0 && description.trim()) {
-              const categoryKey = categorizeExpense(description);
-              
-              newExpenses.push({
-                id: uniqueIdCounter++,
-                description: description.trim(),
-                date: invoiceDate,
-                amount: amount,
-                currency: "EUR",
-                category: categoryKey
-              });
-            }
-          }
-        }
-
-        if (newExpenses.length > 0) {
-          setExpenses(prev => [...prev, ...newExpenses]);
-          alert(`Successfully imported ${newExpenses.length} transactions from invoice!`);
-        } else {
-          alert("No transactions found. Please ensure this is a valid Mastercard invoice.");
-        }
-      } catch (error) {
-        console.error("Error parsing invoice:", error);
-        alert("Error parsing invoice. Please check the file format.");
+      const dateRangeMatch = content.match(/Abrechnung vom (\d{2})\.(\d{2})\.(\d{4}) bis (\d{2})\.(\d{2})\.(\d{4})/);
+      if (dateRangeMatch) {
+        const [, , , , , month, year] = dateRangeMatch;
+        invoiceDate = `${year}-${month}`;
       }
-    };
 
-    if (file.name.endsWith('.pdf')) {
-      alert("Please convert PDF to text first, or copy-paste the invoice content into a .txt file.");
-    } else {
-      reader.readAsText(file);
+      const lines = content.split('\n');
+      
+      for (let line of lines) {
+        line = line.trim();
+        if (!line) continue;
+        
+        // Skip header/footer lines
+        if (line.includes('ALTER SALDO') || line.includes('NEUER SALDO') || 
+            line.includes('EINZAHLUNG') || line.includes('SOLLZINSEN') ||
+            line.includes('Mindestbetrag') || line.includes('Abrechnung vom') ||
+            line.includes('Karteninhaber') || line.includes('Kartennummer') ||
+            line.includes('Mastercard') || line.startsWith('Seite ')) {
+          continue;
+        }
+
+        // Match transaction lines: Date, Description (including location), Amount
+        // Pattern: DD.MM.YYYY followed by text and ending with amount
+        const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(.+?)\s+([\d.,]+)$/);
+        
+        if (match) {
+          const [, date, fullDescription, amountStr] = match;
+          const amount = parseAmount(amountStr);
+
+          if (amount > 0 && fullDescription.trim()) {
+            const categoryKey = categorizeExpense(fullDescription);
+            
+            newExpenses.push({
+              id: uniqueIdCounter++,
+              description: fullDescription.trim(),
+              date: invoiceDate,
+              amount: amount,
+              currency: "EUR",
+              category: categoryKey
+            });
+          }
+        }
+      }
+
+      if (newExpenses.length > 0) {
+        setExpenses(prev => [...prev, ...newExpenses]);
+        alert(`Successfully imported ${newExpenses.length} transactions from invoice!`);
+      } else {
+        alert("No transactions found. Please ensure this is a valid Mastercard invoice.");
+      }
+    } catch (error) {
+      console.error("Error parsing invoice:", error);
+      alert("Error parsing invoice. Please check the file format.");
     }
   };
+
+  if (file.name.endsWith('.pdf')) {
+    alert("Please convert PDF to text first, or copy-paste the invoice content into a .txt file.");
+  } else {
+    reader.readAsText(file);
+  }
+};
+
 
   const addKeywordToCategory = (categoryKey: string, keyword: string) => {
     if (!keyword.trim()) return;
