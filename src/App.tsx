@@ -1298,41 +1298,90 @@ const ExpenseTracker: React.FC = () => {
           </button>
         </div>
 
+        <div className="flex gap-2 mb-4">
+          <label className="flex-1 cursor-pointer">
+            <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+              <Upload className="inline mr-2" size={20} />
+              {t.importFile}
+            </div>
+            <input
+              type="file"
+              accept=".csv"
+              onChange={handleCSVUpload}
+              className="hidden"
+            />
+          </label>
+          <label className="flex-1 cursor-pointer">
+            <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
+              <FileText className="inline mr-2" size={20} />
+              {t.uploadInvoice}
+            </div>
+            <input
+              type="file"
+              accept=".txt,.pdf"
+              onChange={handleInvoiceUpload}
+              className="hidden"
+            />
+          </label>
+          <button
+            onClick={downloadCSV}
+            className={`flex-1 p-3 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
+          >
+            {t.downloadCSV}
+          </button>
+        </div>
+
+        {/* Sticky Batch Edit - shows when expenses are selected */}
         {selectedExpenseIds.length > 0 && (
-          <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-800' : 'bg-blue-50'}`}>
-            <h3 className="font-bold mb-2">{t.batchEditSelected} ({selectedExpenseIds.length})</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+          <div className={`sticky top-4 z-40 p-4 rounded mb-4 shadow-lg border-2 ${isDarkMode ? 'bg-gray-800 border-blue-500' : 'bg-blue-50 border-blue-400'}`}>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-bold text-lg flex items-center gap-2">
+                <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
+                  {selectedExpenseIds.length}
+                </span>
+                {t.batchEditSelected}
+              </h3>
+              <button
+                onClick={() => setSelectedExpenseIds([])}
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
+                title="Deselect all"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
               <input
                 type="text"
                 value={batchEditDescription}
                 onChange={(e) => setBatchEditDescription(e.target.value)}
                 placeholder="New description"
-                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white'}`}
               />
               <select
                 value={batchEditCategory}
                 onChange={(e) => setBatchEditCategory(e.target.value)}
-                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white'}`}
               >
-                <option value="">Select category</option>
+                <option value="">Change category...</option>
                 {Object.keys(categories).map(catKey => (
                   <option key={catKey} value={catKey}>
                     {categories[catKey].icon} {getTranslatedCategory(catKey, categories[catKey].name, t)}
                   </option>
                 ))}
               </select>
+              <button
+                onClick={applyAllBatchEdits}
+                className="p-2 rounded text-white font-bold"
+                style={{ backgroundColor: buttonColor }}
+              >
+                {t.applyChanges}
+              </button>
             </div>
-            <button
-              onClick={applyAllBatchEdits}
-              className="w-full p-2 rounded text-white"
-              style={{ backgroundColor: buttonColor }}
-            >
-              {t.applyChanges}
-            </button>
           </div>
         )}
 
         <div>
+
           {Object.keys(categories).map(categoryKey => {
             const filteredExpenses = getFilteredExpenses();
             const categoryExpenses = filteredExpenses.filter(exp => exp.category === categoryKey);
