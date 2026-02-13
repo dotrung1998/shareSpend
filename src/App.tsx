@@ -3,6 +3,9 @@ import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X, Users } 
 
 const translations = {
   en: {
+    total: "Total",
+    people: "people",
+    person: "person",
     sharedExpenseTracker: "Shared Expense Tracker",
     manageCategories: "Manage Categories",
     manageCategoryRules: "Manage Auto-Categorization Rules",
@@ -37,7 +40,7 @@ const translations = {
     totalExpenses: "Total Expenses:",
     downloadCSV: "Download CSV",
     importFile: "Import file",
-    uploadInvoice: "Upload Invoice (PDF/Image)",
+    uploadInvoice: "Upload Invoice (txt)",
     exampleItem: "e.g., Coffee",
     amountExample: "e.g., 10",
     requiredFieldsWarning: "Please fill out this field.",
@@ -57,6 +60,9 @@ const translations = {
     }
   },
   de: {
+    total: "Gesamt",
+    people: "Personen",
+    person: "Person",
     sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
     manageCategories: "Kategorien verwalten",
     manageCategoryRules: "Auto-Kategorisierungsregeln verwalten",
@@ -91,7 +97,7 @@ const translations = {
     totalExpenses: "Gesamtausgaben:",
     downloadCSV: "CSV herunterladen",
     importFile: "Datei importieren",
-    uploadInvoice: "Rechnung hochladen (PDF/Bild)",
+    uploadInvoice: "Rechnung hochladen (txt)",
     exampleItem: "z.B. Kaffee",
     amountExample: "z.B. 10",
     requiredFieldsWarning: "Bitte füllen Sie dieses Feld aus.",
@@ -111,6 +117,9 @@ const translations = {
     }
   },
   vi: {
+    total: "Tổng",
+    people: "người",
+    person: "người",
     sharedExpenseTracker: "Trình Theo Dõi Chi Phí Chung",
     manageCategories: "Quản Lý Danh Mục",
     manageCategoryRules: "Quản Lý Quy Tắc Tự Động Phân Loại",
@@ -145,7 +154,7 @@ const translations = {
     totalExpenses: "Tổng Chi Phí:",
     downloadCSV: "Tải xuống CSV",
     importFile: "Nhập tệp",
-    uploadInvoice: "Tải lên Hóa đơn (PDF/Hình)",
+    uploadInvoice: "Tải lên Hóa đơn (txt)",
     exampleItem: "vd: Cà phê",
     amountExample: "vd: 10000",
     requiredFieldsWarning: "Vui lòng điền vào mục này.",
@@ -450,82 +459,96 @@ const ExpenseTracker: React.FC = () => {
     return strField;
   };
 
-  const downloadCSV = () => {
-    const csvRows: string[] = [];
-    let rowIndex = 1;
+const downloadCSV = () => {
+  const csvRows: string[] = [];
+  let rowIndex = 1;
+  
+  // Header with Per Person column
+  csvRows.push(
+    ["ID", "Description", "Date", "Amount", "Currency", "Original Amount", "Category", `Per Person (${numberOfPeople} ${numberOfPeople === 1 ? t.person : t.people})`]
+      .map(escapeCSV).join(",")
+  );
+  rowIndex++;
+
+  const categoryTotalCellRefs: string[] = [];
+  const categoryPerPersonCellRefs: string[] = [];
+  
+  Object.keys(categories).forEach(categoryKey => {
+    const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+    if (categoryExpenses.length === 0) return;
+
+    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+    rowIndex++;
     csvRows.push(
-      ["ID", "Description", "Date", "Amount", "Currency", "Original Amount", "Category"]
+      [`CATEGORY: ${getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}`, "", "", "", "", "", "", ""]
         .map(escapeCSV).join(",")
     );
     rowIndex++;
+    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+    rowIndex++;
 
-    const categoryTotalCellRefs: string[] = [];
-    Object.keys(categories).forEach(categoryKey => {
-      const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
-      if (categoryExpenses.length === 0) return;
-
-      csvRows.push(["", "", "", "", "", "", ""].join(","));
-      rowIndex++;
-      csvRows.push(
-        [`CATEGORY: ${getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}`, "", "", "", "", "", ""]
-          .map(escapeCSV).join(",")
-      );
-      rowIndex++;
-      csvRows.push(["", "", "", "", "", "", ""].join(","));
-      rowIndex++;
-
-      const expenseStart = rowIndex;
-      categoryExpenses.forEach((exp, index) => {
-        const convertedAmount = convertAmountTo(exp.amount, exp.currency, primaryCurrency);
-        csvRows.push([
-          index + 1,
-          exp.description || "No description",
-          exp.date || "",
-          formatCurrencyForCSV(convertedAmount, primaryCurrency),
-          primaryCurrency,
-          formatCurrencyForCSV(exp.amount, exp.currency) + " " + exp.currency,
-          getTranslatedCategory(exp.category, categories[exp.category]?.name || exp.category, t)
-        ].map(escapeCSV).join(","));
-        rowIndex++;
-      });
-
-      const expenseEnd = rowIndex - 1;
-      csvRows.push(["", "", "", "", "", "", ""].join(","));
-      rowIndex++;
-      const categoryTotalFormula = `=SUM(D${expenseStart}:D${expenseEnd})`;
-      csvRows.push(
-        ["", t.categoryTotal, "", categoryTotalFormula, primaryCurrency, "", ""]
-          .map(escapeCSV).join(",")
-      );
-      categoryTotalCellRefs.push(`D${rowIndex}`);
-      rowIndex++;
-      csvRows.push(["", "", "", "", "", "", ""].join(","));
+    const expenseStart = rowIndex;
+    categoryExpenses.forEach((exp, index) => {
+      const convertedAmount = convertAmountTo(exp.amount, exp.currency, primaryCurrency);
+      const perPersonAmount = numberOfPeople > 0 ? convertedAmount / numberOfPeople : 0;
+      
+      csvRows.push([
+        index + 1,
+        exp.description || "No description",
+        exp.date || "",
+        formatCurrencyForCSV(convertedAmount, primaryCurrency),
+        primaryCurrency,
+        formatCurrencyForCSV(exp.amount, exp.currency) + " " + exp.currency,
+        getTranslatedCategory(exp.category, categories[exp.category]?.name || exp.category, t),
+        formatCurrencyForCSV(perPersonAmount, primaryCurrency)
+      ].map(escapeCSV).join(","));
       rowIndex++;
     });
 
-    csvRows.push(["", "", "", "", "", "", ""].join(","));
+    const expenseEnd = rowIndex - 1;
+    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
     rowIndex++;
-    const grandTotalFormula = `=SUM(${categoryTotalCellRefs.join(",")})`;
+    
+    const categoryTotalFormula = `=SUM(D${expenseStart}:D${expenseEnd})`;
+    const categoryPerPersonFormula = `=D${rowIndex}/${numberOfPeople}`;
+    
     csvRows.push(
-      ["", "GRAND TOTAL:", "", grandTotalFormula, primaryCurrency, "", ""]
+      ["", t.categoryTotal, "", categoryTotalFormula, primaryCurrency, "", "", categoryPerPersonFormula]
         .map(escapeCSV).join(",")
     );
+    categoryTotalCellRefs.push(`D${rowIndex}`);
+    categoryPerPersonCellRefs.push(`H${rowIndex}`);
+    rowIndex++;
+    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+    rowIndex++;
+  });
 
-    const fileDate = expenseYear && expenseMonth
-      ? convertDateToFileString(`${expenseYear}-${expenseMonth}`)
-      : convertDateToFileString(new Date().toISOString().slice(0, 7));
-    const fileName = `Expense_Tracker_${fileDate}.csv`;
-    const csvString = csvRows.join("\n");
-    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.setAttribute("href", url);
-    link.setAttribute("download", fileName);
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+  rowIndex++;
+  
+  const grandTotalFormula = `=SUM(${categoryTotalCellRefs.join(",")})`;
+  const grandPerPersonFormula = `=SUM(${categoryPerPersonCellRefs.join(",")})`;
+  
+  csvRows.push(
+    ["", `GRAND ${t.total.toUpperCase()}:`, "", grandTotalFormula, primaryCurrency, "", "", grandPerPersonFormula]
+      .map(escapeCSV).join(",")
+  );
+
+  const fileDate = expenseYear && expenseMonth
+    ? convertDateToFileString(`${expenseYear}-${expenseMonth}`)
+    : convertDateToFileString(new Date().toISOString().slice(0, 7));
+  const fileName = `Expense_Tracker_${fileDate}.csv`;
+  const csvString = csvRows.join("\n");
+  const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", fileName);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   const parseCSV = (text: string) => {
     const rows = text.split("\n").filter(row => row.trim() !== "");
@@ -1326,52 +1349,55 @@ const ExpenseTracker: React.FC = () => {
           </div>
         )}
 
-        {expenses.length > 0 && (
-          <div className={`p-4 rounded mt-6 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">{t.totalExpenses}</h2>
-              <div className="flex gap-2 items-center">
-                <div className="flex items-center gap-2">
-                  <Users size={20} />
-                  <input
-                    type="number"
-                    min="1"
-                    max="20"
-                    value={numberOfPeople}
-                    onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
-                    className={`w-16 p-2 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                    title={t.numberOfPeople}
-                  />
-                </div>
-                <select
-                  value={primaryCurrency}
-                  onChange={(e) => setPrimaryCurrency(e.target.value)}
-                  className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                >
-                  <option value="EUR">EUR (€)</option>
-                  <option value="USD">USD ($)</option>
-                  <option value="VND">VND (₫)</option>
-                </select>
+      {expenses.length > 0 && (
+        <div className={`p-4 rounded mt-6 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">{t.totalExpenses}</h2>
+            <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
+                <Users size={20} />
+                <input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={numberOfPeople}
+                  onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
+                  className={`w-16 p-2 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                  title={t.numberOfPeople}
+                />
               </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-lg">Total:</span>
-                <span className="text-3xl font-bold">
-                  {formatCurrency(calculateGrandTotal(), primaryCurrency)}
-                </span>
-              </div>
-              {numberOfPeople > 1 && (
-                <div className="flex justify-between items-center border-t pt-2">
-                  <span className="text-lg">{t.perPerson} ({numberOfPeople} {numberOfPeople === 1 ? 'person' : 'people'}):</span>
-                  <span className="text-2xl font-bold text-blue-500">
-                    {formatCurrency(calculateGrandTotal() / numberOfPeople, primaryCurrency)}
-                  </span>
-                </div>
-              )}
+              <select
+                value={primaryCurrency}
+                onChange={(e) => setPrimaryCurrency(e.target.value)}
+                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+              >
+                <option value="EUR">EUR (€)</option>
+                <option value="USD">USD ($)</option>
+                <option value="VND">VND (₫)</option>
+              </select>
             </div>
           </div>
-        )}
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-lg">{t.total}:</span>
+              <span className="text-3xl font-bold">
+                {formatCurrency(calculateGrandTotal(), primaryCurrency)}
+              </span>
+            </div>
+            {numberOfPeople > 1 && (
+              <div className="flex justify-between items-center border-t pt-2">
+                <span className="text-lg">
+                  {t.perPerson} ({numberOfPeople} {numberOfPeople === 1 ? t.person : t.people}):
+                </span>
+                <span className="text-2xl font-bold text-blue-500">
+                  {formatCurrency(calculateGrandTotal() / numberOfPeople, primaryCurrency)}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       </div>
 
       {showRulesManager && <CategoryRulesManager />}
