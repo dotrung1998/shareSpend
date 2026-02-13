@@ -38,7 +38,7 @@ const translations = {
     searchResults: "results found",
     clearSearch: "Clear",
     batchEditSelected: "Batch Edit Selected Expenses",
-    applyChanges: "Apply Changes to Selected Expenses",
+    applyChanges: "Apply Changes",
     noExpensesYet: "No expenses added yet. Start by adding your first expense!",
     totalExpenses: "Total Expenses:",
     downloadCSV: "Download CSV",
@@ -97,8 +97,8 @@ const translations = {
     searchExpenses: "Ausgaben durchsuchen...",
     searchResults: "Ergebnisse gefunden",
     clearSearch: "Löschen",
-    batchEditSelected: "Ausgewählte Ausgaben Stapelbearbeitung",
-    applyChanges: "Änderungen auf ausgewählte Ausgaben anwenden",
+    batchEditSelected: "Ausgewählte Ausgaben bearbeiten",
+    applyChanges: "Änderungen anwenden",
     noExpensesYet: "Noch keine Ausgaben hinzugefügt. Beginnen Sie mit der ersten Ausgabe!",
     totalExpenses: "Gesamtausgaben:",
     downloadCSV: "CSV herunterladen",
@@ -157,8 +157,8 @@ const translations = {
     searchExpenses: "Tìm kiếm chi phí...",
     searchResults: "kết quả",
     clearSearch: "Xóa",
-    batchEditSelected: "Chỉnh Sửa Hàng Loạt Các Chi Phí Được Chọn",
-    applyChanges: "Áp dụng thay đổi cho các chi phí được chọn",
+    batchEditSelected: "Chỉnh Sửa Hàng Loạt",
+    applyChanges: "Áp dụng",
     noExpensesYet: "Chưa có chi phí nào. Hãy bắt đầu bằng cách thêm chi phí đầu tiên!",
     totalExpenses: "Tổng Chi Phí:",
     downloadCSV: "Tải xuống CSV",
@@ -1298,39 +1298,6 @@ const ExpenseTracker: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex gap-2 mb-4">
-          <label className="flex-1 cursor-pointer">
-            <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-              <Upload className="inline mr-2" size={20} />
-              {t.importFile}
-            </div>
-            <input
-              type="file"
-              accept=".csv"
-              onChange={handleCSVUpload}
-              className="hidden"
-            />
-          </label>
-          <label className="flex-1 cursor-pointer">
-            <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-              <FileText className="inline mr-2" size={20} />
-              {t.uploadInvoice}
-            </div>
-            <input
-              type="file"
-              accept=".txt,.pdf"
-              onChange={handleInvoiceUpload}
-              className="hidden"
-            />
-          </label>
-          <button
-            onClick={downloadCSV}
-            className={`flex-1 p-3 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}
-          >
-            {t.downloadCSV}
-          </button>
-        </div>
-
         {/* Sticky Batch Edit - shows when expenses are selected */}
         {selectedExpenseIds.length > 0 && (
           <div className={`sticky top-4 z-40 p-4 rounded mb-4 shadow-lg border-2 ${isDarkMode ? 'bg-gray-800 border-blue-500' : 'bg-blue-50 border-blue-400'}`}>
@@ -1381,7 +1348,6 @@ const ExpenseTracker: React.FC = () => {
         )}
 
         <div>
-
           {Object.keys(categories).map(categoryKey => {
             const filteredExpenses = getFilteredExpenses();
             const categoryExpenses = filteredExpenses.filter(exp => exp.category === categoryKey);
