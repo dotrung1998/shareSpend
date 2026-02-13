@@ -1573,11 +1573,12 @@ const ExpenseTracker: React.FC = () => {
                             <Edit2 size={16} />
                           </button>
                           <button
-                          onClick={() => deleteExpense(expense.id)}
-                          className={`p-2 rounded ${isDarkMode ? 'bg-red-600' : 'bg-red-200'}`}
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                            onClick={() => deleteExpense(expense.id)}
+                            className={`p-2 rounded ${isDarkMode ? 'bg-red-600 text-white' : 'bg-red-100 text-red-600 hover:bg-red-200'}`}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+
 
                         </div>
                       </div>
