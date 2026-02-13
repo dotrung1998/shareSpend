@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X, Users } from "lucide-react";
+import { Upload, Edit2, Trash2, Sun, Moon, FileText, Settings, Plus, X, Users, Search } from "lucide-react";
 
 const translations = {
   en: {
-    total: "Total",
-    people: "people",
-    person: "person",
     sharedExpenseTracker: "Shared Expense Tracker",
     manageCategories: "Manage Categories",
     manageCategoryRules: "Manage Auto-Categorization Rules",
@@ -34,6 +31,12 @@ const translations = {
     primaryCurrencyLabel: "Primary Currency",
     numberOfPeople: "Number of People",
     perPerson: "Per Person",
+    total: "Total",
+    people: "people",
+    person: "person",
+    searchExpenses: "Search expenses...",
+    searchResults: "results found",
+    clearSearch: "Clear",
     batchEditSelected: "Batch Edit Selected Expenses",
     applyChanges: "Apply Changes to Selected Expenses",
     noExpensesYet: "No expenses added yet. Start by adding your first expense!",
@@ -60,9 +63,6 @@ const translations = {
     }
   },
   de: {
-    total: "Gesamt",
-    people: "Personen",
-    person: "Person",
     sharedExpenseTracker: "Gemeinsamer Ausgaben-Tracker",
     manageCategories: "Kategorien verwalten",
     manageCategoryRules: "Auto-Kategorisierungsregeln verwalten",
@@ -91,6 +91,12 @@ const translations = {
     primaryCurrencyLabel: "Hauptwährung",
     numberOfPeople: "Anzahl Personen",
     perPerson: "Pro Person",
+    total: "Gesamt",
+    people: "Personen",
+    person: "Person",
+    searchExpenses: "Ausgaben durchsuchen...",
+    searchResults: "Ergebnisse gefunden",
+    clearSearch: "Löschen",
     batchEditSelected: "Ausgewählte Ausgaben Stapelbearbeitung",
     applyChanges: "Änderungen auf ausgewählte Ausgaben anwenden",
     noExpensesYet: "Noch keine Ausgaben hinzugefügt. Beginnen Sie mit der ersten Ausgabe!",
@@ -117,9 +123,6 @@ const translations = {
     }
   },
   vi: {
-    total: "Tổng",
-    people: "người",
-    person: "người",
     sharedExpenseTracker: "Trình Theo Dõi Chi Phí Chung",
     manageCategories: "Quản Lý Danh Mục",
     manageCategoryRules: "Quản Lý Quy Tắc Tự Động Phân Loại",
@@ -148,6 +151,12 @@ const translations = {
     primaryCurrencyLabel: "Tiền tệ chính",
     numberOfPeople: "Số người",
     perPerson: "Mỗi người",
+    total: "Tổng",
+    people: "người",
+    person: "người",
+    searchExpenses: "Tìm kiếm chi phí...",
+    searchResults: "kết quả",
+    clearSearch: "Xóa",
     batchEditSelected: "Chỉnh Sửa Hàng Loạt Các Chi Phí Được Chọn",
     applyChanges: "Áp dụng thay đổi cho các chi phí được chọn",
     noExpensesYet: "Chưa có chi phí nào. Hãy bắt đầu bằng cách thêm chi phí đầu tiên!",
@@ -219,6 +228,7 @@ const ExpenseTracker: React.FC = () => {
   const [currency, setCurrency] = useState("EUR");
   const [category, setCategory] = useState("supermarkt");
   const [numberOfPeople, setNumberOfPeople] = useState(2);
+  const [searchTerm, setSearchTerm] = useState("");
   
   const [categories, setCategories] = useState<Record<string, Category>>({
     groceries: { name: translations.en.categories.groceries, icon: "🛒", note: "" },
@@ -300,6 +310,44 @@ const ExpenseTracker: React.FC = () => {
     const [year, month] = dateStr.split("-");
     const monthNames = t.monthNames || [];
     return monthNames[parseInt(month, 10) - 1] + " " + year;
+  };
+
+  const getFilteredExpenses = () => {
+    if (!searchTerm.trim()) {
+      return expenses;
+    }
+    
+    const term = searchTerm.toLowerCase();
+    return expenses.filter(exp => {
+      const description = exp.description.toLowerCase();
+      const amount = exp.amount.toString();
+      const categoryName = getTranslatedCategory(exp.category, categories[exp.category]?.name || exp.category, t).toLowerCase();
+      const date = convertDateToFileString(exp.date).toLowerCase();
+      
+      return description.includes(term) || 
+             amount.includes(term) || 
+             categoryName.includes(term) ||
+             date.includes(term);
+    });
+  };
+
+  const highlightText = (text: string, highlight: string) => {
+    if (!highlight.trim()) {
+      return text;
+    }
+    
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return (
+      <span>
+        {parts.map((part, i) => 
+          part.toLowerCase() === highlight.toLowerCase() ? (
+            <mark key={i} className={`${isDarkMode ? 'bg-yellow-600' : 'bg-yellow-300'}`}>{part}</mark>
+          ) : (
+            <span key={i}>{part}</span>
+          )
+        )}
+      </span>
+    );
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -413,15 +461,17 @@ const ExpenseTracker: React.FC = () => {
     setSelectedExpenseIds([]);
   };
 
-  const calculateGrandTotal = () => {
-    return expenses.reduce(
+  const calculateGrandTotal = (useFiltered: boolean = false) => {
+    const expenseList = useFiltered ? getFilteredExpenses() : expenses;
+    return expenseList.reduce(
       (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
       0
     );
   };
 
-  const calculateCategoryTotal = (categoryKey: string) => {
-    return expenses
+  const calculateCategoryTotal = (categoryKey: string, useFiltered: boolean = false) => {
+    const expenseList = useFiltered ? getFilteredExpenses() : expenses;
+    return expenseList
       .filter(exp => exp.category === categoryKey)
       .reduce(
         (sum, exp) => sum + convertAmountTo(exp.amount, exp.currency, primaryCurrency),
@@ -436,7 +486,8 @@ const ExpenseTracker: React.FC = () => {
   };
 
   const toggleSelectAllInCategory = (categoryKey: string) => {
-    const categoryExpenseIds = expenses.filter(exp => exp.category === categoryKey).map(exp => exp.id);
+    const filteredExpenses = getFilteredExpenses();
+    const categoryExpenseIds = filteredExpenses.filter(exp => exp.category === categoryKey).map(exp => exp.id);
     const allSelected = categoryExpenseIds.every(id => selectedExpenseIds.includes(id));
     if (allSelected) {
       setSelectedExpenseIds(prev => prev.filter(id => !categoryExpenseIds.includes(id)));
@@ -459,96 +510,96 @@ const ExpenseTracker: React.FC = () => {
     return strField;
   };
 
-const downloadCSV = () => {
-  const csvRows: string[] = [];
-  let rowIndex = 1;
-  
-  // Header with Per Person column
-  csvRows.push(
-    ["ID", "Description", "Date", "Amount", "Currency", "Original Amount", "Category", `Per Person (${numberOfPeople} ${numberOfPeople === 1 ? t.person : t.people})`]
-      .map(escapeCSV).join(",")
-  );
-  rowIndex++;
-
-  const categoryTotalCellRefs: string[] = [];
-  const categoryPerPersonCellRefs: string[] = [];
-  
-  Object.keys(categories).forEach(categoryKey => {
-    const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
-    if (categoryExpenses.length === 0) return;
-
-    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
-    rowIndex++;
+  const downloadCSV = () => {
+    const csvRows: string[] = [];
+    let rowIndex = 1;
+    
+    // Header with Per Person column
     csvRows.push(
-      [`CATEGORY: ${getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}`, "", "", "", "", "", "", ""]
+      ["ID", "Description", "Date", "Amount", "Currency", "Original Amount", "Category", `Per Person (${numberOfPeople} ${numberOfPeople === 1 ? t.person : t.people})`]
         .map(escapeCSV).join(",")
     );
     rowIndex++;
-    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
-    rowIndex++;
 
-    const expenseStart = rowIndex;
-    categoryExpenses.forEach((exp, index) => {
-      const convertedAmount = convertAmountTo(exp.amount, exp.currency, primaryCurrency);
-      const perPersonAmount = numberOfPeople > 0 ? convertedAmount / numberOfPeople : 0;
+    const categoryTotalCellRefs: string[] = [];
+    const categoryPerPersonCellRefs: string[] = [];
+    
+    Object.keys(categories).forEach(categoryKey => {
+      const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+      if (categoryExpenses.length === 0) return;
+
+      csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+      rowIndex++;
+      csvRows.push(
+        [`CATEGORY: ${getTranslatedCategory(categoryKey, categories[categoryKey].name, t)}`, "", "", "", "", "", "", ""]
+          .map(escapeCSV).join(",")
+      );
+      rowIndex++;
+      csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+      rowIndex++;
+
+      const expenseStart = rowIndex;
+      categoryExpenses.forEach((exp, index) => {
+        const convertedAmount = convertAmountTo(exp.amount, exp.currency, primaryCurrency);
+        const perPersonAmount = numberOfPeople > 0 ? convertedAmount / numberOfPeople : 0;
+        
+        csvRows.push([
+          index + 1,
+          exp.description || "No description",
+          exp.date || "",
+          formatCurrencyForCSV(convertedAmount, primaryCurrency),
+          primaryCurrency,
+          formatCurrencyForCSV(exp.amount, exp.currency) + " " + exp.currency,
+          getTranslatedCategory(exp.category, categories[exp.category]?.name || exp.category, t),
+          formatCurrencyForCSV(perPersonAmount, primaryCurrency)
+        ].map(escapeCSV).join(","));
+        rowIndex++;
+      });
+
+      const expenseEnd = rowIndex - 1;
+      csvRows.push(["", "", "", "", "", "", "", ""].join(","));
+      rowIndex++;
       
-      csvRows.push([
-        index + 1,
-        exp.description || "No description",
-        exp.date || "",
-        formatCurrencyForCSV(convertedAmount, primaryCurrency),
-        primaryCurrency,
-        formatCurrencyForCSV(exp.amount, exp.currency) + " " + exp.currency,
-        getTranslatedCategory(exp.category, categories[exp.category]?.name || exp.category, t),
-        formatCurrencyForCSV(perPersonAmount, primaryCurrency)
-      ].map(escapeCSV).join(","));
+      const categoryTotalFormula = `=SUM(D${expenseStart}:D${expenseEnd})`;
+      const categoryPerPersonFormula = `=D${rowIndex}/${numberOfPeople}`;
+      
+      csvRows.push(
+        ["", t.categoryTotal, "", categoryTotalFormula, primaryCurrency, "", "", categoryPerPersonFormula]
+          .map(escapeCSV).join(",")
+      );
+      categoryTotalCellRefs.push(`D${rowIndex}`);
+      categoryPerPersonCellRefs.push(`H${rowIndex}`);
+      rowIndex++;
+      csvRows.push(["", "", "", "", "", "", "", ""].join(","));
       rowIndex++;
     });
 
-    const expenseEnd = rowIndex - 1;
     csvRows.push(["", "", "", "", "", "", "", ""].join(","));
     rowIndex++;
     
-    const categoryTotalFormula = `=SUM(D${expenseStart}:D${expenseEnd})`;
-    const categoryPerPersonFormula = `=D${rowIndex}/${numberOfPeople}`;
+    const grandTotalFormula = `=SUM(${categoryTotalCellRefs.join(",")})`;
+    const grandPerPersonFormula = `=SUM(${categoryPerPersonCellRefs.join(",")})`;
     
     csvRows.push(
-      ["", t.categoryTotal, "", categoryTotalFormula, primaryCurrency, "", "", categoryPerPersonFormula]
+      ["", `GRAND ${t.total.toUpperCase()}:`, "", grandTotalFormula, primaryCurrency, "", "", grandPerPersonFormula]
         .map(escapeCSV).join(",")
     );
-    categoryTotalCellRefs.push(`D${rowIndex}`);
-    categoryPerPersonCellRefs.push(`H${rowIndex}`);
-    rowIndex++;
-    csvRows.push(["", "", "", "", "", "", "", ""].join(","));
-    rowIndex++;
-  });
 
-  csvRows.push(["", "", "", "", "", "", "", ""].join(","));
-  rowIndex++;
-  
-  const grandTotalFormula = `=SUM(${categoryTotalCellRefs.join(",")})`;
-  const grandPerPersonFormula = `=SUM(${categoryPerPersonCellRefs.join(",")})`;
-  
-  csvRows.push(
-    ["", `GRAND ${t.total.toUpperCase()}:`, "", grandTotalFormula, primaryCurrency, "", "", grandPerPersonFormula]
-      .map(escapeCSV).join(",")
-  );
-
-  const fileDate = expenseYear && expenseMonth
-    ? convertDateToFileString(`${expenseYear}-${expenseMonth}`)
-    : convertDateToFileString(new Date().toISOString().slice(0, 7));
-  const fileName = `Expense_Tracker_${fileDate}.csv`;
-  const csvString = csvRows.join("\n");
-  const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.setAttribute("href", url);
-  link.setAttribute("download", fileName);
-  link.style.visibility = "hidden";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+    const fileDate = expenseYear && expenseMonth
+      ? convertDateToFileString(`${expenseYear}-${expenseMonth}`)
+      : convertDateToFileString(new Date().toISOString().slice(0, 7));
+    const fileName = `Expense_Tracker_${fileDate}.csv`;
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", fileName);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const parseCSV = (text: string) => {
     const rows = text.split("\n").filter(row => row.trim() !== "");
@@ -606,7 +657,7 @@ const downloadCSV = () => {
 
         if (row[3]?.startsWith("=")) continue;
 
-        if (row.length !== 7) continue;
+        if (row.length < 7) continue;
 
         if (!row[1] || row[1].trim() === "") continue;
 
@@ -1187,6 +1238,33 @@ const downloadCSV = () => {
           </button>
         </form>
 
+        {/* Search Bar */}
+        <div className={`mb-4 p-3 rounded ${isDarkMode ? 'bg-gray-800' : 'bg-gray-50'}`}>
+          <div className="flex items-center gap-2">
+            <Search size={20} className="opacity-50" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder={t.searchExpenses}
+              className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+            />
+            {searchTerm && (
+              <>
+                <span className="text-sm opacity-75">
+                  {getFilteredExpenses().length} {t.searchResults}
+                </span>
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className={`px-3 py-2 rounded ${isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
+                >
+                  {t.clearSearch}
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+
         <div className="flex gap-2 mb-4">
           <label className="flex-1 cursor-pointer">
             <div className={`p-3 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
@@ -1256,10 +1334,11 @@ const downloadCSV = () => {
 
         <div>
           {Object.keys(categories).map(categoryKey => {
-            const categoryExpenses = expenses.filter(exp => exp.category === categoryKey);
+            const filteredExpenses = getFilteredExpenses();
+            const categoryExpenses = filteredExpenses.filter(exp => exp.category === categoryKey);
             if (categoryExpenses.length === 0) return null;
 
-            const categoryTotal = calculateCategoryTotal(categoryKey);
+            const categoryTotal = calculateCategoryTotal(categoryKey, !!searchTerm);
             const perPersonAmount = numberOfPeople > 0 ? categoryTotal / numberOfPeople : 0;
 
             return (
@@ -1310,7 +1389,9 @@ const downloadCSV = () => {
                             className="w-5 h-5"
                           />
                           <div className="flex-1">
-                            <div className="font-semibold">{expense.description}</div>
+                            <div className="font-semibold">
+                              {searchTerm ? highlightText(expense.description, searchTerm) : expense.description}
+                            </div>
                             <div className="text-sm opacity-75">
                               {formatCurrency(expense.amount, expense.currency)}
                               {expense.date && ` • ${convertDateToFileString(expense.date)}`}
@@ -1349,55 +1430,54 @@ const downloadCSV = () => {
           </div>
         )}
 
-      {expenses.length > 0 && (
-        <div className={`p-4 rounded mt-6 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">{t.totalExpenses}</h2>
-            <div className="flex gap-2 items-center">
-              <div className="flex items-center gap-2">
-                <Users size={20} />
-                <input
-                  type="number"
-                  min="1"
-                  max="20"
-                  value={numberOfPeople}
-                  onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
-                  className={`w-16 p-2 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-                  title={t.numberOfPeople}
-                />
+        {expenses.length > 0 && (
+          <div className={`p-4 rounded mt-6 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">{t.totalExpenses}</h2>
+              <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
+                  <Users size={20} />
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={numberOfPeople}
+                    onChange={(e) => setNumberOfPeople(parseInt(e.target.value) || 1)}
+                    className={`w-16 p-2 rounded text-center ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                    title={t.numberOfPeople}
+                  />
+                </div>
+                <select
+                  value={primaryCurrency}
+                  onChange={(e) => setPrimaryCurrency(e.target.value)}
+                  className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
+                >
+                  <option value="EUR">EUR (€)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="VND">VND (₫)</option>
+                </select>
               </div>
-              <select
-                value={primaryCurrency}
-                onChange={(e) => setPrimaryCurrency(e.target.value)}
-                className={`p-2 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-white'}`}
-              >
-                <option value="EUR">EUR (€)</option>
-                <option value="USD">USD ($)</option>
-                <option value="VND">VND (₫)</option>
-              </select>
             </div>
-          </div>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-lg">{t.total}:</span>
-              <span className="text-3xl font-bold">
-                {formatCurrency(calculateGrandTotal(), primaryCurrency)}
-              </span>
-            </div>
-            {numberOfPeople > 1 && (
-              <div className="flex justify-between items-center border-t pt-2">
-                <span className="text-lg">
-                  {t.perPerson} ({numberOfPeople} {numberOfPeople === 1 ? t.person : t.people}):
-                </span>
-                <span className="text-2xl font-bold text-blue-500">
-                  {formatCurrency(calculateGrandTotal() / numberOfPeople, primaryCurrency)}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-lg">{t.total}:</span>
+                <span className="text-3xl font-bold">
+                  {formatCurrency(calculateGrandTotal(!!searchTerm), primaryCurrency)}
                 </span>
               </div>
-            )}
+              {numberOfPeople > 1 && (
+                <div className="flex justify-between items-center border-t pt-2">
+                  <span className="text-lg">
+                    {t.perPerson} ({numberOfPeople} {numberOfPeople === 1 ? t.person : t.people}):
+                  </span>
+                  <span className="text-2xl font-bold text-blue-500">
+                    {formatCurrency(calculateGrandTotal(!!searchTerm) / numberOfPeople, primaryCurrency)}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-
+        )}
       </div>
 
       {showRulesManager && <CategoryRulesManager />}
