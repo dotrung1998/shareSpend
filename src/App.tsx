@@ -12,6 +12,7 @@ const translations = {
     categoryName: "Category Name",
     enterCategoryName: "Enter category name",
     categoryIcon: "Category Icon",
+    selectIcon: "Select Icon",
     categoryNote: "Category Description/Note",
     categoryNotePlaceholder: "Add a note for the category",
     categoryRules: "Auto-categorization Keywords",
@@ -63,6 +64,7 @@ const translations = {
     categoryName: "Kategoriename",
     enterCategoryName: "Kategoriename eingeben",
     categoryIcon: "Kategorensymbol",
+    selectIcon: "Symbol auswählen",
     categoryNote: "Kategoriebeschreibung/Notiz",
     categoryNotePlaceholder: "Fügen Sie der Kategorie eine Notiz hinzu",
     categoryRules: "Auto-Kategorisierung Schlüsselwörter",
@@ -114,6 +116,7 @@ const translations = {
     categoryName: "Tên danh mục",
     enterCategoryName: "Nhập tên danh mục",
     categoryIcon: "Biểu tượng danh mục",
+    selectIcon: "Chọn biểu tượng",
     categoryNote: "Mô tả/Ghi chú danh mục",
     categoryNotePlaceholder: "Thêm ghi chú cho danh mục",
     categoryRules: "Từ khóa tự động phân loại",
@@ -156,6 +159,17 @@ const translations = {
     }
   }
 };
+
+// Popular emoji icons for categories
+const ICON_OPTIONS = [
+  "🛒", "🏪", "🍽️", "🍔", "🍕", "☕", "🍺", "🥗", "🍜", "🍱",
+  "🚗", "⛽", "🚕", "🚌", "✈️", "🏠", "🔑", "🛋️", "🪑", "🛏️",
+  "💊", "🏥", "⚕️", "💉", "🩺", "👕", "👗", "👔", "👟", "👜",
+  "📱", "💻", "🖥️", "⌚", "📷", "🎮", "🎧", "📚", "✏️", "📝",
+  "🎬", "🎵", "🎨", "🎭", "⚽", "🏋️", "🎾", "🏊", "💰", "💳",
+  "💵", "💶", "💷", "📦", "🎁", "🔧", "🔨", "🪛", "🌱", "🌸",
+  "🐕", "🐈", "🐾", "🧸", "🎂", "🍰", "🧁", "🍫", "🍬", "🍭"
+];
 
 const getTranslatedCategory = (key: string, defaultName: string, t: any) => {
   return t.categories && t.categories[key] ? t.categories[key] : defaultName;
@@ -221,6 +235,7 @@ const ExpenseTracker: React.FC = () => {
   const [language, setLanguage] = useState("en");
   
   const scrollPositionRef = useRef<number>(0);
+  const modalScrollRef = useRef<HTMLDivElement>(null);
 
   const t = translations[language as keyof typeof translations];
 
@@ -684,17 +699,38 @@ const ExpenseTracker: React.FC = () => {
 
   const addKeywordToCategory = (categoryKey: string, keyword: string) => {
     if (!keyword.trim()) return;
+    
+    // Save scroll position before state update
+    const scrollPos = modalScrollRef.current?.scrollTop || 0;
+    
     setCategoryRules(prev => ({
       ...prev,
       [categoryKey]: [...(prev[categoryKey] || []), keyword.trim().toLowerCase()]
     }));
+    
+    // Restore scroll position after state update
+    setTimeout(() => {
+      if (modalScrollRef.current) {
+        modalScrollRef.current.scrollTop = scrollPos;
+      }
+    }, 0);
   };
 
   const removeKeywordFromCategory = (categoryKey: string, keyword: string) => {
+    // Save scroll position before state update
+    const scrollPos = modalScrollRef.current?.scrollTop || 0;
+    
     setCategoryRules(prev => ({
       ...prev,
       [categoryKey]: (prev[categoryKey] || []).filter(k => k !== keyword)
     }));
+    
+    // Restore scroll position after state update
+    setTimeout(() => {
+      if (modalScrollRef.current) {
+        modalScrollRef.current.scrollTop = scrollPos;
+      }
+    }, 0);
   };
 
   const InlineEditExpense: React.FC<{
@@ -795,14 +831,41 @@ const ExpenseTracker: React.FC = () => {
     );
   };
 
+  const IconPicker: React.FC<{
+    selectedIcon: string;
+    onSelectIcon: (icon: string) => void;
+  }> = ({ selectedIcon, onSelectIcon }) => {
+    return (
+      <div className={`p-3 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-100'} max-h-48 overflow-y-auto`}>
+        <div className="grid grid-cols-10 gap-2">
+          {ICON_OPTIONS.map((icon, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => onSelectIcon(icon)}
+              className={`text-2xl p-2 rounded hover:bg-opacity-70 transition ${
+                selectedIcon === icon 
+                  ? (isDarkMode ? 'bg-gray-500 ring-2 ring-white' : 'bg-gray-300 ring-2 ring-blue-500')
+                  : (isDarkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-white hover:bg-gray-200')
+              }`}
+            >
+              {icon}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   const CategoryRulesManager = () => {
     const [newKeywords, setNewKeywords] = useState<Record<string, string>>({});
     const [newCategoryForm, setNewCategoryForm] = useState({ name: "", icon: "📁" });
     const [showAddCategory, setShowAddCategory] = useState(false);
+    const [showIconPicker, setShowIconPicker] = useState(false);
 
     return (
       <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50`}>
-        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg p-6 max-w-3xl w-full max-h-[80vh] overflow-y-auto`}>
+        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-lg p-6 max-w-3xl w-full max-h-[85vh] flex flex-col`}>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold">{t.manageCategoryRules}</h2>
             <button
@@ -813,136 +876,161 @@ const ExpenseTracker: React.FC = () => {
             </button>
           </div>
 
-          {/* Add New Category Section */}
-          <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
-            {!showAddCategory ? (
-              <button
-                onClick={() => setShowAddCategory(true)}
-                className="w-full p-3 rounded flex items-center justify-center gap-2"
-                style={{ backgroundColor: buttonColor }}
-              >
-                <Plus size={20} />
-                {t.addNewCategory}
-              </button>
-            ) : (
-              <div>
-                <div className="grid grid-cols-3 gap-2 mb-2">
-                  <input
-                    type="text"
-                    placeholder={t.enterCategoryName}
-                    value={newCategoryForm.name}
-                    onChange={(e) => setNewCategoryForm({ ...newCategoryForm, name: e.target.value })}
-                    className={`col-span-2 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
-                  />
-                  <input
-                    type="text"
-                    placeholder="📁"
-                    maxLength={2}
-                    value={newCategoryForm.icon}
-                    onChange={(e) => setNewCategoryForm({ ...newCategoryForm, icon: e.target.value })}
-                    className={`p-2 rounded text-center ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      addNewCategory(newCategoryForm.name, newCategoryForm.icon);
-                      setNewCategoryForm({ name: "", icon: "📁" });
-                      setShowAddCategory(false);
-                    }}
-                    className="flex-1 p-2 rounded"
-                    style={{ backgroundColor: buttonColor }}
-                  >
-                    {t.save}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowAddCategory(false);
-                      setNewCategoryForm({ name: "", icon: "📁" });
-                    }}
-                    className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
-                  >
-                    {t.cancel}
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Existing Categories */}
-          <div className="space-y-6">
-            {Object.keys(categories).map(catKey => (
-              <div key={catKey} className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">{categories[catKey].icon}</span>
-                    <h3 className="text-lg font-bold">
-                      {getTranslatedCategory(catKey, categories[catKey].name, t)}
-                    </h3>
-                  </div>
-                  <button
-                    onClick={() => deleteCategory(catKey)}
-                    className="p-2 rounded text-red-500 hover:bg-red-100"
-                    title={t.deleteCategory}
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-                
-                <div className="mb-2">
-                  <label className="text-sm opacity-75 mb-1 block">{t.categoryRules}</label>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {(categoryRules[catKey] || []).map((keyword, idx) => (
-                      <span
-                        key={idx}
-                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
-                          isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
-                        }`}
-                      >
-                        {keyword}
-                        <button
-                          onClick={() => removeKeywordFromCategory(catKey, keyword)}
-                          className="hover:text-red-500"
-                        >
-                          <X size={14} />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-2">
+          {/* Scrollable content */}
+          <div ref={modalScrollRef} className="overflow-y-auto flex-1">
+            {/* Add New Category Section */}
+            <div className={`p-4 rounded mb-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
+              {!showAddCategory ? (
+                <button
+                  onClick={() => setShowAddCategory(true)}
+                  className="w-full p-3 rounded flex items-center justify-center gap-2"
+                  style={{ backgroundColor: buttonColor }}
+                >
+                  <Plus size={20} />
+                  {t.addNewCategory}
+                </button>
+              ) : (
+                <div>
+                  <div className="mb-2">
                     <input
                       type="text"
-                      value={newKeywords[catKey] || ""}
-                      onChange={(e) => setNewKeywords({ ...newKeywords, [catKey]: e.target.value })}
-                      placeholder={t.categoryRulesPlaceholder}
-                      className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          addKeywordToCategory(catKey, newKeywords[catKey] || "");
-                          setNewKeywords({ ...newKeywords, [catKey]: "" });
-                        }
-                      }}
+                      placeholder={t.enterCategoryName}
+                      value={newCategoryForm.name}
+                      onChange={(e) => setNewCategoryForm({ ...newCategoryForm, name: e.target.value })}
+                      className={`w-full p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
                     />
+                  </div>
+                  
+                  <div className="mb-2 flex items-center gap-2">
+                    <div 
+                      className={`text-4xl p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'} cursor-pointer`}
+                      onClick={() => setShowIconPicker(!showIconPicker)}
+                    >
+                      {newCategoryForm.icon}
+                    </div>
+                    <button
+                      onClick={() => setShowIconPicker(!showIconPicker)}
+                      className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-white'}`}
+                    >
+                      {t.selectIcon}
+                    </button>
+                  </div>
+
+                  {showIconPicker && (
+                    <div className="mb-2">
+                      <IconPicker 
+                        selectedIcon={newCategoryForm.icon}
+                        onSelectIcon={(icon) => {
+                          setNewCategoryForm({ ...newCategoryForm, icon });
+                          setShowIconPicker(false);
+                        }}
+                      />
+                    </div>
+                  )}
+                  
+                  <div className="flex gap-2">
                     <button
                       onClick={() => {
-                        addKeywordToCategory(catKey, newKeywords[catKey] || "");
-                        setNewKeywords({ ...newKeywords, [catKey]: "" });
+                        addNewCategory(newCategoryForm.name, newCategoryForm.icon);
+                        setNewCategoryForm({ name: "", icon: "📁" });
+                        setShowAddCategory(false);
+                        setShowIconPicker(false);
                       }}
-                      className="p-2 rounded"
+                      className="flex-1 p-2 rounded"
                       style={{ backgroundColor: buttonColor }}
                     >
-                      <Plus size={20} />
+                      {t.save}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowAddCategory(false);
+                        setShowIconPicker(false);
+                        setNewCategoryForm({ name: "", icon: "📁" });
+                      }}
+                      className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600' : 'bg-gray-300'}`}
+                    >
+                      {t.cancel}
                     </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              )}
+            </div>
+
+            {/* Existing Categories */}
+            <div className="space-y-6">
+              {Object.keys(categories).map(catKey => (
+                <div key={catKey} className={`p-4 rounded ${isDarkMode ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">{categories[catKey].icon}</span>
+                      <h3 className="text-lg font-bold">
+                        {getTranslatedCategory(catKey, categories[catKey].name, t)}
+                      </h3>
+                    </div>
+                    <button
+                      onClick={() => deleteCategory(catKey)}
+                      className="p-2 rounded text-red-500 hover:bg-red-100"
+                      title={t.deleteCategory}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                  
+                  <div className="mb-2">
+                    <label className="text-sm opacity-75 mb-1 block">{t.categoryRules}</label>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {(categoryRules[catKey] || []).map((keyword, idx) => (
+                        <span
+                          key={idx}
+                          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                            isDarkMode ? 'bg-gray-600' : 'bg-gray-200'
+                          }`}
+                        >
+                          {keyword}
+                          <button
+                            onClick={() => removeKeywordFromCategory(catKey, keyword)}
+                            className="hover:text-red-500"
+                          >
+                            <X size={14} />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={newKeywords[catKey] || ""}
+                        onChange={(e) => setNewKeywords({ ...newKeywords, [catKey]: e.target.value })}
+                        placeholder={t.categoryRulesPlaceholder}
+                        className={`flex-1 p-2 rounded ${isDarkMode ? 'bg-gray-600 text-white' : 'bg-white'}`}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter') {
+                            addKeywordToCategory(catKey, newKeywords[catKey] || "");
+                            setNewKeywords({ ...newKeywords, [catKey]: "" });
+                          }
+                        }}
+                      />
+                      <button
+                        onClick={() => {
+                          addKeywordToCategory(catKey, newKeywords[catKey] || "");
+                          setNewKeywords({ ...newKeywords, [catKey]: "" });
+                        }}
+                        className="p-2 rounded"
+                        style={{ backgroundColor: buttonColor }}
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <button
             onClick={() => setShowRulesManager(false)}
-            className="w-full mt-6 p-3 rounded"
+            className="w-full mt-4 p-3 rounded"
             style={{ backgroundColor: buttonColor }}
           >
             {t.save}
